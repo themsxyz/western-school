@@ -64,3 +64,92 @@ window.uploadFile = uploadFile;
 if (document.getElementById("out").innerText === "") {
   document.getElementById("out").innerText = "💡 Ready — click any action or upload a .txt file";
 }
+
+
+
+const url = "https://script.google.com/macros/s/AKfycbxz7Y2IX0d7Gc6wOO7X1UEa_kDlb1AnbRQhtbnoIA5rPANL3yqZOqBq1xhEOZr6257qYg/exec";
+
+function showLoader(v){
+  const loaderEl = document.getElementById("loader");
+  if(loaderEl) loaderEl.style.display = v ? "flex" : "none";
+}
+
+function bn(n){
+  return new Intl.NumberFormat('bn-BD').format(n || 0);
+}
+
+function load(){
+  showLoader(true);
+
+  fetch(url+"?mode=admin")
+  .then(r=>r.json())
+  .then(d=>{
+    document.getElementById("sms").innerText = bn(Math.round(d.total_sms_used || 0));
+    document.getElementById("cost").innerText = "৳ " + bn(d.sms_cost || 0);
+    document.getElementById("rtk").innerText = "৳ " + bn(d.total_recharge_tk || 0);
+    document.getElementById("remtk").innerText = "৳ " + bn(d.remaining_tk || 0);
+    // REMAINING SMS: show rounded figure (no decimals)
+    document.getElementById("remsms").innerText = bn(Math.round(d.remaining_sms || 0));
+  })
+  .catch(err=>console.warn(err))
+  .finally(()=>showLoader(false));
+}
+
+function recharge(){
+  let amountInput = document.getElementById("amount");
+  let amt = amountInput.value;
+  if(!amt || parseFloat(amt) <= 0) {
+    return;
+  }
+
+  showLoader(true);
+
+  fetch(url+"?mode=admin&amount="+encodeURIComponent(amt))
+  .then(()=>{
+    amountInput.value = "";
+    return load();
+  })
+  .catch(err=>console.warn(err))
+  .finally(()=>showLoader(false));
+}
+
+function reset(){
+  showLoader(true);
+  fetch(url+"?mode=admin&reset=true")
+  .then(()=>load())
+  .catch(err=>console.warn(err))
+  .finally(()=>showLoader(false));
+}
+
+// ENTER KEY SHORTCUT for recharge button trigger
+function setupEnterKey(){
+  const amountField = document.getElementById("amount");
+  if(amountField){
+    amountField.addEventListener("keypress", function(e){
+      if(e.key === "Enter"){
+        e.preventDefault();
+        recharge();
+      }
+    });
+  }
+  const rechargeBtn = document.getElementById("rechargeBtn");
+  if(rechargeBtn){
+    rechargeBtn.onclick = (e) => {
+      e.preventDefault();
+      recharge();
+    };
+  }
+}
+
+// initialize everything after DOM ready
+document.addEventListener("DOMContentLoaded", function(){
+  setupEnterKey();
+  load();
+});
+
+if(document.readyState === "loading"){
+  // already added event listener
+} else {
+  setupEnterKey();
+  load();
+}

@@ -3,8 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Western School</title>
+  <title>Western School | SMS Hub + Dashboard</title>
   <link rel="stylesheet" href="student-sms.css">
+  <style>
+    /* ----- LAYOUT FIX: 2-COLUMN DESKTOP (main + section side by side) ----- */
+    /* No existing styles are overwritten — only layout structure is enhanced */
+    body {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+      background: inherit; /* keep existing background from student-sms.css */
+      gap: 1.5rem 1.8rem;
+    }
+
+    /* header spans full width at top */
+    header {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      width: 100%;
+    }
+
+    /* main (left column) — contains SMS glass panel */
+    main {
+      grid-column: 1 / 2;
+      grid-row: 2;
+      overflow-y: auto;
+      align-self: start;
+      margin: 0;
+      padding: 0 0 0.5rem 0;
+    }
+
+    /* section (right column) — contains admin dashboard & smsreport */
+    section {
+      grid-column: 2 / 3;
+      grid-row: 2;
+      overflow-y: auto;
+      align-self: start;
+      margin: 0;
+      padding: 0 0 0.5rem 0;
+    }
+
+    /* preserve inner spacing for both areas, keep original card aesthetics */
+    .sms-glass-panel {
+      margin: 0 0.25rem 0 0;
+    }
+
+    .smsreport .container {
+      margin-top: 0;
+    }
+
+    /* responsive: on tablets & mobiles, stack vertically */
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1rem;
+      }
+      header {
+        grid-row: 1;
+      }
+      main {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+      section {
+        grid-column: 1 / -1;
+        grid-row: 3;
+      }
+    }
+
+    /* for very small screens, reduce gap */
+    @media (max-width: 540px) {
+      body {
+        gap: 0.8rem;
+      }
+    }
+
+    /* ensure scroll containers are elegant */
+    main::-webkit-scrollbar, section::-webkit-scrollbar {
+      width: 5px;
+    }
+    main::-webkit-scrollbar-track, section::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.05);
+      border-radius: 10px;
+    }
+    main::-webkit-scrollbar-thumb, section::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -353,6 +443,74 @@
   </div>
 </div>
 </main>
+
+<section>
+  
+<!-- MAIN NAMESPACE WRAPPER: .smsreport added exactly as required -->
+<div class="smsreport">
+
+<div id="loader">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <span>লোড হচ্ছে...</span>
+  </div>
+</div>
+
+<div class="container">
+
+<h2>📊 Admin Dashboard</h2>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="title">Total SMS</div>
+    <div class="value" id="sms">0</div>
+  </div>
+
+  <div class="card">
+    <div class="title">SMS Cost</div>
+    <div class="value" id="cost">৳ 0</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Recharge (৳)</div>
+    <div class="value" id="rtk">0</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Remaining TK</div>
+    <div class="value" id="remtk">0</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Remaining SMS</div>
+    <div class="value" id="remsms">0</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Recharge Input</div>
+    <input type="number" id="amount" placeholder="Enter amount" autocomplete="off">
+    <button class="recharge" id="rechargeBtn">Recharge</button>
+  </div>
+
+</div>
+
+<div class="grid" style="margin-top:20px;">
+
+  <div class="card">
+    <button class="refresh" onclick="load()">Refresh</button>
+  </div>
+
+  <div class="card">
+    <button class="reset" onclick="reset()">Reset Recharge</button>
+  </div>
+
+</div>
+
+</div>
+
+</div>
+</section>
 
 <script src="student-sms.js"></script>
 <script src="nav.js"></script>
