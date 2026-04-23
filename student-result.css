@@ -1,4 +1,5 @@
-    /* ===== loader, toast ===== */
+  @import "nav.css";
+  /* ===== loader, toast ===== */
     .result-loader-overlay {
       position: fixed;
       top: 0;
