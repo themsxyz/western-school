@@ -349,24 +349,85 @@
             </div>
             <div id="profileView" class="account-hidden" style="margin-top: 16px;"></div>
             <hr>
-            <h3 id="formTitle" style="color:#1e3a5f; margin-bottom: 12px; font-weight: 600;">➕ নতুন শিক্ষার্থী তৈরি</h3>
-            <div class="account-form-grid">
-                <div class="account-form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি"></div>
-                <div class="account-form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="পূর্ণ নাম"></div>
-                <div class="account-form-group"><label>রোল</label><input type="text" id="newRoll" placeholder="রোল"></div>
-                <div class="account-form-group"><label>শ্রেণি</label><input type="text" id="newClass" placeholder="শ্রেণি"></div>
-                <div class="account-form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন"></div>
-                <div class="account-form-group"><label>প্রোফাইল ছবি</label><input type="file" id="newPhotoFile" accept="image/*"><input type="hidden" id="newPhotoUrl"></div>
-                <div class="account-form-group"><label>জন্ম তারিখ</label><input type="date" id="newDob"></div>
-                <div class="account-form-group"><label>জন্ম নিবন্ধন নং</label><input type="text" id="newBcn"></div>
-                <div class="account-form-group"><label>পিতার নাম</label><input type="text" id="newFname"></div>
-                <div class="account-form-group"><label>মাতার নাম</label><input type="text" id="newMname"></div>
-                <div class="account-form-group"><label>পিতার এনআইডি</label><input type="text" id="newFnid"></div>
-                <div class="account-form-group"><label>মাতার এনআইডি</label><input type="text" id="newMnid"></div>
-                <div class="account-form-group"><label>ঠিকানা</label><textarea id="newAddress" rows="2" placeholder="ঠিকানা"></textarea></div>
-                <div class="account-form-group"><label>মোবাইল নং (১১ ডিজিট)</label><input type="tel" id="newPhone" placeholder="মোবাইল" maxlength="11"></div>
-                <div class="account-form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood" placeholder="ব্লাড গ্রুপ"></div>
-            </div>
+           <h3 id="formTitle" style="color:#1e3a5f; margin-bottom: 12px; font-weight: 600;">➕ নতুন শিক্ষার্থী তৈরি</h3>
+
+<div class="account-form-grid">
+    <div class="account-form-group">
+        <label>আইডি *</label>
+        <input type="text" id="newId" placeholder="আইডি">
+    </div>
+
+    <div class="account-form-group">
+        <label>পূর্ণ নাম</label>
+        <input type="text" id="newName" placeholder="পূর্ণ নাম" style="text-transform: uppercase;">
+    </div>
+
+    <div class="account-form-group">
+        <label>রোল</label>
+        <input type="text" id="newRoll" placeholder="রোল">
+    </div>
+
+    <div class="account-form-group">
+        <label>শ্রেণি</label>
+        <input type="text" id="newClass" placeholder="শ্রেণি">
+    </div>
+
+    <div class="account-form-group">
+        <label>সেকশন</label>
+        <input type="text" id="newSection" placeholder="সেকশন">
+    </div>
+
+    <div class="account-form-group">
+        <label>প্রোফাইল ছবি</label>
+        <input type="file" id="newPhotoFile" accept="image/*">
+        <input type="hidden" id="newPhotoUrl">
+    </div>
+
+    <div class="account-form-group">
+        <label>জন্ম তারিখ</label>
+        <input type="date" id="newDob">
+    </div>
+
+    <div class="account-form-group">
+        <label>জন্ম নিবন্ধন নং</label>
+        <input type="text" id="newBcn" placeholder="জন্ম নিবন্ধন নং" maxlength="17" pattern="\d{17}">
+    </div>
+
+    <div class="account-form-group">
+        <label>পিতার নাম</label>
+        <input type="text" id="newFname" placeholder="পিতার নাম" style="text-transform: uppercase;">
+    </div>
+
+    <div class="account-form-group">
+        <label>মাতার নাম</label>
+        <input type="text" id="newMname" placeholder="মাতার নাম" style="text-transform: uppercase;">
+    </div>
+
+    <div class="account-form-group">
+        <label>পিতার এনআইডি</label>
+        <input type="text" id="newFnid" placeholder="এনআইডি" maxlength="10" pattern="\d{10}">
+    </div>
+
+    <div class="account-form-group">
+        <label>মাতার এনআইডি</label>
+        <input type="text" id="newMnid" placeholder="এনআইডি" maxlength="10" pattern="\d{10}">
+    </div>
+
+    <div class="account-form-group">
+        <label>ঠিকানা</label>
+        <textarea id="newAddress" rows="2" placeholder="ঠিকানা"></textarea>
+    </div>
+
+    <div class="account-form-group">
+        <label>মোবাইল নং (১১ ডিজিট)</label>
+        <input type="tel" id="newPhone" placeholder="মোবাইল" maxlength="11" pattern="\d{11}">
+    </div>
+
+    <div class="account-form-group">
+        <label>রক্তের গ্রুপ</label>
+        <input type="text" id="newBlood" placeholder="ব্লাড গ্রুপ">
+    </div>
+</div>
             <div class="account-button-group">
                 <button id="createBtn" class="account-success account-button">➕ শিক্ষার্থী তৈরি</button>
                 <button id="updateBtn" class="account-secondary account-hidden account-button">✏️ হালনাগাদ</button>
