@@ -1,13 +1,17 @@
-@import "nav.css";
- /* Clean light theme - minimal sharp edges */
-        .card, .class-selector-panel, .glass-panel {
+/* external import (keep as is) */
+        @import "nav.css";
+
+        /* ---------- Clean light theme - minimal sharp edges :: all classes prefixed with account- ---------- */
+        .account-card, 
+        .account-class-selector-panel, 
+        .account-glass-panel {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
             border-radius: 50px;
             border: 5px solid #e9edf2;
             transition: all 0.2s ease;
         }
 
-        .container {
+        .account-container {
             max-width: 1280px;
             margin: 0 auto;
         }
@@ -25,15 +29,15 @@
             letter-spacing: -0.3px;
         }
 
-        /* Class panel */
-        .class-selector-panel {
+        /* class panel */
+        .account-class-selector-panel {
             background: #ffffff;
             padding: 1.2rem 2rem;
             margin-bottom: 2rem;
             border: 1px solid #eef2f6;
         }
 
-        button, .reset-btn {
+        button, .account-reset-btn {
             background: #11072e;
             border: none;
             color: white;
@@ -50,12 +54,12 @@
         }
 
         button:hover { background: #1f4a6e; transform: translateY(-1px); }
-        button.danger { background: #e40303; }
-        button.danger:hover { background: #df7d05; }
-        button.secondary { background: #7c5e3a; }
-        button.success { background: #040635; }
-        button.success:hover { background: #0b2be3; }
-        .reset-btn { background: #b9a28c; color: #2d2b26; }
+        button.account-danger { background: #e40303; }
+        button.account-danger:hover { background: #df7d05; }
+        button.account-secondary { background: #7c5e3a; }
+        button.account-success { background: #040635; }
+        button.account-success:hover { background: #0b2be3; }
+        .account-reset-btn { background: #b9a28c; color: #2d2b26; }
 
         input, select, textarea {
             background: #ffffff;
@@ -74,20 +78,20 @@
             box-shadow: 0 0 0 3px rgba(44, 95, 138, 0.15);
         }
 
-        .form-grid {
+        .account-form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 1.2rem 1.5rem;
             margin-top: 0.8rem;
         }
 
-        .form-group {
+        .account-form-group {
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
         }
 
-        .form-group label {
+        .account-form-group label {
             font-size: 0.7rem;
             font-weight: 700;
             color: #4a5568;
@@ -96,7 +100,7 @@
         }
 
         /* Toast stack */
-        .toast-stack {
+        .account-toast-stack {
             position: fixed;
             bottom: 24px;
             right: 24px;
@@ -109,7 +113,7 @@
             max-width: 360px;
         }
 
-        .toast-message {
+        .account-toast-message {
             background: #1e293b;
             border-radius: 0.8rem;
             padding: 12px 20px;
@@ -125,8 +129,8 @@
             animation: slideIn 0.2s ease;
         }
 
-        .toast-success { border-left-color: #2f6b47; background: #1e2f2a; }
-        .toast-error { border-left-color: #c24141; background: #2e1f1f; }
+        .account-toast-success { border-left-color: #2f6b47; background: #1e2f2a; }
+        .account-toast-error { border-left-color: #c24141; background: #2e1f1f; }
 
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(40px); }
@@ -134,7 +138,7 @@
         }
 
         /* Confirm overlay */
-        .confirm-overlay {
+        .account-confirm-overlay {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -148,7 +152,7 @@
             z-index: 10002;
         }
 
-        .confirm-card {
+        .account-confirm-card {
             background: #1e293b;
             border-radius: 1.2rem;
             padding: 1.2rem 1.8rem;
@@ -160,7 +164,7 @@
         }
 
         /* profile & tables */
-        .profile-image {
+        .account-profile-image {
             width: 90px;
             height: 90px;
             border-radius: 50%;
@@ -170,7 +174,7 @@
             background: #f1f5f9;
         }
 
-        .info-grid {
+        .account-info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
             gap: 0.8rem;
@@ -179,7 +183,7 @@
             border-radius: 0.8rem;
         }
 
-        .card-header {
+        .account-card-header {
             border-radius: 50px;
             font-weight: 700;
             font-size: 1.2rem;
@@ -192,11 +196,11 @@
             color: #1e3a5f;
         }
 
-        .card-body {
+        .account-card-body {
             padding: 1.5rem;
         }
 
-        .flex-row {
+        .account-flex-row {
             display: flex;
             gap: 0.8rem;
             flex-wrap: wrap;
@@ -204,7 +208,7 @@
             margin-bottom: 1rem;
         }
 
-        .hidden {
+        .account-hidden {
             display: none;
         }
 
@@ -213,14 +217,14 @@
             border-color: #eef2f6;
         }
 
-        .button-group {
+        .account-button-group {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
             margin-top: 1rem;
         }
 
-        .badge-success {
+        .account-badge-success {
             background: #e6f7ec;
             color: #1f5438;
             border-radius: 30px;
@@ -238,7 +242,7 @@
         }
 
         /* LOADER overlay - minimal sharp */
-        .loader-overlay {
+        .account-loader-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -254,7 +258,7 @@
             gap: 1rem;
         }
 
-        .spinner {
+        .account-spinner {
             width: 48px;
             height: 48px;
             border: 4px solid #e2e8f0;
@@ -268,7 +272,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        .loader-text {
+        .account-loader-text {
             color: #1e293b;
             font-weight: 500;
             font-size: 0.9rem;
@@ -279,8 +283,8 @@
         }
 
         @media (max-width: 680px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .class-selector-panel { padding: 1rem; }
+            .account-form-grid { grid-template-columns: 1fr; }
+            .account-class-selector-panel { padding: 1rem; }
         }
 
         a {
@@ -288,7 +292,7 @@
             text-decoration: none;
             font-weight: 500;
         }
-        .fee-link a {
+        .account-fee-link a {
             background: #f1f5f9;
             padding: 6px 14px;
             border-radius: 2rem;

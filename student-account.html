@@ -315,11 +315,12 @@
 </header>
 
 <main>
-<div class="container">
+
+<div class="account-container">
     <h1>📘 শিক্ষার্থী অ্যাকাউন্ট ব্যবস্থাপনা</h1>
     
     <!-- CLASS SELECTOR PANEL - default no selection -->
-    <div class="class-selector-panel">
+    <div class="account-class-selector-panel">
         <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
             <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
                 <label style="font-weight: 700; color:#334155;">🏫 ক্লাস নির্বাচন:</label>
@@ -337,56 +338,56 @@
                 <button id="applyClassBtn">✅ নিশ্চিত করুন</button>
             </div>
             <div id="classStatusArea"></div>
-            <button id="clearUiBtn" class="reset-btn" style="background:#eef2f6; color:#334155;">🗑️ সব তথ্য মুছুন</button>
+            <button id="clearUiBtn" class="account-reset-btn" style="background:#eef2f6; color:#334155;">🗑️ সব তথ্য মুছুন</button>
         </div>
     </div>
     
-    <div class="fee-link glass-panel" style="text-align:center; padding: 12px; margin-bottom: 24px;">
+    <div class="account-fee-link account-glass-panel" style="text-align:center; padding: 12px; margin-bottom: 24px;">
         🔗 <a href="fee-management.html" target="_blank">ফি ব্যবস্থাপনায় যান →</a>
         <span style="font-size:12px; margin-left:12px;">(স্বতন্ত্র মডিউল)</span>
     </div>
     
     <!-- Student Account Card -->
-    <div class="card">
-        <div class="card-header">👨‍🎓 শিক্ষার্থী অ্যাকাউন্ট</div>
-        <div class="card-body">
-            <div class="flex-row">
+    <div class="account-card">
+        <div class="account-card-header">👨‍🎓 শিক্ষার্থী অ্যাকাউন্ট</div>
+        <div class="account-card-body">
+            <div class="account-flex-row">
                 <input type="text" id="searchId" placeholder="শিক্ষার্থী আইডি (Enter চাপুন)" style="flex:2">
                 <button id="searchBtn">🔍 অনুসন্ধান</button>
             </div>
-            <div id="profileView" class="hidden" style="margin-top: 16px;"></div>
+            <div id="profileView" class="account-hidden" style="margin-top: 16px;"></div>
             <hr>
             <h3 id="formTitle" style="color:#1e3a5f; margin-bottom: 12px; font-weight: 600;">➕ নতুন শিক্ষার্থী তৈরি</h3>
-            <div class="form-grid">
-                <div class="form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি"></div>
-                <div class="form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="পূর্ণ নাম"></div>
-                <div class="form-group"><label>রোল</label><input type="text" id="newRoll" placeholder="রোল"></div>
-                <div class="form-group"><label>শ্রেণি</label><input type="text" id="newClass" placeholder="শ্রেণি"></div>
-                <div class="form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন"></div>
-                <div class="form-group"><label>প্রোফাইল ছবি</label><input type="file" id="newPhotoFile" accept="image/*"><input type="hidden" id="newPhotoUrl"></div>
-                <div class="form-group"><label>জন্ম তারিখ</label><input type="date" id="newDob"></div>
-                <div class="form-group"><label>জন্ম নিবন্ধন নং</label><input type="text" id="newBcn"></div>
-                <div class="form-group"><label>পিতার নাম</label><input type="text" id="newFname"></div>
-                <div class="form-group"><label>মাতার নাম</label><input type="text" id="newMname"></div>
-                <div class="form-group"><label>পিতার এনআইডি</label><input type="text" id="newFnid"></div>
-                <div class="form-group"><label>মাতার এনআইডি</label><input type="text" id="newMnid"></div>
-                <div class="form-group"><label>ঠিকানা</label><textarea id="newAddress" rows="2" placeholder="ঠিকানা"></textarea></div>
-                <div class="form-group"><label>মোবাইল নং (১১ ডিজিট)</label><input type="tel" id="newPhone" placeholder="মোবাইল" maxlength="11"></div>
-                <div class="form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood" placeholder="ব্লাড গ্রুপ"></div>
+            <div class="account-form-grid">
+                <div class="account-form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি"></div>
+                <div class="account-form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="পূর্ণ নাম"></div>
+                <div class="account-form-group"><label>রোল</label><input type="text" id="newRoll" placeholder="রোল"></div>
+                <div class="account-form-group"><label>শ্রেণি</label><input type="text" id="newClass" placeholder="শ্রেণি"></div>
+                <div class="account-form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন"></div>
+                <div class="account-form-group"><label>প্রোফাইল ছবি</label><input type="file" id="newPhotoFile" accept="image/*"><input type="hidden" id="newPhotoUrl"></div>
+                <div class="account-form-group"><label>জন্ম তারিখ</label><input type="date" id="newDob"></div>
+                <div class="account-form-group"><label>জন্ম নিবন্ধন নং</label><input type="text" id="newBcn"></div>
+                <div class="account-form-group"><label>পিতার নাম</label><input type="text" id="newFname"></div>
+                <div class="account-form-group"><label>মাতার নাম</label><input type="text" id="newMname"></div>
+                <div class="account-form-group"><label>পিতার এনআইডি</label><input type="text" id="newFnid"></div>
+                <div class="account-form-group"><label>মাতার এনআইডি</label><input type="text" id="newMnid"></div>
+                <div class="account-form-group"><label>ঠিকানা</label><textarea id="newAddress" rows="2" placeholder="ঠিকানা"></textarea></div>
+                <div class="account-form-group"><label>মোবাইল নং (১১ ডিজিট)</label><input type="tel" id="newPhone" placeholder="মোবাইল" maxlength="11"></div>
+                <div class="account-form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood" placeholder="ব্লাড গ্রুপ"></div>
             </div>
-            <div class="button-group">
-                <button id="createBtn" class="success">➕ শিক্ষার্থী তৈরি</button>
-                <button id="updateBtn" class="secondary hidden">✏️ হালনাগাদ</button>
-                <button id="deleteStudentBtn" class="danger hidden">🗑️ মুছুন</button>
+            <div class="account-button-group">
+                <button id="createBtn" class="account-success">➕ শিক্ষার্থী তৈরি</button>
+                <button id="updateBtn" class="account-secondary account-hidden">✏️ হালনাগাদ</button>
+                <button id="deleteStudentBtn" class="account-danger account-hidden">🗑️ মুছুন</button>
             </div>
         </div>
     </div>
 </div>
 
-<div id="toastRoot" class="toast-stack"></div>
-<div id="globalLoader" class="loader-overlay">
-    <div class="spinner"></div>
-    <div class="loader-text">অপেক্ষা করুন...</div>
+<div id="toastRoot" class="account-toast-stack"></div>
+<div id="globalLoader" class="account-loader-overlay">
+    <div class="account-spinner"></div>
+    <div class="account-loader-text">অপেক্ষা করুন...</div>
 </div>
 </main>
 

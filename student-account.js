@@ -1,8 +1,8 @@
-// ---------- TOAST & CONFIRM (improved) ----------
+    // ---------- TOAST & CONFIRM (updated classnames: account- prefixed) ----------
     function showToast(message, type = "info") {
         const root = document.getElementById("toastRoot");
         const toast = document.createElement("div");
-        toast.className = `toast-message ${type === "success" ? "toast-success" : (type === "error" ? "toast-error" : "")}`;
+        toast.className = `account-toast-message ${type === "success" ? "account-toast-success" : (type === "error" ? "account-toast-error" : "")}`;
         let icon = type === "success" ? "✅" : type === "error" ? "❌" : "ℹ️";
         toast.innerHTML = `<span>${icon}</span><span>${message}</span><span style="margin-left:auto; cursor:pointer;" onclick="this.parentElement.remove()">✕</span>`;
         root.appendChild(toast);
@@ -12,9 +12,9 @@
     function showConfirm(message) {
         return new Promise((resolve) => {
             const overlay = document.createElement("div");
-            overlay.className = "confirm-overlay";
+            overlay.className = "account-confirm-overlay";
             overlay.innerHTML = `
-                <div class="confirm-card">
+                <div class="account-confirm-card">
                     <p style="font-size:1rem; margin-bottom:14px;">❓ ${message}</p>
                     <div style="display: flex; gap: 16px; justify-content: center;">
                         <button id="confirmYesBtn" style="background:#2f6b47;">হ্যাঁ</button>
@@ -34,30 +34,29 @@
     window.confirm = async function(msg) { return await showConfirm(msg); };
     
     // ---------- API ENDPOINTS ----------
-   const CLASS_API_MAP = {
-    nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
-    play: "https://script.google.com/macros/s/AKfycbzhtst-Y7Z4BNtDNW76zginGzhVJ9CCYM8WOot2Ij1IzPLrtxVIb6p7JuDT_ZOhgiKi/exec",
-    kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
-    class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
-    class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
-    class3: "https://script.google.com/macros/s/AKfycbzxg-lf8ZvBpw9L-kzPdpxRRTtdxnCGNSiyc_UElLihDpRr6zl4YxZIoKDek7IXtlsv/exec",
-    class4: "https://script.google.com/macros/s/AKfycbyzuGgkk4osZCf45qkb40RKSa6I3nBFhLSG3B618rn0_PaBMv62K8YIh8R7-eGQqydF/exec",
-    class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
-};
+    const CLASS_API_MAP = {
+        nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
+        play: "https://script.google.com/macros/s/AKfycbzhtst-Y7Z4BNtDNW76zginGzhVJ9CCYM8WOot2Ij1IzPLrtxVIb6p7JuDT_ZOhgiKi/exec",
+        kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
+        class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
+        class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
+        class3: "https://script.google.com/macros/s/AKfycbzxg-lf8ZvBpw9L-kzPdpxRRTtdxnCGNSiyc_UElLihDpRr6zl4YxZIoKDek7IXtlsv/exec",
+        class4: "https://script.google.com/macros/s/AKfycbyzuGgkk4osZCf45qkb40RKSa6I3nBFhLSG3B618rn0_PaBMv62K8YIh8R7-eGQqydF/exec",
+        class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
+    };
     
     let currentApiUrl = null, currentActiveClassKey = null, currentStudent = null;
     
-    // Loader controls
     const loader = document.getElementById("globalLoader");
     function showLoader() { loader.style.display = "flex"; }
     function hideLoader() { loader.style.display = "none"; }
     
     function resetAllUIContent() {
-        document.getElementById("profileView").classList.add("hidden"); 
+        document.getElementById("profileView").classList.add("account-hidden"); 
         document.getElementById("profileView").innerHTML = "";
         document.getElementById("searchId").value = "";
-        document.getElementById("updateBtn").classList.add("hidden"); 
-        document.getElementById("deleteStudentBtn").classList.add("hidden");
+        document.getElementById("updateBtn").classList.add("account-hidden"); 
+        document.getElementById("deleteStudentBtn").classList.add("account-hidden");
         currentStudent = null; 
         document.getElementById("formTitle").innerHTML = "➕ নতুন শিক্ষার্থী তৈরি";
         const fields = ["newId","newName","newRoll","newClass","newSection","newPhotoUrl","newDob","newBcn","newFname","newMname","newFnid","newMnid","newAddress","newPhone","newBlood"];
@@ -102,10 +101,10 @@
     
     function displayProfile(basic) {
         const container = document.getElementById("profileView"); 
-        container.classList.remove("hidden");
+        container.classList.remove("account-hidden");
         const photoUrl = basic["Photo URL"] || "";
-        const photoHtml = photoUrl ? `<img src="${photoUrl}" class="profile-image">` : `<div class="profile-image" style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:2rem;">📷</div>`;
-        let infoHtml = `<div style="display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">${photoHtml}<h3 style="color:#1e3a5f;">${basic["Student Name"] || ""}</h3></div><div class="info-grid">`;
+        const photoHtml = photoUrl ? `<img src="${photoUrl}" class="account-profile-image">` : `<div class="account-profile-image" style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:2rem;">📷</div>`;
+        let infoHtml = `<div style="display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">${photoHtml}<h3 style="color:#1e3a5f;">${basic["Student Name"] || ""}</h3></div><div class="account-info-grid">`;
         for(let [k,v] of Object.entries(basic)) if(k!=="Photo URL") infoHtml += `<div><strong>${k}:</strong> ${v || '—'}</div>`;
         infoHtml += `</div>`; 
         container.innerHTML = infoHtml;
@@ -124,8 +123,8 @@
             if(res.status==="found") {
                 currentStudent = res; 
                 displayProfile(res.basic);
-                document.getElementById("updateBtn").classList.remove("hidden"); 
-                document.getElementById("deleteStudentBtn").classList.remove("hidden");
+                document.getElementById("updateBtn").classList.remove("account-hidden"); 
+                document.getElementById("deleteStudentBtn").classList.remove("account-hidden");
                 document.getElementById("formTitle").innerHTML = "✏️ শিক্ষার্থী সম্পাদনা";
                 const b = res.basic;
                 document.getElementById("newId").value = id; 
@@ -151,7 +150,6 @@
     }
     
     searchBtn.onclick = handleSearch;
-    // ENTER shortkey on search field
     searchInput.addEventListener("keypress", function(e) {
         if(e.key === "Enter") {
             e.preventDefault();
@@ -244,11 +242,9 @@
     });
     
     // ---------- DEFAULT NO CLASS SELECTION ----------
-    // Clear any previous activation, dropdown default no active, status shows no selection
     currentApiUrl = null;
     currentActiveClassKey = null;
     currentStudent = null;
-    // Optionally show previously selected class in dropdown but NOT ACTIVATED (UX without breaking rule)
     const savedClass = localStorage.getItem("selectedClassKey");
     if(savedClass && CLASS_API_MAP[savedClass]) {
         document.getElementById("classSelect").value = savedClass;
