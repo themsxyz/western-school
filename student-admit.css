@@ -44,7 +44,7 @@
             border: 1px solid #f0e0c0;
         }
 
-        admit-button {
+        .admit-button {
             background: #2c5f8a;
             border: none;
             color: white;
@@ -58,12 +58,12 @@
             transition: 0.2s;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-        admit-button:hover { background: #1e4a76; transform: translateY(-1px); }
-        admit-button.account-secondary { background: #7c5e3a; }
-        admit-button.account-success { background: #2f6b47; }
-        admit-button.account-success:hover { background: #1f5438; }
-        admit-button.account-warning { background: #b86b2c; }
-        admit-button.account-warning:hover { background: #9a551f; }
+        .admit-button:hover { background: #1e4a76; transform: translateY(-1px); }
+        .admit-button.account-secondary { background: #7c5e3a; }
+        .admit-button.account-success { background: #2f6b47; }
+        .admit-button.account-success:hover { background: #1f5438; }
+        .admit-button.account-warning { background: #b86b2c; }
+        .admit-button.account-warning:hover { background: #9a551f; }
 
         input, select {
             background: rgba(255, 255, 255, 0.95);
