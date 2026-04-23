@@ -88,9 +88,7 @@
     }
 
     .result-glass-panel {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
             border-radius: 50px;
-            border: 5px solid #e9edf2;
             transition: all 0.2s ease;
     }
 
