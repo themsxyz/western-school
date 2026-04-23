@@ -75,6 +75,7 @@
 
     /* ===== main containers ===== */
     .result-container {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
       max-width: 1400px;
       margin: 0 auto;
       margin-top: 40px;
@@ -82,7 +83,6 @@
     }
 
     .result-glass-card {
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
       backdrop-filter: blur(12px);
       border-radius: 2rem;
       margin-bottom: 2rem;
@@ -108,7 +108,6 @@
     }
 
     .result-class-selector-panel {
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
       backdrop-filter: blur(8px);
       border-radius: 1rem;
       padding: 1rem 2rem;
@@ -148,11 +147,11 @@
 
     .result-input, .result-select, .result-textarea {
       background: rgba(255, 255, 255, 0.95);
-      border: 1px solid #d4c5b0;
+      border: 1px solid #5d3805;
       border-radius: 1.2rem;
       padding: 0.7rem 1rem;
       font-size: 0.9rem;
-      width: 100%;
+      width: 80%;
     }
 
     .result-input:focus, .result-select:focus {
@@ -245,30 +244,6 @@
 
     .result-hr {
       margin: 1rem 0;
-    }
-
-    .result-home-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #5e3a22cc;
-      backdrop-filter: blur(8px);
-      border-radius: 60px;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      color: white;
-      cursor: pointer;
-      z-index: 99;
-      transition: 0.2s;
-    }
-
-    .result-home-btn:hover {
-      background: #3f2a18;
-      transform: scale(1.05);
     }
 
     .result-attendance-panel {
