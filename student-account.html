@@ -315,11 +315,9 @@
 </header>
 
 <main>
-
 <div class="account-container">
     <h1>📘 শিক্ষার্থী অ্যাকাউন্ট ব্যবস্থাপনা</h1>
     
-    <!-- CLASS SELECTOR PANEL - default no selection -->
     <div class="account-class-selector-panel">
         <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
             <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
@@ -335,10 +333,10 @@
                     <option value="class4">চতুর্থ শ্রেণি</option>
                     <option value="class5">পঞ্চম শ্রেণি</option>
                 </select>
-                <button id="applyClassBtn">✅ নিশ্চিত করুন</button>
+                <button id="applyClassBtn" class="account-button">✅ নিশ্চিত করুন</button>
             </div>
             <div id="classStatusArea"></div>
-            <button id="clearUiBtn" class="account-reset-btn" style="background:#eef2f6; color:#334155;">🗑️ সব তথ্য মুছুন</button>
+            <button id="clearUiBtn" class="account-reset-btn account-button" style="background:#eef2f6; color:#334155;">🗑️ সব তথ্য মুছুন</button>
         </div>
     </div>
     
@@ -347,13 +345,12 @@
         <span style="font-size:12px; margin-left:12px;">(স্বতন্ত্র মডিউল)</span>
     </div>
     
-    <!-- Student Account Card -->
     <div class="account-card">
         <div class="account-card-header">👨‍🎓 শিক্ষার্থী অ্যাকাউন্ট</div>
         <div class="account-card-body">
             <div class="account-flex-row">
                 <input type="text" id="searchId" placeholder="শিক্ষার্থী আইডি (Enter চাপুন)" style="flex:2">
-                <button id="searchBtn">🔍 অনুসন্ধান</button>
+                <button id="searchBtn" class="account-button">🔍 অনুসন্ধান</button>
             </div>
             <div id="profileView" class="account-hidden" style="margin-top: 16px;"></div>
             <hr>
@@ -376,9 +373,9 @@
                 <div class="account-form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood" placeholder="ব্লাড গ্রুপ"></div>
             </div>
             <div class="account-button-group">
-                <button id="createBtn" class="account-success">➕ শিক্ষার্থী তৈরি</button>
-                <button id="updateBtn" class="account-secondary account-hidden">✏️ হালনাগাদ</button>
-                <button id="deleteStudentBtn" class="account-danger account-hidden">🗑️ মুছুন</button>
+                <button id="createBtn" class="account-success account-button">➕ শিক্ষার্থী তৈরি</button>
+                <button id="updateBtn" class="account-secondary account-hidden account-button">✏️ হালনাগাদ</button>
+                <button id="deleteStudentBtn" class="account-danger account-hidden account-button">🗑️ মুছুন</button>
             </div>
         </div>
     </div>
