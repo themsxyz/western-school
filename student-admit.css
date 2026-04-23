@@ -110,7 +110,7 @@
             align-items: center;
             animation: slideIn 0.25s ease;
         }
-        .account-toast-success { border-left-color: #2f6b47; background: #1f3e30e6; }
+        .account-toast-success { border-left-color: #b6dff8; background: #1f3e30e6; }
         .account-toast-error { border-left-color: #c24141; }
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(40px); }
@@ -161,11 +161,10 @@
         
         /* Teacher selector styling */
         .teacher-selector-wrapper {
-            background: #fef5e7;
             border-radius: 1.5rem;
             padding: 0.8rem 1rem;
             margin-bottom: 1.2rem;
-            border: 1px solid #f0e0c0;
+            border: 1px solid #999998;
         }
         .teacher-grid {
             display: flex;
@@ -175,7 +174,6 @@
         }
         .teacher-option {
             background: white;
-            border: 2px solid #e0cfb0;
             border-radius: 3rem;
             padding: 0.5rem 1.2rem;
             cursor: pointer;
