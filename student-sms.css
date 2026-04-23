@@ -1,19 +1,4 @@
 @import "nav.css";
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: system-ui, 'Segoe UI', 'Inter', 'Helvetica Neue', sans-serif;
-}
-
-body {
-  background: linear-gradient(145deg, #e9f0fc 0%, #d9e3f0 100%);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 1.5rem;
-}
 
 /* main card container */
 .sms-glass-panel {
