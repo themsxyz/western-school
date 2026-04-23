@@ -148,7 +148,7 @@
 
     .result-input, .result-select, .result-textarea {
       background: rgba(255, 255, 255, 0.95);
-      border: 1px solid #5d3805;
+      border: 1px solid transparent;
       border-radius: 1.2rem;
       padding: 0.7rem 1rem;
       font-size: 0.9rem;
