@@ -37,7 +37,7 @@
             border: 1px solid #eef2f6;
         }
 
-        account-button, .account-reset-btn {
+        .account-button, .account-reset-btn {
             background: #11072e;
             border: none;
             color: white;
@@ -53,12 +53,12 @@
             box-shadow: 0 1px 1px rgba(0,0,0,0.05);
         }
 
-        account-button:hover { background: #1f4a6e; transform: translateY(-1px); }
-        account-button.account-danger { background: #e40303; }
-        account-button.account-danger:hover { background: #df7d05; }
-        account-button.account-secondary { background: #7c5e3a; }
-        account-button.account-success { background: #040635; }
-        account-button.account-success:hover { background: #0b2be3; }
+        .account-button:hover { background: #1f4a6e; transform: translateY(-1px); }
+        .account-button.account-danger { background: #e40303; }
+        .account-button.account-danger:hover { background: #df7d05; }
+        .account-button.account-secondary { background: #7c5e3a; }
+        .account-button.account-success { background: #040635; }
+        .account-button.account-success:hover { background: #0b2be3; }
         .account-reset-btn { background: #b9a28c; color: #2d2b26; }
 
         input, select, textarea {
