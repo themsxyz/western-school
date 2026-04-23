@@ -1,0 +1,319 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(145deg, #f9fafb 0%, #f3f4f6 50%, #fef9e6 100%)
+}
+.glass-nav {
+    background: rgba(255, 255, 255, .72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(224, 224, 228, .6);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .02);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .75rem 1.5rem
+}
+
+@media(min-width:768px) {
+    .glass-nav {
+        padding: .75rem 2rem
+    }
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-shrink: 0
+}
+
+.logo-img {
+    height: 2.5rem;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .05))
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -.025em;
+    background: linear-gradient(135deg, #1c1c1e, #4b5563);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent
+}
+
+.center-nav {
+    display: none
+}
+
+@media(min-width:768px) {
+    .center-nav {
+        display: flex;
+        align-items: center;
+        background: rgba(120, 120, 128, .12);
+        backdrop-filter: blur(4px);
+        border: .5px solid rgba(224, 224, 228, .5);
+        border-radius: 9999px;
+        padding: .25rem 1rem;
+        gap: .25rem
+    }
+}
+
+.nav-trigger {
+    background: transparent;
+    border: none;
+    font-size: .9rem;
+    font-weight: 500;
+    padding: .5rem .75rem;
+    transition: all .2s cubic-bezier(.23, 1, .32, 1);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 9999px;
+    color: #1c1c1e;
+    font-family: inherit
+}
+
+.nav-trigger:hover {
+    background-color: #1c1c1e;
+    color: #fff
+}
+
+.dropdown-wrapper {
+    position: relative
+}
+
+.dropdown-wrapper:hover .dropdown-panel,
+.tools-dropdown-wrapper:hover .tools-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto
+}
+
+.dropdown-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    min-width: 200px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+    z-index: 50;
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease
+}
+
+.dropdown-panel.active,
+.tools-dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto
+}
+
+.dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: .6rem 1rem;
+    font-size: .85rem;
+    color: #1c1c1e;
+    transition: all .15s ease;
+    border-bottom: 1px solid #f0f0f0;
+    text-decoration: none;
+    font-weight: 450
+}
+
+.dropdown-link:last-child {
+    border-bottom: none
+}
+
+.dropdown-link:hover {
+    background: #1c1c1e;
+    color: #fff
+}
+
+.dropdown-link:hover svg {
+    stroke: #fff
+}
+
+.dropdown-icon {
+    width: 16px;
+    height: 16px;
+    stroke-width: 1.8;
+    flex-shrink: 0
+}
+
+.dropdown-wrapper.active-dropdown .chevron-icon,
+.tools-dropdown-wrapper.active-dropdown .chevron-icon {
+    transform: rotate(180deg)
+}
+
+.chevron-icon {
+    transition: transform .2s ease
+}
+
+.right-utils {
+    display: flex;
+    align-items: center;
+    gap: .75rem
+}
+/* Fix for tools & profile SVGs not showing */
+/* Fix missing tools & profile icons - reset button padding */
+.pill-btn {
+   
+}
+
+.pill-btn svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    stroke: #1c1c1e !important;
+    stroke-width: 1.7 !important;
+    fill: none !important;
+    flex-shrink: 0;
+}
+.pill-btn:hover svg {
+    stroke: yellow;
+}
+.pill-btn {
+     padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 9999px;
+    transition: all .2s ease;
+    cursor: pointer;
+    background: #fff;
+    border: .5px solid rgba(0, 0, 0, .08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .02);
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    text-decoration: none;
+    color: #1c1c1e
+}
+
+@media(min-width:768px) {
+    .pill-btn {
+        width: 2.5rem;
+        height: 2.5rem
+    }
+}
+
+.pill-btn:hover {
+    transform: translateY(-1px);
+    background: #f5f5f7;
+    border-color: #c6c6c8
+}
+
+.tools-dropdown-wrapper {
+    position: relative
+}
+
+.tools-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    width: 280px;
+    max-height: 480px;
+    overflow-y: auto;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility .2s ease;
+    z-index: 60;
+    pointer-events: none;
+    scrollbar-width: thin
+}
+
+.tools-dropdown-menu::-webkit-scrollbar {
+    width: 4px
+}
+
+.tools-dropdown-menu::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px
+}
+
+.tools-dropdown-menu::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px
+}
+
+.tools-icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    transition: filter .2s
+}
+
+.dropdown-link:hover .tools-icon-img.color-logo {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, .2))
+}
+
+.dropdown-link:hover .tools-icon-img:not(.color-logo) {
+    filter: brightness(1.2) contrast(1.1)
+}
+
+svg.icon-stroke {
+    stroke: currentColor;
+    fill: none
+}
+
+.dashboard-badge {
+    font-size: .875rem;
+    font-weight: 500;
+    padding: .375rem 1rem;
+    border-radius: 9999px;
+    transition: all .2s;
+    cursor: pointer
+}
+
+.dashboard-badge:hover {
+    background: #1c1c1e;
+    color: #fff
+}
+
+.center-nav-item {
+    margin: 0 2px
+}
+
+@media(max-width:767px) {
+    .center-nav {
+        display: none
+    }
+
+    .right-utils {
+        gap: .5rem
+    }
+
+    .glass-nav {
+        padding: .6rem 1rem
+    }
+
+    .logo-text {
+        font-size: 1rem
+    }
+}

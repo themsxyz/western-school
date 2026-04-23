@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Western School</title>
+  <link rel="stylesheet" href="student-result.css">
+</head>
+<body>
+<header>
+  
+    <div class="glass-nav">
+
+      <!-- Logo + Title -->
+      <div class="logo-area">
+        <img src="https://res.cloudinary.com/do1dejkkk/image/upload/v1774935468/western_logo_hg9fji.png"
+          alt="Western School Logo" class="logo-img">
+        <div class="logo-text">ওয়েস্টার্ন স্কুল</div>
+      </div>
+
+      <!-- Center Navigation - Glassmorphism pill style (click-based dropdowns) -->
+      <div class="center-nav">
+        <!-- Dashboard standalone -->
+        <span class="dashboard-badge" style="cursor: pointer;"
+          onclick="window.location.href='../../../index.html';">Dashboard</span>
+
+         <!-- Student Dropdown -->
+        <div class="dropdown-wrapper" data-dropdown="student">
+          <button class="nav-trigger" data-trigger="dropdown">
+            শিক্ষার্থী
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.2" class="chevron-icon">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-panel">
+            <a href="student-account.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              অ্যাকাউন্ট
+            </a>
+            <a href="student-fee.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              ফি
+            </a>
+            <a href="student-result.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              ফলাফল
+            </a>
+             <a href="student-admit.html" class="dropdown-link">
+              <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M22 3c.53 0 1.039.211 1.414.586s.586.884.586 1.414v14c0 .53-.211 1.039-.586 1.414s-.884.586-1.414.586h-20c-.53 0-1.039-.211-1.414-.586s-.586-.884-.586-1.414v-14c0-.53.211-1.039.586-1.414s.884-.586 1.414-.586h20zm1 8h-22v8c0 .552.448 1 1 1h20c.552 0 1-.448 1-1v-8zm-15 5v1h-5v-1h5zm13-2v1h-3v-1h3zm-10 0v1h-8v-1h8zm-10-6v2h22v-2h-22zm22-1v-2c0-.552-.448-1-1-1h-20c-.552 0-1 .448-1 1v2h22z"/></svg>
+              এডমিট কার্ড 
+            </a>
+            <a href="student-sms.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              এসএমএস
+            </a>
+            <a href="student-record.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              রেকর্ড
+            </a>
+          </div>
+        </div>
+
+        <!-- Teacher Dropdown -->
+        <div class="dropdown-wrapper" data-dropdown="teacher">
+          <button class="nav-trigger" data-trigger="dropdown">
+            শিক্ষক
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.2" class="chevron-icon">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-panel">
+            <a href="Accountt.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              অ্যাকাউন্ট
+            </a>
+            <a href="Salary.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 2v20M17 7H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              বেতন
+            </a>
+            <a href="Attendencet.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              উপস্থিতি
+            </a>
+            <a href="Recordt.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              রেকর্ড
+            </a>
+          </div>
+        </div>
+
+        <!-- Office Dropdown -->
+        <div class="dropdown-wrapper" data-dropdown="office">
+          <button class="nav-trigger" data-trigger="dropdown">
+            অফিস
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.2" class="chevron-icon">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-panel">
+            <a href="Earn.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              আয়
+            </a>
+            <a href="Cost.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M22 12h-4l-3 9-4-18-3 9H2"></path>
+              </svg>
+              ব্যয়
+            </a>
+            <a href="Report.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              রিপোর্ট
+            </a>
+          </div>
+        </div>
+
+        <!-- Tools Dropdown (main tools menu) -->
+        <div class="dropdown-wrapper" data-dropdown="tools-main">
+          <button class="nav-trigger" data-trigger="dropdown">
+            টুলস
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.2" class="chevron-icon">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-panel">
+            <a href="Notice.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              নোটিশ
+            </a>
+            <a href="Pad.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              টাস্কপ্যাড
+            </a>
+            <a href="Table.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18"></path>
+              </svg>
+              টেবিল
+            </a>
+            <a href="office%20tamplate.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              অফিসেট
+            </a>
+            <a href="../../../Tools/Dashboard/Dashboard.html" class="dropdown-link">
+              <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              ড্যাশবোর্ড
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Utilities: Settings + Tools icon dropdown (colorful tools) + Profile -->
+      <div class="right-utils">
+        <!-- Settings button -->
+        <a href="../../../index.html" class="pill-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+        </a>
+
+        <!-- Tools icon dropdown (colorful tools menu) with click-to-toggle -->
+        <div class="tools-dropdown-wrapper" data-dropdown="tools-colorful">
+          <button class="pill-btn" data-trigger="dropdown">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+              </path>
+            </svg>
+          </button>
+          <div class="tools-dropdown-menu">
+            <a href="https://chat.openai.com" target="_blank" class="dropdown-link"> <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776758216/openai_b3utzu.svg" width="20"
+                height="20" class="tools-icon-img color-logo" alt="chatgpt"> <span>ChatGPT</span> </a>
+
+            <a href="https://sheets.google.com" target="_blank" class="dropdown-link">
+              <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776761941/data-doc-document-5-svgrepo-com_1_b523al.svg"
+                width="20" height="20" class="tools-icon-img" alt="google docs">
+              <span>Database</span>
+            </a>
+            <a href="https://calendar.google.com" target="_blank" class="dropdown-link">
+              <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776761672/google-collaborative-content-tools-svgrepo-com_akgqjz.svg"
+                width="20" height="20" class="tools-icon-img" alt="calendar">
+              <span>Google Docs
+              </span>
+            </a>
+            <a href="https://chat.deepseek.com" target="_blank" class="dropdown-link">
+              <img src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776761425/deepseek-color_kj9gn8.svg"
+                width="20" height="20" class="tools-icon-img color-logo" alt="deepseek">
+              <span>DeepSeek</span>
+            </a>
+            <a href="https://gemini.google.com" target="_blank" class="dropdown-link">
+              <img src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776758044/gemini-color_vissle.svg"
+                width="20" height="20" class="tools-icon-img color-logo" alt="gemini">
+              <span>Google Gemini</span>
+            </a>
+            <a href="https://claude.ai" target="_blank" class="dropdown-link">
+              <img src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776761425/claude-color_oz7rqg.svg"
+                width="20" height="20" class="tools-icon-img color-logo" alt="claude">
+              <span>Claude AI</span>
+            </a>
+            <a href="https://drive.google.com" target="_blank" class="dropdown-link">
+              <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776761499/drive-color-svgrepo-com_zphbuz.svg"
+                width="20" height="20" class="tools-icon-img" alt="drive">
+              <span>Google Drive</span>
+            </a>
+            <a href="https://onedrive.live.com" target="_blank" class="dropdown-link">
+              <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776761672/ms-onedrive-svgrepo-com_llx1c7.svg"
+                width="20" height="20" class="tools-icon-img" alt="onedrive">
+              <span>Microsoft OneDrive</span>
+            </a>
+            <a href="https://web.whatsapp.com" target="_blank" class="dropdown-link">
+              <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776762153/whatsapp-symbol-logo-svgrepo-com_ag0pfm.svg"
+                width="20" height="20" class="tools-icon-img" alt="whatsapp">
+              <span>WhatsApp Web</span>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="dropdown-link">
+              <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776762152/youtube-color-svgrepo-com_vzjcoy.svg"
+                width="20" height="20" class="tools-icon-img" alt="youtube">
+              <span>YouTube</span>
+            </a>
+            <a href="https://github.com" target="_blank" class="dropdown-link">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" width="20" height="20"
+                class="tools-icon-img" alt="github">
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.ilovepdf.com" target="_blank" class="dropdown-link">
+              <img
+                src="https://res.cloudinary.com/do1dejkkk/image/upload/v1776758345/idpLxr3CH4_1776758336893_dg3l4y.svg"
+                width="20" height="20" class="tools-icon-img color-logo" alt="ilovepdf">
+              <span>iLovePDF</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Profile icon -->
+        <button class="pill-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+      </div>
+    </div>
+</header>
+
+<main>
+  <div class="result-loader-overlay" id="loaderOverlay"><div class="result-loader-spinner"></div></div>
+
+  <div class="result-container">
+    <h1>📋 ফলাফল ও উপস্থিতি ব্যবস্থাপনা</h1>
+
+    <div class="result-class-selector-panel result-glass-card">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+        <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+          <label style="font-weight: 800; color:#5d3a1a;">🏫 ক্লাস নির্বাচন:</label>
+          <select id="classSelect" style="width: auto; min-width: 170px;">
+            <option value="">-- বাছাই করুন --</option>
+            <option value="nursery">নার্সারি</option>
+            <option value="play">প্লে</option>
+            <option value="kg">কেজি</option>
+            <option value="class1">প্রথম শ্রেণি</option>
+            <option value="class2">দ্বিতীয় শ্রেণি</option>
+            <option value="class3">তৃতীয় শ্রেণি</option>
+            <option value="class4">চতুর্থ শ্রেণি</option>
+            <option value="class5">পঞ্চম শ্রেণি</option>
+          </select>
+          <button id="applyClassBtn">✅ নিশ্চিত করুন</button>
+        </div>
+        <div id="classStatusArea"></div>
+        <button id="clearUiBtn" class="result-reset-btn" style="background:#9b7b5c;">🗑️ সব তথ্য মুছুন</button>
+      </div>
+    </div>
+
+    <!-- RESULT MANAGEMENT CARD (FULL WIDTH) -->
+    <div class="result-glass-card">
+      <div class="result-card-header">📊 ফলাফল ব্যবস্থাপনা</div>
+      <div class="result-card-body">
+        <div class="result-flex-row">
+          <input type="text" id="resultSearchId" placeholder="শিক্ষার্থী আইডি (যেমন: STD-101)" style="flex:1;">
+          <button id="resultSearchBtn">ফলাফল লোড করুন</button>
+        </div>
+        <div id="resultContainer" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem;"></div>
+        <hr>
+        <div id="resultForm" class="result-hidden">
+          <div class="result-form-grid">
+            <div class="result-form-group"><label>পরীক্ষা নং</label><select id="examNo"><option>1</option><option>2</option><option>3</option></select></div>
+            <div class="result-form-group"><label>বিষয়</label>
+              <select id="subjectName">
+                <option value="ইংরেজি">ইংরেজি</option>
+                <option value="বাংলা">বাংলা</option>
+                <option value="গণিত">গণিত</option>
+                <option value="চারু ও কারুকলা">চারু ও কারুকলা</option>
+              </select>
+            </div>
+            <div class="result-form-group"><label>সর্বোচ্চ নম্বর</label><input type="number" id="maxMarksResult" placeholder="100"></div>
+            <div class="result-form-group"><label>প্রাপ্ত নম্বর</label><input type="number" id="obtainedMarks" placeholder="0"></div>
+          </div>
+          <button id="addResultBtn" class="result-success">💾 ফলাফল সংরক্ষণ</button>
+        </div>
+
+        <div class="result-glass-panel" style="margin-top: 20px;">
+          <div style="font-weight:800; display:flex; justify-content:space-between; align-items:center;">
+            <span>⚙️ গ্রেডিং নিয়ম (পাস মার্ক ও জিপিএ সীমা)</span>
+            <button id="showGradingBtn" class="result-outline" style="padding:0.3rem 1rem;">✏️ সম্পাদনা করুন</button>
+          </div>
+          <div id="gradingRulesPanel" style="margin-top: 12px; display: none;"></div>
+          <div id="gradingSaveContainer" style="display: none; margin-top: 12px;">
+            <button id="saveGradingRulesBtn" class="result-success">সংরক্ষণ করুন</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE SECTION (FULL WIDTH) -->
+    <div class="result-glass-card">
+      <div class="result-card-header">📅 উপস্থিতি সংক্রান্ত (পরীক্ষাভিত্তিক)</div>
+      <div class="result-card-body">
+        <div class="result-flex-row">
+          <input type="text" id="attSearchId" placeholder="শিক্ষার্থী আইডি" style="flex:1;">
+          <button id="attSearchBtn">উপস্থিতি লোড করুন</button>
+        </div>
+        <div id="attendanceTablesContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastRoot" class="result-toast-stack"></div>
+
+</main>
+
+<script src="student-result.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
