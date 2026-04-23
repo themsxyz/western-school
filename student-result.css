@@ -81,7 +81,7 @@
     }
 
     .result-glass-card {
-      background: transparent;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
       backdrop-filter: blur(12px);
       border-radius: 2rem;
       margin-bottom: 2rem;
@@ -109,12 +109,11 @@
     }
 
     .result-class-selector-panel {
-      background: rgba(255, 248, 235, 0.9);
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
       backdrop-filter: blur(8px);
-      border-radius: 3rem;
+      border-radius: 1rem;
       padding: 1rem 2rem;
       margin-bottom: 2rem;
-      border: 1px solid #f0e0c0;
     }
 
     .result-btn, .result-reset-btn {
@@ -186,8 +185,7 @@
       font-weight: 800;
       font-size: 1.3rem;
       padding: 1rem 1.5rem;
-      border-bottom: 2px solid #f0e2cf;
-      background: rgba(250, 245, 230, 0.6);
+      border-bottom: 2px solid #d4d4d3;
       border-radius: 2rem 2rem 0 0;
       display: flex;
       align-items: center;
