@@ -1,8 +1,8 @@
-  // ---------- TOAST ----------
+ // ---------- TOAST ----------
     function showToast(message, type = "info") {
         const root = document.getElementById("toastRoot");
         const toast = document.createElement("div");
-        toast.className = `toast-message ${type === "success" ? "toast-success" : (type === "error" ? "toast-error" : "")}`;
+        toast.className = `account-toast-message ${type === "success" ? "account-toast-success" : (type === "error" ? "account-toast-error" : "")}`;
         let icon = type === "success" ? "✅" : type === "error" ? "❌" : "ℹ️";
         toast.innerHTML = `<span>${icon}</span><span>${message}</span><span style="margin-left:auto; cursor:pointer;" onclick="this.parentElement.remove()">✕</span>`;
         root.appendChild(toast);
@@ -25,13 +25,13 @@
     function updateClassStatusUI() {
         const area = document.getElementById("classStatusArea");
         if(currentApiUrl && currentActiveClassKey) {
-            let displayName = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" }[currentActiveClassKey] || currentActiveClassKey;
-            area.innerHTML = `<div style="background:#e9e0cf; border-radius:2rem; padding:0.4rem 1.2rem; color:#5d3a1a; font-weight:600;">✅ সক্রিয় ক্লাস: ${displayName}</div>`;
-        } else area.innerHTML = `<div style="background:#ffe6cc; border-radius:2rem; padding:0.4rem 1rem;">⚠️ কোন সক্রিয় ক্লাস নেই। প্রথমে ক্লাস নির্বাচন করুন।</div>`;
+            let displayName = { nursery:"Nursery", play:"Play", kg:"KG", class1:"Class 1", class2:"Class 2", class3:"Class 3", class4:"Class 4", class5:"Class 5" }[currentActiveClassKey] || currentActiveClassKey;
+            area.innerHTML = `<div style="background:#e9e0cf; border-radius:2rem; padding:0.4rem 1.2rem; color:#5d3a1a; font-weight:600;">✅ Active Class: ${displayName}</div>`;
+        } else area.innerHTML = `<div style="background:#ffe6cc; border-radius:2rem; padding:0.4rem 1rem;">⚠️ No active class. Please select a class first.</div>`;
     }
     
     async function callApi(action, payload) {
-        if (!currentApiUrl) { showToast("প্রথমে ক্লাস নির্বাচন ও নিশ্চিত করুন!", "error"); throw new Error("No API"); }
+        if (!currentApiUrl) { showToast("Please select and confirm a class first!", "error"); throw new Error("No API"); }
         const res = await fetch(currentApiUrl, { method: "POST", body: JSON.stringify({ action, ...payload }) });
         return await res.json();
     }
@@ -40,25 +40,61 @@
         const url = CLASS_API_MAP[classKey]; if(!url) return false;
         currentApiUrl = url; currentActiveClassKey = classKey; localStorage.setItem("selectedClassKeyAdmit", classKey);
         updateClassStatusUI(); 
-        showToast(`${classKey.toUpperCase()} ক্লাস সক্রিয়`,"success");
+        showToast(`${classKey.toUpperCase()} class activated`,"success");
         return true;
     }
     
-    document.getElementById("applyClassBtn").onclick = () => { const val = document.getElementById("classSelect").value; if(val) activateClass(val); else showToast("ক্লাস নির্বাচন করুন","warning"); };
+    document.getElementById("applyClassBtn").onclick = () => { const val = document.getElementById("classSelect").value; if(val) activateClass(val); else showToast("Please select a class","warning"); };
     const saved = localStorage.getItem("selectedClassKeyAdmit");
     if(saved && CLASS_API_MAP[saved]) activateClass(saved); else updateClassStatusUI();
     
-    // ---------- Image URLs & Teacher Signs ----------
+    // ---------- 10 TEACHERS WITH ENGLISH NAMES & SIGNATURE URLs ----------
+    const teachersList = [
+        { id: "t1", name: "Mr. Abdur Rahman", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776881851/Gemini_Generated_Image_rkl605rkl605rkl6_nooehi_1_1_v9wgur.png" },
+        { id: "t2", name: "Ms. Fatema Begum", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png" },
+        { id: "t3", name: "Mr. Jamal Uddin", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png" },
+        { id: "t4", name: "Ms. Nasrin Sultana", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png" },
+        { id: "t5", name: "Mr. Kamal Hossain", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776881851/Gemini_Generated_Image_rkl605rkl605rkl6_nooehi_1_1_v9wgur.png" },
+        { id: "t6", name: "Ms. Sheli Akter", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png" },
+        { id: "t7", name: "Mr. Rafiqul Islam", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776881851/Gemini_Generated_Image_rkl605rkl605rkl6_nooehi_1_1_v9wgur.png" },
+        { id: "t8", name: "Ms. Sabrina Chowdhury", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png" },
+        { id: "t9", name: "Mr. Shahinur Rahman", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776881851/Gemini_Generated_Image_rkl605rkl605rkl6_nooehi_1_1_v9wgur.png" },
+        { id: "t10", name: "Ms. Rumana Khatun", sign: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png" }
+    ];
+    
+    let selectedTeacherId = "t1";
+    
+    // Render teacher grid with English names
+    function renderTeacherGrid() {
+        const gridContainer = document.getElementById("teacherGrid");
+        if(!gridContainer) return;
+        gridContainer.innerHTML = "";
+        teachersList.forEach(teacher => {
+            const btn = document.createElement("div");
+            btn.className = `teacher-option ${selectedTeacherId === teacher.id ? 'active' : ''}`;
+            btn.setAttribute("data-id", teacher.id);
+            btn.innerHTML = `<img src="${teacher.sign}" class="teacher-preview-img" alt="sign" onerror="this.style.display='none'"> <span>${teacher.name}</span>`;
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".teacher-option").forEach(el => el.classList.remove("active"));
+                btn.classList.add("active");
+                selectedTeacherId = teacher.id;
+                document.getElementById("selectedTeacherKey").value = teacher.id;
+                showToast(`Teacher selected: ${teacher.name}`, "success");
+                window.currentTeacherSignUrl = teacher.sign;
+            });
+            gridContainer.appendChild(btn);
+        });
+    }
+    
+    renderTeacherGrid();
+    
+    // Logo and signature images
     const logoURL = "https://res.cloudinary.com/do1dejkkk/image/upload/v1774935468/western_logo_hg9fji.png";
     const principalURL = "https://res.cloudinary.com/do1dejkkk/image/upload/v1776331870/principal_sign-removebg-preview_pj4jrj.png";
-    const teacherSigns = {
-        t1: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776881851/Gemini_Generated_Image_rkl605rkl605rkl6_nooehi_1_1_v9wgur.png",
-        t2: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png",
-        t3: "https://res.cloudinary.com/do1dejkkk/image/upload/v1776573178/MUKTADIR_SIGN_bhyglf.png"
-    };
-    let logoBase64, principalBase64, teacherBase64;
     
-    // Helper: Convert image URL to Base64
+    let logoBase64 = null, principalBase64 = null, teacherBase64 = null;
+    let currentTeacherSignUrl = teachersList.find(t => t.id === "t1")?.sign;
+    
     function toDataURL(url, cb) {
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -73,17 +109,24 @@
         xhr.send();
     }
     
-    // Load all required images before generating PDF
-    function loadImages(selectedTeacher, done) {
+    function loadImages(selectedTeacherSignUrl, done) {
         let loaded = 0;
-        function checkDone() { loaded++; if (loaded === 3) done(); }
+        function checkDone() { 
+            loaded++; 
+            if (loaded === 3) done(); 
+        }
+        if(logoBase64 && principalBase64) {
+            toDataURL(selectedTeacherSignUrl, (t) => { teacherBase64 = t; checkDone(); checkDone(); });
+            loaded = 2;
+            checkDone();
+            return;
+        }
         toDataURL(logoURL, (l) => { logoBase64 = l; checkDone(); });
         toDataURL(principalURL, (p) => { principalBase64 = p; checkDone(); });
-        toDataURL(teacherSigns[selectedTeacher], (t) => { teacherBase64 = t; checkDone(); });
+        toDataURL(selectedTeacherSignUrl, (t) => { teacherBase64 = t; checkDone(); });
     }
     
-    // ---------- PDF Generation (Exact design from snippet) ----------
-    function buildCardContent(student, examName, examDate, year) {
+    function buildCardContent(student, examName, examDate, year, teacherSignImg) {
         if (!student.success) {
             return {
                 stack: [
@@ -92,7 +135,7 @@
                     { text: "ADMIT CARD | " + examDate, alignment: "center", fontSize: 9 },
                     { text: examName + " - " + year, alignment: "center", fontSize: 9, margin: [0,2] },
                     { text: " ", margin: [0,5] },
-                    { text: `⚠️ Student ID: ${student.id} not found`, alignment: "center", fontSize: 10, color: "red", margin: [0,10] }
+                    { text: `⚠️ Student ID: ${student.id} পাওয়া যাইনি`, alignment: "center", fontSize: 10, color: "red", margin: [0,10] }
                 ]
             };
         }
@@ -129,7 +172,7 @@
                         body: [
                             [
                                 { stack: [
-                                    { image: teacherBase64, width: 55, alignment: "center" },
+                                    { image: teacherSignImg, width: 55, alignment: "center" },
                                     { text: "Class Teacher", alignment: "center", fontSize: 10 }
                                 ] },
                                 { stack: [
@@ -147,34 +190,35 @@
     }
     
     async function generatePDF(studentsData, examName, examDate) {
-        const selectedTeacher = document.getElementById("teacherSelect").value;
-        const year = new Date().getFullYear();
+        const selectedTeacherObj = teachersList.find(t => t.id === selectedTeacherId);
+        const teacherSignUrl = selectedTeacherObj ? selectedTeacherObj.sign : teachersList[0].sign;
+        currentTeacherSignUrl = teacherSignUrl;
         
-        // Load images first, then generate PDF
-        loadImages(selectedTeacher, () => {
-            // Prepare exactly 4 cards (fill missing with error cards)
+        loadImages(teacherSignUrl, () => {
+            const year = new Date().getFullYear();
             const finalCards = [];
             for (let i=0; i<4; i++) {
                 if (i < studentsData.length) finalCards.push(studentsData[i]);
                 else finalCards.push({ success: false, id: "—", error: "No ID provided" });
             }
             
-            // Build the 2x2 table
+            const teacherSignImg = teacherBase64;
+            
             const tableBody = [
                 [
-                    buildCardContent(finalCards[0], examName, examDate, year),
-                    buildCardContent(finalCards[1], examName, examDate, year)
+                    buildCardContent(finalCards[0], examName, examDate, year, teacherSignImg),
+                    buildCardContent(finalCards[1], examName, examDate, year, teacherSignImg)
                 ],
                 [
-                    buildCardContent(finalCards[2], examName, examDate, year),
-                    buildCardContent(finalCards[3], examName, examDate, year)
+                    buildCardContent(finalCards[2], examName, examDate, year, teacherSignImg),
+                    buildCardContent(finalCards[3], examName, examDate, year, teacherSignImg)
                 ]
             ];
             
             const docDefinition = {
                 pageSize: "A4",
                 pageOrientation: "landscape",
-                pageMargins: [8,8,8,8],
+                pageMargins: [10,10,10,10],
                 content: [
                     {
                         table: {
@@ -187,17 +231,19 @@
                             padding: () => 6
                         }
                     }
-                ]
+                ],
+                styles: {
+                    cellStyle: { margin: [2,2,2,2] }
+                }
             };
             
             pdfMake.createPdf(docDefinition).download(`Admit_Cards_${examName.replace(/\s/g, '_')}.pdf`);
-            showToast("PDF তৈরি হয়েছে!", "success");
+            showToast("Admit card তৈরি", "success");
         });
     }
     
-    // ---------- Fetch student data from API ----------
     async function fetchAndGenerate() {
-        if (!currentApiUrl) { showToast("ক্লাস সক্রিয় করুন প্রথমে!", "error"); return; }
+        if (!currentApiUrl) { showToast("Please activate a class first!", "error"); return; }
         const examName = document.getElementById("examNameInput").value.trim() || "Mid Term Examination";
         const examDate = document.getElementById("examDateInput").value.trim() || "22-04-2026";
         const ids = [
@@ -206,16 +252,16 @@
             document.getElementById("studentId3").value.trim(),
             document.getElementById("studentId4").value.trim()
         ].filter(id => id !== "");
-        if (ids.length === 0) { showToast("কমপক্ষে ১ জন শিক্ষার্থীর আইডি দিন", "warning"); return; }
+        if (ids.length === 0) { showToast("দয়া করে ছাত্র আইডি যোগ করুন", "warning"); return; }
         
-        showToast(`${ids.length} জনের তথ্য সংগ্রহ করা হচ্ছে...`, "info");
+        showToast(`Fetching data for ${ids.length} student(s)...`, "info");
         
         const fetchPromises = ids.map(async (id) => {
             try {
                 const res = await callApi("getFullData", { id });
                 if (res.status === "found" && res.basic) return { id, success: true, data: res.basic };
-                else return { id, success: false, error: "শিক্ষার্থী পাওয়া যায়নি" };
-            } catch (e) { return { id, success: false, error: "সার্ভার ত্রুটি" }; }
+                else return { id, success: false, error: "ছাত্র পাওয়া যাইনি" };
+            } catch (e) { return { id, success: false, error: "সার্ভার সমস্যা!" }; }
         });
         const results = await Promise.allSettled(fetchPromises);
         const studentsData = [];
@@ -224,25 +270,24 @@
             if (res && res.success) studentsData.push(res);
             else {
                 const origId = ids[i];
-                studentsData.push({ id: origId, success: false, error: res?.error || "অজানা ত্রুটি" });
+                studentsData.push({ id: origId, success: false, error: res?.error || "Unknown error" });
             }
         }
         
-        // Show preview
         const previewDiv = document.getElementById("studentInfoPreview");
-        let previewHtml = `<h4>📋 সংগৃহীত তথ্য:</h4><table>`;
+        let previewHtml = `<h4>📋 Collected Data (Selected Teacher: ${teachersList.find(t=>t.id===selectedTeacherId)?.name}):</h4>`;
+        previewHtml += `<table><thead><tr><th>ID</th><th>Name</th><th>Roll</th><th>Status</th></tr></thead><tbody>`;
         for (let s of studentsData) {
             if (s.success) {
-                previewHtml += `<tr><td>${s.id}</td><td>${s.data["Student Name"] || "নাম নেই"}</td><td>${s.data["Roll"] || "—"}</td></tr>`;
+                previewHtml += `<tr><td>${s.id}</td><td>${s.data["Student Name"] || "N/A"}</td><td>${s.data["Roll"] || "—"}</td><td style="color:green;">✅ পাওয়া গেছে! </td></tr>`;
             } else {
-                previewHtml += `<tr><td>${s.id}</td><td colspan="2" style="color:red;">${s.error}</td></tr>`;
+                previewHtml += `<tr><td>${s.id}</td><td colspan="2" style="color:red;">${s.error}</td><td style="color:red;">❌পাওয়া যাইনি </td></tr>`;
             }
         }
-        previewHtml += `</table><p>✅ ${studentsData.length}টি কার্ড তৈরি হবে (এক পৃষ্ঠায় ৪টি)।</p>`;
+        previewHtml += `</tbody></table><p>✅ ${studentsData.filter(s=>s.success).length} valid card(s) will be generated (4 per page) &nbsp; 👩‍🏫 Teacher signature included.</p>`;
         previewDiv.innerHTML = previewHtml;
         previewDiv.style.display = "block";
         
-        // Generate PDF
         await generatePDF(studentsData, examName, examDate);
     }
     
@@ -253,5 +298,10 @@
         document.getElementById("studentId3").value = "";
         document.getElementById("studentId4").value = "";
         document.getElementById("studentInfoPreview").style.display = "none";
-        showToast("আইডি ফিল্ড সাফ করা হয়েছে", "info");
+        showToast("ID fields cleared", "info");
     };
+    
+    window.addEventListener("load", () => {
+        const activeTeacher = teachersList.find(t => t.id === selectedTeacherId);
+        if(activeTeacher) currentTeacherSignUrl = activeTeacher.sign;
+    });

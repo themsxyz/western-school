@@ -315,68 +315,72 @@
 </header>
 
 <main>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
-
-<div class="container">
-    <h1>🎫 অ্যাডমিট কার্ড</h1>
+ <div class="account-container">
+    <h1>🎫 প্রবেশপত্র জেনারেটর</h1>
     
-    <div class="class-selector-panel glass-card">
+    <div class="account-class-selector-panel account-glass-card">
         <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
             <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                <label style="font-weight: 800; color:#5d3a1a;">🏫 ক্লাস নির্বাচন:</label>
+                <label style="font-weight: 800; color:#5d3a1a;">🏫 শ্রেণি নির্বাচন করুন:</label>
                 <select id="classSelect" style="width: auto; min-width: 170px;">
-                    <option value="">-- বাছাই করুন --</option>
-                    <option value="nursery">নার্সারি</option><option value="play">প্লে</option><option value="kg">কেজি</option>
-                    <option value="class1">প্রথম শ্রেণি</option><option value="class2">দ্বিতীয় শ্রেণি</option><option value="class3">তৃতীয় শ্রেণি</option>
-                    <option value="class4">চতুর্থ শ্রেণি</option><option value="class5">পঞ্চম শ্রেণি</option>
+                    <option value="">-- নির্বাচন করুন --</option>
+                    <option value="nursery">নার্সারি</option>
+                    <option value="play">প্লে</option>
+                    <option value="kg">কেজি</option>
+                    <option value="class1">প্রথম শ্রেণি</option>
+                    <option value="class2">দ্বিতীয় শ্রেণি</option>
+                    <option value="class3">তৃতীয় শ্রেণি</option>
+                    <option value="class4">চতুর্থ শ্রেণি</option>
+                    <option value="class5">পঞ্চম শ্রেণি</option>
                 </select>
-                <button id="applyClassBtn">✅ নিশ্চিত করুন</button>
+                <button id="applyClassBtn">✅ শ্রেণি নিশ্চিত করুন</button>
             </div>
             <div id="classStatusArea"></div>
         </div>
     </div>
     
-    <div class="glass-panel" style="text-align:center; padding: 10px; margin-bottom: 20px;">
-        🔗 <a href="fee-management.html" target="_blank">ফি ব্যবস্থাপনায় যান →</a>
+    <div class="account-glass-panel" style="text-align:center; padding: 10px; margin-bottom: 20px;">
+        🔗 <a href="fee-management.html" target="_blank">ফি ব্যবস্থাপনায় যান →</a>
     </div>
     
-    <div class="card glass-card">
-        <div class="card-header" style="padding:1rem 1.5rem;">📄 অ্যাডমিট কার্ড তৈরি করুন (PDFMake)</div>
-        <div class="card-body">
-            <div class="form-group">
+    <div class="account-card account-glass-card">
+        <div class="account-card-header">📄 প্রবেশপত্র তৈরি করুন (১০ জন শিক্ষকের স্বাক্ষর)</div>
+        <div class="account-card-body">
+            <div class="account-form-group">
                 <label>📝 পরীক্ষার নাম</label>
-                <input type="text" id="examNameInput" placeholder="যেমন: Mid Term Examination" value="Mid Term Examination">
+                <input type="text" id="examNameInput" placeholder="যেমন: মধ্যবর্তী পরীক্ষা" value="মধ্যবর্তী পরীক্ষা">
             </div>
-            <div class="form-group">
+            <div class="account-form-group">
                 <label>📅 পরীক্ষার তারিখ</label>
                 <input type="text" id="examDateInput" placeholder="DD-MM-YYYY" value="22-04-2026">
             </div>
-            <div class="form-group">
-                <label>👨‍🏫 শ্রেণি শিক্ষক নির্বাচন করুন</label>
-                <select id="teacherSelect">
-                    <option value="t1">Teacher 1</option>
-                    <option value="t2">Teacher 2</option>
-                    <option value="t3">Teacher 3</option>
-                </select>
+            
+            <div class="teacher-selector-wrapper">
+                <label style="font-weight:800; color:#5d3a1a;">👩‍🏫 শ্রেণি শিক্ষক নির্বাচন করুন (১০ জন শিক্ষক)</label>
+                <div class="teacher-grid" id="teacherGrid"></div>
+                <input type="hidden" id="selectedTeacherKey" value="t1">
+                <div style="font-size:0.7rem; color:#8b6946; margin-top:8px;">✨ নির্বাচিত শিক্ষকের স্বাক্ষর প্রবেশপত্রে প্রদর্শিত হবে</div>
             </div>
-            <div class="form-grid">
-                <div class="form-group"><label>শিক্ষার্থী আইডি ১</label><input id="studentId1" placeholder="যেমন: STD-101"></div>
-                <div class="form-group"><label>শিক্ষার্থী আইডি ২</label><input id="studentId2" placeholder="আইডি"></div>
-                <div class="form-group"><label>শিক্ষার্থী আইডি ৩</label><input id="studentId3" placeholder="আইডি"></div>
-                <div class="form-group"><label>শিক্ষার্থী আইডি ৪</label><input id="studentId4" placeholder="আইডি"></div>
+            
+            <div class="account-form-grid">
+                <div class="account-form-group"><label>শিক্ষার্থী আইডি ১</label><input id="studentId1" placeholder="যেমন: STD-101"></div>
+                <div class="account-form-group"><label>শিক্ষার্থী আইডি ২</label><input id="studentId2" placeholder="আইডি"></div>
+                <div class="account-form-group"><label>শিক্ষার্থী আইডি ৩</label><input id="studentId3" placeholder="আইডি"></div>
+                <div class="account-form-group"><label>শিক্ষার্থী আইডি ৪</label><input id="studentId4" placeholder="আইডি"></div>
             </div>
-            <div class="flex-row">
-                <button id="fetchAndGenerateBtn" class="success">✨ তথ্য সংগ্রহ করে PDF তৈরি করুন</button>
-                <button id="resetAdmitIdsBtn" class="secondary">🧹 আইডি ফাঁকা করুন</button>
+            <div class="account-flex-row">
+                <button id="fetchAndGenerateBtn" class="account-success">✨ তথ্য আনুন ও PDF তৈরি করুন</button>
+                <button id="resetAdmitIdsBtn" class="account-secondary">🧹 আইডি মুছুন</button>
             </div>
-            <div id="studentInfoPreview" class="student-info-preview" style="display: none;"></div>
+            <div id="studentInfoPreview" class="account-student-info-preview" style="display: none;"></div>
         </div>
     </div>
 </div>
 
-<div id="toastRoot" class="toast-stack"></div>
+<div id="toastRoot" class="account-toast-stack"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 </main>
 
 <script src="student-admit.js"></script>

@@ -1,20 +1,24 @@
-@import "nav.css";
- .glass-card {
+/* ---------- external import ---------- */
+        @import "nav.css";
+
+        /* ---------- all classes renamed: account- prefix ---------- */
+        .account-glass-card {
             background: rgba(255, 255, 194, 0.85);
             backdrop-filter: blur(12px);
             border-radius: 50px;
         }
 
-        .glass-panel {
+        .account-glass-panel {
             background: rgba(255, 250, 240, 0.7);
             backdrop-filter: blur(6px);
             border-radius: 1.5rem;
             border: 1px solid rgba(230, 210, 170, 0.6);
         }
 
-        .container {
+        .account-container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 1rem;
         }
 
         h1 {
@@ -31,7 +35,7 @@
             margin-bottom: 1.8rem;
         }
 
-        .class-selector-panel {
+        .account-class-selector-panel {
             background: rgba(255, 248, 235, 0.9);
             backdrop-filter: blur(8px);
             border-radius: 3rem;
@@ -55,9 +59,11 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         button:hover { background: #1e4a76; transform: translateY(-1px); }
-        button.secondary { background: #7c5e3a; }
-        button.success { background: #2f6b47; }
-        button.success:hover { background: #1f5438; }
+        button.account-secondary { background: #7c5e3a; }
+        button.account-success { background: #2f6b47; }
+        button.account-success:hover { background: #1f5438; }
+        button.account-warning { background: #b86b2c; }
+        button.account-warning:hover { background: #9a551f; }
 
         input, select {
             background: rgba(255, 255, 255, 0.95);
@@ -69,25 +75,25 @@
         }
         input:focus, select:focus { border-color: #2c5f8a; outline: none; box-shadow: 0 0 0 3px rgba(44,95,138,0.2); }
 
-        .form-group {
+        .account-form-group {
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
             margin-bottom: 1rem;
         }
-        .form-group label {
+        .account-form-group label {
             font-size: 0.7rem;
             font-weight: 700;
             color: #5a3e20;
             letter-spacing: 0.3px;
         }
-        .form-grid {
+        .account-form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
         }
 
-        .toast-stack {
+        .account-toast-stack {
             position: fixed;
             bottom: 24px;
             right: 24px;
@@ -98,7 +104,7 @@
             pointer-events: none;
             max-width: 360px;
         }
-        .toast-message {
+        .account-toast-message {
             background: rgba(15, 25, 35, 0.94);
             backdrop-filter: blur(16px);
             border-radius: 2rem;
@@ -112,28 +118,97 @@
             align-items: center;
             animation: slideIn 0.25s ease;
         }
-        .toast-success { border-left-color: #2f6b47; background: #1f3e30e6; }
-        .toast-error { border-left-color: #c24141; }
+        .account-toast-success { border-left-color: #2f6b47; background: #1f3e30e6; }
+        .account-toast-error { border-left-color: #c24141; }
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(40px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
-        .flex-row { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; justify-content: space-between; }
+        .account-flex-row { 
+            display: flex; 
+            gap: 0.8rem; 
+            flex-wrap: wrap; 
+            align-items: center; 
+            margin-bottom: 1rem; 
+            justify-content: space-between; 
+        }
 
-        .student-info-preview {
+        .account-student-info-preview {
             background: #fffaf0;
             border-radius: 1rem;
             padding: 1rem;
             margin-top: 1rem;
+            overflow-x: auto;
         }
-        .student-info-preview table {
+        .account-student-info-preview table {
             width: 100%;
             border-collapse: collapse;
         }
-        .student-info-preview th, .student-info-preview td {
+        .account-student-info-preview th, 
+        .account-student-info-preview td {
             border: 1px solid #e0d0b0;
-            padding: 6px;
+            padding: 8px;
             text-align: left;
             font-size: 0.8rem;
+        }
+        
+        .account-card {
+            background: rgba(255, 255, 194, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+        }
+        .account-card-header {
+            padding: 1rem 1.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .account-card-body {
+            padding: 1rem;
+        }
+        
+        /* Teacher selector styling */
+        .teacher-selector-wrapper {
+            background: #fef5e7;
+            border-radius: 1.5rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #f0e0c0;
+        }
+        .teacher-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .teacher-option {
+            background: white;
+            border: 2px solid #e0cfb0;
+            border-radius: 3rem;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #5a3e20;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .teacher-option.active {
+            background: #2c5f8a;
+            border-color: #2c5f8a;
+            color: white;
+            box-shadow: 0 2px 8px rgba(44,95,138,0.3);
+        }
+        .teacher-option:hover {
+            transform: translateY(-2px);
+            border-color: #b8860b;
+        }
+        .teacher-preview-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: #f0e6d2;
+            padding: 2px;
         }
