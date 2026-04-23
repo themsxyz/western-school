@@ -315,16 +315,16 @@
 </header>
 
 <main>
-  <div class="result-loader-overlay" id="loaderOverlay"><div class="result-loader-spinner"></div></div>
+    <div class="result-loader-overlay" id="loaderOverlay"><div class="result-loader-spinner"></div></div>
 
   <div class="result-container">
-    <h1>📋 ফলাফল ও উপস্থিতি ব্যবস্থাপনা</h1>
+    <h1 class="result-h1">📋 ফলাফল ও উপস্থিতি ব্যবস্থাপনা</h1>
 
     <div class="result-class-selector-panel result-glass-card">
       <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
         <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
           <label style="font-weight: 800; color:#5d3a1a;">🏫 ক্লাস নির্বাচন:</label>
-          <select id="classSelect" style="width: auto; min-width: 170px;">
+          <select id="classSelect" class="result-select" style="width: auto; min-width: 170px;">
             <option value="">-- বাছাই করুন --</option>
             <option value="nursery">নার্সারি</option>
             <option value="play">প্লে</option>
@@ -335,60 +335,60 @@
             <option value="class4">চতুর্থ শ্রেণি</option>
             <option value="class5">পঞ্চম শ্রেণি</option>
           </select>
-          <button id="applyClassBtn">✅ নিশ্চিত করুন</button>
+          <button id="applyClassBtn" class="result-btn">✅ নিশ্চিত করুন</button>
         </div>
         <div id="classStatusArea"></div>
         <button id="clearUiBtn" class="result-reset-btn" style="background:#9b7b5c;">🗑️ সব তথ্য মুছুন</button>
       </div>
     </div>
 
-    <!-- RESULT MANAGEMENT CARD (FULL WIDTH) -->
+    <!-- RESULT MANAGEMENT CARD -->
     <div class="result-glass-card">
       <div class="result-card-header">📊 ফলাফল ব্যবস্থাপনা</div>
       <div class="result-card-body">
         <div class="result-flex-row">
-          <input type="text" id="resultSearchId" placeholder="শিক্ষার্থী আইডি (যেমন: STD-101)" style="flex:1;">
-          <button id="resultSearchBtn">ফলাফল লোড করুন</button>
+          <input type="text" id="resultSearchId" class="result-input" placeholder="শিক্ষার্থী আইডি (যেমন: STD-101)" style="flex:1;">
+          <button id="resultSearchBtn" class="result-btn">ফলাফল লোড করুন</button>
         </div>
         <div id="resultContainer" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem;"></div>
-        <hr>
+        <hr class="result-hr">
         <div id="resultForm" class="result-hidden">
           <div class="result-form-grid">
-            <div class="result-form-group"><label>পরীক্ষা নং</label><select id="examNo"><option>1</option><option>2</option><option>3</option></select></div>
+            <div class="result-form-group"><label>পরীক্ষা নং</label><select id="examNo" class="result-select"><option>1</option><option>2</option><option>3</option></select></div>
             <div class="result-form-group"><label>বিষয়</label>
-              <select id="subjectName">
+              <select id="subjectName" class="result-select">
                 <option value="ইংরেজি">ইংরেজি</option>
                 <option value="বাংলা">বাংলা</option>
                 <option value="গণিত">গণিত</option>
                 <option value="চারু ও কারুকলা">চারু ও কারুকলা</option>
               </select>
             </div>
-            <div class="result-form-group"><label>সর্বোচ্চ নম্বর</label><input type="number" id="maxMarksResult" placeholder="100"></div>
-            <div class="result-form-group"><label>প্রাপ্ত নম্বর</label><input type="number" id="obtainedMarks" placeholder="0"></div>
+            <div class="result-form-group"><label>সর্বোচ্চ নম্বর</label><input type="number" id="maxMarksResult" class="result-input" placeholder="100"></div>
+            <div class="result-form-group"><label>প্রাপ্ত নম্বর</label><input type="number" id="obtainedMarks" class="result-input" placeholder="0"></div>
           </div>
-          <button id="addResultBtn" class="result-success">💾 ফলাফল সংরক্ষণ</button>
+          <button id="addResultBtn" class="result-btn result-btn-success">💾 ফলাফল সংরক্ষণ</button>
         </div>
 
         <div class="result-glass-panel" style="margin-top: 20px;">
           <div style="font-weight:800; display:flex; justify-content:space-between; align-items:center;">
             <span>⚙️ গ্রেডিং নিয়ম (পাস মার্ক ও জিপিএ সীমা)</span>
-            <button id="showGradingBtn" class="result-outline" style="padding:0.3rem 1rem;">✏️ সম্পাদনা করুন</button>
+            <button id="showGradingBtn" class="result-btn result-btn-outline" style="padding:0.3rem 1rem;">✏️ সম্পাদনা করুন</button>
           </div>
           <div id="gradingRulesPanel" style="margin-top: 12px; display: none;"></div>
           <div id="gradingSaveContainer" style="display: none; margin-top: 12px;">
-            <button id="saveGradingRulesBtn" class="result-success">সংরক্ষণ করুন</button>
+            <button id="saveGradingRulesBtn" class="result-btn result-btn-success">সংরক্ষণ করুন</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ATTENDANCE SECTION (FULL WIDTH) -->
+    <!-- ATTENDANCE SECTION -->
     <div class="result-glass-card">
       <div class="result-card-header">📅 উপস্থিতি সংক্রান্ত (পরীক্ষাভিত্তিক)</div>
       <div class="result-card-body">
         <div class="result-flex-row">
-          <input type="text" id="attSearchId" placeholder="শিক্ষার্থী আইডি" style="flex:1;">
-          <button id="attSearchBtn">উপস্থিতি লোড করুন</button>
+          <input type="text" id="attSearchId" class="result-input" placeholder="শিক্ষার্থী আইডি" style="flex:1;">
+          <button id="attSearchBtn" class="result-btn">উপস্থিতি লোড করুন</button>
         </div>
         <div id="attendanceTablesContainer"></div>
       </div>
@@ -396,7 +396,6 @@
   </div>
 
   <div id="toastRoot" class="result-toast-stack"></div>
-
 </main>
 
 <script src="student-result.js"></script>

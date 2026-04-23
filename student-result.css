@@ -1,5 +1,4 @@
-@import "nav.css";
-  /* ===== loader, toast ===== */
+    /* ===== loader, toast ===== */
     .result-loader-overlay {
       position: fixed;
       top: 0;
@@ -97,7 +96,7 @@
       padding: 1rem;
     }
 
-    h1 {
+    .result-h1 {
       font-size: 2rem;
       font-weight: 800;
       background: linear-gradient(135deg, #1e3a5f, #2c4c3c, #8b5a2b);
@@ -120,7 +119,7 @@
       border: 1px solid #f0e0c0;
     }
 
-    button, .result-reset-btn {
+    .result-btn, .result-reset-btn {
       background: #2c5f8a;
       border: none;
       color: white;
@@ -135,23 +134,23 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    button:hover {
+    .result-btn:hover {
       background: #1e4a76;
       transform: translateY(-1px);
     }
 
-    button.result-danger { background: #b45353; }
-    button.result-secondary { background: #7c5e3a; }
-    button.result-success { background: #2f6b47; }
-    button.result-outline {
+    .result-btn-danger { background: #b45353; }
+    .result-btn-secondary { background: #7c5e3a; }
+    .result-btn-success { background: #2f6b47; }
+    .result-btn-outline {
       background: transparent;
       border: 1px solid #2c5f8a;
       color: #2c5f8a;
       box-shadow: none;
     }
-    button.result-outline:hover { background: #eef2f5; }
+    .result-btn-outline:hover { background: #eef2f5; }
 
-    input, select, textarea {
+    .result-input, .result-select, .result-textarea {
       background: rgba(255, 255, 255, 0.95);
       border: 1px solid #d4c5b0;
       border-radius: 1.2rem;
@@ -160,7 +159,7 @@
       width: 100%;
     }
 
-    input:focus, select:focus {
+    .result-input:focus, .result-select:focus {
       border-color: #2c5f8a;
       outline: none;
       box-shadow: 0 0 0 3px rgba(44, 95, 138, 0.2);
@@ -249,7 +248,7 @@
       display: none;
     }
 
-    hr {
+    .result-hr {
       margin: 1rem 0;
     }
 
@@ -286,7 +285,7 @@
     }
 
     @media print {
-      .no-print, .no-print *, button, .result-class-selector-panel, .result-home-btn, .result-toast-stack, .result-loader-overlay, header, .fee-link {
+      .result-no-print, .result-no-print *, .result-btn, .result-class-selector-panel, .result-home-btn, .result-toast-stack, .result-loader-overlay, header {
         display: none !important;
       }
       body, .result-container, .result-glass-card, .result-card-body {

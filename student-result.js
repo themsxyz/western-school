@@ -1,9 +1,10 @@
-  // ---------- LOADER & TOAST (updated class names) ----------
+  // ---------- LOADER & TOAST ----------
   function showLoader(show) {
     const overlay = document.getElementById('loaderOverlay');
     if (show) overlay.classList.add('active');
     else overlay.classList.remove('active');
   }
+  
   function showToast(message, type = "info") {
     const root = document.getElementById("toastRoot");
     const toast = document.createElement("div");
@@ -78,17 +79,19 @@
       }
     } catch (e) { console.log(e); }
   }
+  
   function renderGradingRulesForm(rules) {
     const container = document.getElementById("gradingRulesPanel");
-    let html = `<label>পাস মার্ক (%): <input type="number" id="passMark" value="${rules.passMark}" style="width:100px;"></label><br><br>
+    let html = `<label>পাস মার্ক (%): <input type="number" id="passMark" class="result-input" value="${rules.passMark}" style="width:100px;"></label><br><br>
         <table class="result-data-table"><thead><tr><th>ন্যূনতম %</th><th>জিপিএ</th></tr></thead><tbody>`;
     for (let i = 0; i < rules.thresholds.length; i++) {
-      html += `<tr><td><input type="number" id="th_${i}" value="${rules.thresholds[i]}"></td>
-                     <td><input type="number" id="gpa_${i}" value="${rules.gpaValues[i]}" step="0.01"></td></tr>`;
+      html += `<tr><td><input type="number" id="th_${i}" class="result-input" value="${rules.thresholds[i]}"></td>
+                     <td><input type="number" id="gpa_${i}" class="result-input" value="${rules.gpaValues[i]}" step="0.01"></td></tr>`;
     }
     html += `</tbody></table>`;
     container.innerHTML = html;
   }
+  
   document.getElementById("showGradingBtn").onclick = () => {
     const panel = document.getElementById("gradingRulesPanel");
     const saveContainer = document.getElementById("gradingSaveContainer");
@@ -101,6 +104,7 @@
       saveContainer.style.display = "none";
     }
   };
+  
   document.getElementById("saveGradingRulesBtn").onclick = async () => {
     if (!currentApiUrl) { showToast("ক্লাস সক্রিয় করুন", "error"); return; }
     const passMark = parseFloat(document.getElementById("passMark").value);
@@ -116,7 +120,7 @@
     else showToast("ত্রুটি", "error");
   };
 
-  // ---------- RESULT DISPLAY (updated class names inside generated HTML) ----------
+  // ---------- RESULT DISPLAY ----------
   function displayNewResults(r1, r2, r3) {
     const container = document.getElementById("resultContainer");
     let html = "";
@@ -129,7 +133,7 @@
         exam.subjects.forEach(sub => {
           html += `<tr><td>${sub.subject}</td><td>${sub.maxMarks}</td><td>${sub.obtained}</td><td>${sub.gpa}</td><td>${sub.percentage}%</td><td><span class="${sub.status === 'Pass' ? 'result-badge-success' : 'result-badge-danger'}">${sub.status}</span></td></tr>`;
         });
-        html += `<tr class="summary-row"><td colspan="3"><strong>সামগ্রিক জিপিএ</strong></td><td colspan="3"><strong>${exam.overallGPA}</strong></td></tr>
+        html += `<tr class="result-summary-row"><td colspan="3"><strong>সামগ্রিক জিপিএ</strong></td><td colspan="3"><strong>${exam.overallGPA}</strong></td></tr>
                   <tr><td colspan="3"><strong>সর্বমোট %</strong></td><td colspan="3"><strong>${exam.overallPercentage}%</strong></td></tr>
                   <tr><td colspan="3"><strong>সামগ্রিক ফলাফল</strong></td><td colspan="3"><strong>${exam.overallStatus}</strong></td></tr></tbody></table></div>`;
       } else {
@@ -161,7 +165,7 @@
       showToast("সব তথ্য পূরণ করুন", "warning");
       return;
     }
-    const subjectMap = { "ইংরেজি":"English", "English":"English", "বাংলা":"Bengali", "Bengali":"Bengali", "গণিত":"Math", "Math":"Math", "চারু ও কারুকলা":"Drawing", "Drawing":"Drawing" };
+    const subjectMap = { "ইংরেজি":"English", "বাংলা":"Bengali", "গণিত":"Math", "চারু ও কারুকলা":"Drawing" };
     const subject = subjectMap[selectedSubject];
     if (!subject) { showToast("অবৈধ বিষয়", "error"); return; }
     const res = await callApi("addResult", { id, examNo, subject, obtained, maxMarks });
@@ -171,22 +175,23 @@
     } else showToast("ত্রুটি – " + (res.message || "অজানা"), "error");
   };
 
-  // ---------- ATTENDANCE (updated class names for dynamic elements) ----------
+  // ---------- ATTENDANCE ----------
   async function loadAttendanceTables(id) {
     if (!currentApiUrl) return;
     const res = await callApi("getFullData", { id });
     if (res.status === "found" && res.attendanceTables) renderAttendanceTables(res.attendanceTables);
-    else renderAttendanceTables([{ totalClass:0, totalAttendance:0, missing:0 }, { totalClass:0, totalAttendance:0, missing:0 }, { totalClass:0, totalAttendance:0, missing:0 }]);
+    else renderAttendanceTables([{ totalClass:0, totalAttendance:0 }, { totalClass:0, totalAttendance:0 }, { totalClass:0, totalAttendance:0 }]);
   }
+  
   function renderAttendanceTables(tables) {
     const container = document.getElementById("attendanceTablesContainer");
     let html = "";
     for (let i = 0; i < 3; i++) {
       html += `<div class="result-attendance-panel">
                 <h5>📋 পরীক্ষা ${i + 1}</h5>
-                <label>মোট ক্লাস: <input type="number" id="totalClass_${i+1}" value="${tables[i].totalClass}" style="width:90px;"></label>
-                <label style="margin-left:1rem;">মোট উপস্থিতি: <input type="number" id="totalAttendance_${i+1}" value="${tables[i].totalAttendance}" style="width:90px;"></label>
-                <button class="result-save-attendance-btn" data-exam="${i+1}" style="background:#7c5e3a; margin-left:1rem;">সংরক্ষণ</button>
+                <label>মোট ক্লাস: <input type="number" id="totalClass_${i+1}" class="result-input" value="${tables[i].totalClass}" style="width:90px;"></label>
+                <label style="margin-left:1rem;">মোট উপস্থিতি: <input type="number" id="totalAttendance_${i+1}" class="result-input" value="${tables[i].totalAttendance}" style="width:90px;"></label>
+                <button class="result-save-attendance-btn result-btn result-btn-secondary" data-exam="${i+1}" style="margin-left:1rem;">সংরক্ষণ</button>
               </div>`;
     }
     container.innerHTML = html;
@@ -202,6 +207,7 @@
       });
     }
   }
+  
   document.getElementById("attSearchBtn").onclick = async () => {
     if (!currentApiUrl) { showToast("ক্লাস সক্রিয় করুন", "error"); return; }
     const id = document.getElementById("attSearchId").value.trim();
