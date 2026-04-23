@@ -79,7 +79,8 @@
       max-width: 1400px;
       margin: 0 auto;
       margin-top: 40px;
-      padding: 0 1.5rem;
+      padding: 50px;
+      border-radius: 50px;
     }
 
     .result-glass-card {
