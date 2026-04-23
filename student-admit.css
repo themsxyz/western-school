@@ -1,13 +1,6 @@
 /* ---------- external import ---------- */
         @import "nav.css";
 
-        /* ---------- all classes renamed: account- prefix ---------- */
-        .account-glass-card {
-            background: rgba(255, 255, 194, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 50px;
-        }
-
         .account-glass-panel {
             background: rgba(255, 250, 240, 0.7);
             backdrop-filter: blur(6px);
@@ -36,12 +29,11 @@
         }
 
         .account-class-selector-panel {
-            background: rgba(255, 248, 235, 0.9);
             backdrop-filter: blur(8px);
             border-radius: 3rem;
             padding: 1rem 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid #f0e0c0;
+            margin-bottom: 2rem;             
+            border: 1px solid #e8e8e7;
         }
 
         .admit-button {
@@ -154,7 +146,7 @@
         }
         
         .account-card {
-            background: rgba(255, 255, 194, 0.85);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
             backdrop-filter: blur(12px);
             border-radius: 50px;
         }
