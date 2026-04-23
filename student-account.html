@@ -389,8 +389,12 @@
     </div>
 
     <div class="account-form-group">
-        <label>জন্ম নিবন্ধন নং</label>
-        <input type="text" id="newBcn" placeholder="জন্ম নিবন্ধন নং" maxlength="17" pattern="\d{17}">
+         <label>জন্ম নিবন্ধন নং</label>
+    <input type="text" id="newBcn" placeholder="জন্ম নিবন্ধন নং"
+        maxlength="17"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')">
     </div>
 
     <div class="account-form-group">
@@ -404,14 +408,22 @@
     </div>
 
     <div class="account-form-group">
-        <label>পিতার এনআইডি</label>
-        <input type="text" id="newFnid" placeholder="এনআইডি" maxlength="10" pattern="\d{10}">
-    </div>
+         <label>পিতার এনআইডি</label>
+    <input type="text" id="newFnid" placeholder="এনআইডি"
+        maxlength="10"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+      </div>
 
     <div class="account-form-group">
-        <label>মাতার এনআইডি</label>
-        <input type="text" id="newMnid" placeholder="এনআইডি" maxlength="10" pattern="\d{10}">
-    </div>
+       <label>মাতার এনআইডি</label>
+    <input type="text" id="newMnid" placeholder="এনআইডি"
+        maxlength="10"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+      </div>
 
     <div class="account-form-group">
         <label>ঠিকানা</label>
