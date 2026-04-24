@@ -131,7 +131,7 @@
                 <button class="fee-btn fee-remove-btn" data-index="${index}">✖ Remove</button>
               </div>`;
     });
-    html += `<div style="font-size: 12px; color: #64748b; margin-top: 5px;">💡 Tip: Add multiple fee categories for the selected months</div>`;
+    html += `<div style="font-size: 12px; color: #64748b; margin-top: 15px; margin-bottom: 15px;">💡 Tip: Add multiple fee categories for the selected months</div>`;
     container.innerHTML = html;
     
     document.querySelectorAll('.fee-category-select').forEach(select => {
