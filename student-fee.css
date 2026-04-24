@@ -213,16 +213,27 @@
     }
 
     .fee-add-btn {
-      background: #10b981;
+      background: #1b065f;
       padding: 8px 16px;
       font-size: 12px;
     }
 
     .fee-category-select {
-      width: 45%;
-      display: inline-block;
-      margin-right: 10px;
-    }
+  width: 45%;
+  display: inline-block;
+  margin-right: 10px;
+
+  /* New styles */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: transparent;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* for Safari */
+
+  padding: 8px 12px;
+  color: #fff;
+  outline: none;
+}
 
     .fee-amount-input {
       width: 35%;
