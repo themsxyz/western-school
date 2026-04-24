@@ -224,14 +224,14 @@
   margin-right: 10px;
 
   /* New styles */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+  border: 1px solid rgb(154 151 151 / 30%);
+  border-radius: 50px;
   background: transparent;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px); /* for Safari */
 
   padding: 8px 12px;
-  color: #fff;
+  color: #121111;
   outline: none;
 }
 
@@ -240,14 +240,14 @@
       display: inline-block;
       margin-right: 10px;
         /* New styles */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+  border: 1px solid rgba(208, 207, 207, 0.3);
+  border-radius: 50px;
   background: transparent;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px); /* for Safari */
 
   padding: 8px 12px;
-  color: #fff;
+  color: #0e0e0e;
   outline: none;
     }
 
