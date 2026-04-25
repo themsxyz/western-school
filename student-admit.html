@@ -317,7 +317,7 @@
 </header>
 
 <main>
-  <div class="account-container">
+<div class="account-container">
     <h1>🎫 প্রবেশপত্র জেনারেটর</h1>
     
     <div class="account-class-selector-panel account-glass-card">
@@ -340,7 +340,6 @@
             <div id="classStatusArea"></div>
         </div>
     </div>
-    
     
     <div class="account-card account-glass-card">
         <div class="account-card-header">📄 প্রবেশপত্র তৈরি করুন (১০ জন শিক্ষকের স্বাক্ষর)</div>
@@ -376,7 +375,29 @@
     </div>
 </div>
 
-<div id="toastRoot" class="account-toast-stack"></div>
+<!-- NEW GLASS TOAST (single instance) -->
+<div id="glassToast" class="toast">
+    <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+    </div>
+    <div class="toast-message">Message</div>
+    <button class="toast-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </button>
+</div>
+
+<!-- LOADER OVERLAY -->
+<div id="globalLoader" class="account-loader-overlay">
+    <div class="loader" role="status" aria-label="Loading content"></div>
+    <span class="sr-only">Loading, please wait</span>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 </main>
