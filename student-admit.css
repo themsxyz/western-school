@@ -1,4 +1,4 @@
-/* ---------- external import ---------- */
+       /* ---------- external import ---------- */
         @import "nav.css";
 
         .account-glass-panel {
@@ -85,38 +85,140 @@
             gap: 1rem;
         }
 
-        .account-toast-stack {
+        /* ---------- NEW GLASS TOAST (bottom center) ---------- */
+        .toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            pointer-events: none;
-            max-width: 360px;
-        }
-        .account-toast-message {
-            background: rgba(15, 25, 35, 0.94);
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(2rem);
+            width: max-content;
+            max-width: 90vw;
+            min-width: 280px;
+            background: rgba(255, 255, 255, 0.72);
             backdrop-filter: blur(16px);
-            border-radius: 2rem;
-            padding: 12px 20px;
-            color: #fef7e0;
-            font-weight: 500;
-            border-left: 6px solid #f5b042;
-            pointer-events: auto;
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 3rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 0.85rem 1.6rem;
             display: flex;
-            gap: 12px;
             align-items: center;
-            animation: slideIn 0.25s ease;
+            gap: 0.85rem;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.28s cubic-bezier(0.2, 0.9, 0.4, 1.1), visibility 0.28s, transform 0.32s cubic-bezier(0.12, 0.71, 0.33, 1);
+            pointer-events: none;
         }
-        .account-toast-success { border-left-color: #b6dff8; background: #1f3e30e6; }
-        .account-toast-error { border-left-color: #c24141; }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .toast-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 0.35rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.8), 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .toast-icon svg {
+            width: 1.6rem;
+            height: 1.6rem;
+            display: block;
+            color: #2c3e66;
+        }
+        .toast-message {
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #1a2634;
+            line-height: 1.4;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        }
+        .toast-close {
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            border-radius: 2rem;
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 0.2rem;
+            backdrop-filter: blur(4px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .toast-close:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(0.96);
+        }
+        .toast-close svg {
+            width: 14px;
+            height: 14px;
+            stroke: #2d3e50;
+            stroke-width: 2;
+            fill: none;
+        }
+        @media (max-width: 480px) {
+            .toast {
+                padding: 0.7rem 1.3rem;
+                min-width: 260px;
+            }
+            .toast-message {
+                font-size: 0.85rem;
+            }
         }
 
+        /* ---------- LOADER OVERLAY (modern spinner) ---------- */
+        .account-loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .loader {
+            width: 56px;
+            height: 56px;
+            border: 3px solid #e9ecef;
+            border-top: 3px solid #000;
+            border-radius: 50%;
+            animation: spin 0.9s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+            will-change: transform;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* remaining original styles */
         .account-flex-row { 
             display: flex; 
             gap: 0.8rem; 
@@ -125,7 +227,6 @@
             margin-bottom: 1rem; 
             justify-content: space-between; 
         }
-
         .account-student-info-preview {
             background: #fffaf0;
             border-radius: 1rem;
@@ -144,7 +245,6 @@
             text-align: left;
             font-size: 0.8rem;
         }
-        
         .account-card {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 40%, #dcdfe4 70%, #f2e9e4 100%);
             backdrop-filter: blur(12px);
@@ -158,8 +258,6 @@
         .account-card-body {
             padding: 1rem;
         }
-        
-        /* Teacher selector styling */
         .teacher-selector-wrapper {
             border-radius: 1.5rem;
             padding: 0.8rem 1rem;
@@ -186,13 +284,11 @@
         }
         .teacher-option.active {
             background: #2c5f8a;
-            border-color: #2c5f8a;
             color: white;
             box-shadow: 0 2px 8px rgba(44,95,138,0.3);
         }
         .teacher-option:hover {
             transform: translateY(-2px);
-            border-color: #b8860b;
         }
         .teacher-preview-img {
             width: 32px;
