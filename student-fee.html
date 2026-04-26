@@ -320,78 +320,99 @@
 </header>
 
 <main>
-   <div class="fee-container">
+  <div class="fee-container">
     <h1 class="fee-h1">💰 ফি ম্যানেজমেন্ট</h1>
     <div class="fee-subtitle">শিক্ষার্থীদের বেতন ম্যানেজ করুন।</div>
     
     <!-- CLASS SELECTOR PANEL -->
     <div class="fee-class-selector-panel">
-      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
-        <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-         <label style="font-weight:700; color:#334155; background:transparent; padding:8px 14px; border-radius:10px; display:inline-block;">
-    🏫 ক্লাস নির্বাচন:
-</label>
-          <select id="classSelect" style="font-weight:700; color:#334155; background:white; padding:8px 14px; border-radius:10px; display:inline-block;">
-            <option value="">-- বাছাই করুন / Select --</option>
-            <option value="nursery">নার্সারি (Nursery)</option>
-            <option value="play">প্লে (Play)</option>
-            <option value="kg">কেজি (KG)</option>
-            <option value="class1">প্রথম শ্রেণি (Class 1)</option>
-            <option value="class2">দ্বিতীয় শ্রেণি (Class 2)</option>
-            <option value="class3">তৃতীয় শ্রেণি (Class 3)</option>
-            <option value="class4">চতুর্থ শ্রেণি (Class 4)</option>
-            <option value="class5">পঞ্চম শ্রেণি (Class 5)</option>
-          </select>
-          <button id="applyClassBtn" class="fee-btn fee-btn-success">✅ নিশ্চিত করুন</button>
-          <span id="activeClassStatus" style="font-size: 0.85rem; color: #334155;"></span>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+            <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                <label style="font-weight:700; color:#334155; background:transparent; padding:8px 14px; border-radius:10px; display:inline-block;">🏫 ক্লাস নির্বাচন:</label>
+                <select id="classSelect" style="font-weight:700; color:#334155; background:white; padding:8px 14px; border-radius:10px; display:inline-block;">
+                    <option value="">-- বাছাই করুন / Select --</option>
+                    <option value="nursery">নার্সারি (Nursery)</option>
+                    <option value="play">প্লে (Play)</option>
+                    <option value="kg">কেজি (KG)</option>
+                    <option value="class1">প্রথম শ্রেণি (Class 1)</option>
+                    <option value="class2">দ্বিতীয় শ্রেণি (Class 2)</option>
+                    <option value="class3">তৃতীয় শ্রেণি (Class 3)</option>
+                    <option value="class4">চতুর্থ শ্রেণি (Class 4)</option>
+                    <option value="class5">পঞ্চম শ্রেণি (Class 5)</option>
+                </select>
+                <button id="applyClassBtn" class="fee-btn fee-btn-success">✅ নিশ্চিত করুন</button>
+                <span id="activeClassStatus" style="font-size: 0.85rem; color: #334155;"></span>
+            </div>
+            <div id="apiStatusBadge" style="font-size: 0.7rem; background: #eef2ff; padding: 4px 10px; border-radius: 20px;">⚠️ Select class first</div>
         </div>
-        <div id="apiStatusBadge" style="font-size: 0.7rem; background: #eef2ff; padding: 4px 10px; border-radius: 20px;">
-          ⚡ API: Not connected
-        </div>
-      </div>
     </div>
     
     <!-- Student Search -->
     <div class="fee-card">
-      <div class="fee-card-header">🔍 শিক্ষার্থী সার্চ</div>
-      <div class="fee-card-body">
-        <div class="fee-flex-row">
-          <input type="text" id="feeSearchId" placeholder="Student ID" style="flex:1" class="fee-input">
-          <button id="feeSearchBtn" class="fee-btn">লোড</button>
+        <div class="fee-card-header">🔍 শিক্ষার্থী সার্চ</div>
+        <div class="fee-card-body">
+            <div class="fee-flex-row">
+                <input type="text" id="feeSearchId" placeholder="Student ID" style="flex:1" class="fee-input">
+                <button id="feeSearchBtn" class="fee-btn">লোড</button>
+            </div>
+            <div id="studentInfo" class="fee-hidden" style="margin-top: 10px; padding: 10px; background: #f1f5f9; border-radius: 12px;"></div>
         </div>
-        <div id="studentInfo" class="fee-hidden" style="margin-top: 10px; padding: 10px; background: #f1f5f9; border-radius: 12px;"></div>
-      </div>
     </div>
     
     <!-- Fee Table Display -->
     <div class="fee-card" id="feeTableCard" style="display:none;">
-      <div class="fee-card-header">📋 সম্পূর্ণ স্টেটমেন্ট</div>
-      <div class="fee-card-body">
-        <div id="feeContainer" class="fee-table-wrapper"></div>
-      </div>
+        <div class="fee-card-header">📋 সম্পূর্ণ স্টেটমেন্ট</div>
+        <div class="fee-card-body">
+            <div id="feeContainer" class="fee-table-wrapper"></div>
+        </div>
     </div>
     
     <!-- Fee Update Form -->
     <div class="fee-card" id="feeFormCard" style="display:none;">
-      <div class="fee-card-header">✏️ আপডেট</div>
-      <div class="fee-card-body">
-        <label class="fee-label">মাস নির্বাচন:</label>
-        <div id="monthsCheckboxContainer" class="fee-months-container"></div>
-        <div id="monthWarning" class="fee-warning-text fee-hidden">⚠️ Months with existing fees cannot be updated.</div>
-        
-        <label class="fee-label" style="margin-top: 15px;">খাত নির্বাচন:</label>
-        <div id="feeItemsContainer"></div>
-        <button id="addFeeItemBtn" class="fee-btn fee-add-btn">খাত যোগ</button>
-        
-        <hr>
-        <button id="updateFeesBtn" class="fee-btn fee-btn-success">💾 আপডেট</button>
-        
-        <div id="updateSuccessMessage" class="fee-hidden fee-success-message"></div>
-        <div id="receiptInfo" class="fee-hidden fee-receipt-info"></div>
-      </div>
+        <div class="fee-card-header">✏️ আপডেট</div>
+        <div class="fee-card-body">
+            <label class="fee-label">মাস নির্বাচন:</label>
+            <div id="monthsCheckboxContainer" class="fee-months-container"></div>
+            <div id="monthWarning" class="fee-warning-text fee-hidden">⚠️ Months with existing fees cannot be updated.</div>
+            
+            <label class="fee-label" style="margin-top: 15px;">খাত নির্বাচন:</label>
+            <div id="feeItemsContainer"></div>
+            <button id="addFeeItemBtn" class="fee-btn fee-add-btn">খাত যোগ</button>
+            
+            <hr>
+            <button id="updateFeesBtn" class="fee-btn fee-btn-success">💾 আপডেট</button>
+            
+            <div id="updateSuccessMessage" class="fee-hidden fee-success-message"></div>
+            <div id="receiptInfo" class="fee-hidden fee-receipt-info"></div>
+        </div>
     </div>
-  </div>
-</main>
+</div>
+
+<!-- NEW GLASS TOAST (single instance) -->
+<div id="glassToast" class="toast">
+    <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+    </div>
+    <div class="toast-message">Message</div>
+    <button class="toast-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </button>
+</div>
+
+<!-- LOADER OVERLAY -->
+<div id="globalLoader" class="account-loader-overlay">
+    <div class="loader" role="status" aria-label="Loading content"></div>
+    <span class="sr-only">Loading, please wait</span>
+</div>
+
+   </main>
 
 <script src="student-fee.js"></script>
 <script src="nav.js"></script>
