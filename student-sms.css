@@ -1,383 +1,451 @@
 @import "nav.css";
 
-/* main card container */
-.sms-glass-panel {
-  max-width: 720px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(2px);
-  border-radius: 2.5rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.6);
-  padding: 2rem 2rem 2.2rem;
-  transition: all 0.2s ease;
-  border: 1px solid rgba(255,255,255,0.5);
-}
+    /* main card container */
+    .sms-glass-panel {
+      max-width: 720px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(2px);
+      border-radius: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.6);
+      padding: 2rem 2rem 2.2rem;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
 
-h1 {
-  font-size: 1.9rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #1F2B48, #2A3B5C);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  letter-spacing: -0.3px;
-  margin-bottom: 0.3rem;
-  display: inline-block;
-}
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1F2B48, #2A3B5C);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.3rem;
+      display: inline-block;
+    }
 
-.subhead {
-  color: #4a5b7a;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-left: 3px solid #3b82f6;
-  padding-left: 0.75rem;
-  margin: 0.5rem 0 1.8rem 0;
-  opacity: 0.85;
-}
+    .subhead {
+      color: #4a5b7a;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-left: 3px solid #3b82f6;
+      padding-left: 0.75rem;
+      margin: 0.5rem 0 1.8rem 0;
+      opacity: 0.85;
+    }
 
-/* action buttons row */
-.sms-action-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 1.8rem;
-}
+    /* action buttons row */
+    .sms-action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 1.8rem;
+    }
 
-.sms-action-btn {
-  background: white;
-  border: none;
-  padding: 0.7rem 1.6rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 60px;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0,0,0,0.05);
-  color: #1e293b;
-  background: #f8fafc;
-  border: 1px solid #cbd5e1;
-}
+    .sms-action-btn {
+      background: white;
+      border: none;
+      padding: 0.7rem 1.6rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0,0,0,0.05);
+      color: #1e293b;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+    }
 
-.sms-action-btn:hover {
-  transform: translateY(-2px);
-  background: #ffffff;
-  border-color: #94a3b8;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-}
+    .sms-action-btn:hover {
+      transform: translateY(-2px);
+      background: #ffffff;
+      border-color: #94a3b8;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
 
-.sms-action-btn:active {
-  transform: translateY(1px);
-}
+    .sms-action-btn:active {
+      transform: translateY(1px);
+    }
 
-/* specific buttons */
-.sms-btn-create {
-  background: #eef2ff;
-  border-color: #b9c8ff;
-  color: #1e3a8a;
-}
+    .sms-btn-create {
+      background: #eef2ff;
+      border-color: #b9c8ff;
+      color: #1e3a8a;
+    }
 
-.sms-btn-sync {
-  background: #ecfdf5;
-  border-color: #a7f3d0;
-  color: #065f46;
-}
+    .sms-btn-sync {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #065f46;
+    }
 
-.sms-btn-sms {
-  background: #fff1f0;
-  border-color: #ffcdc9;
-  color: #9b2c1d;
-}
+    .sms-btn-sms {
+      background: #fff1f0;
+      border-color: #ffcdc9;
+      color: #9b2c1d;
+    }
 
-/* upload */
-.sms-upload-section {
-  background: #ffffffcc;
-  border-radius: 1.5rem;
-  border: 1px dashed #b9c8e9;
-  padding: 1rem 1.2rem 1.4rem 1.2rem;
-  margin-bottom: 1.8rem;
-  transition: all 0.2s;
-}
+    /* upload */
+    .sms-upload-section {
+      background: #ffffffcc;
+      border-radius: 1.5rem;
+      border: 1px dashed #b9c8e9;
+      padding: 1rem 1.2rem 1.4rem 1.2rem;
+      margin-bottom: 1.8rem;
+      transition: all 0.2s;
+    }
 
-.sms-upload-label {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
+    .sms-upload-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
 
-.sms-custom-file-label {
-  background: #f1f5f9;
-  padding: 0.5rem 1rem;
-  border-radius: 40px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #1e293b;
-  border: 1px solid #cbd5e1;
-  cursor: pointer;
-  transition: 0.15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
+    .sms-custom-file-label {
+      background: #f1f5f9;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-.sms-custom-file-label:hover {
-  background: #e6edf5;
-  border-color: #3b82f6;
-}
+    .sms-custom-file-label:hover {
+      background: #e6edf5;
+      border-color: #3b82f6;
+    }
 
-#fileInput {
-  display: none;
-}
+    #fileInput {
+      display: none;
+    }
 
-.sms-file-name {
-  font-size: 0.85rem;
-  color: #2c3e66;
-  background: #f1f5f9;
-  padding: 0.3rem 1rem;
-  border-radius: 30px;
-  display: inline-block;
-  max-width: 260px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
+    .sms-file-name {
+      font-size: 0.85rem;
+      color: #2c3e66;
+      background: #f1f5f9;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      display: inline-block;
+      max-width: 260px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
-.sms-upload-btn {
-  background: #2c3e66;
-  color: white;
-  border: none;
-  padding: 0.55rem 1.8rem;
-  border-radius: 40px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  margin-left: auto;
-}
+    .sms-upload-btn {
+      background: #2c3e66;
+      color: white;
+      border: none;
+      padding: 0.55rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-left: auto;
+    }
 
-.sms-upload-btn:hover {
-  background: #1f2b48;
-  transform: scale(0.97);
-}
+    .sms-upload-btn:hover {
+      background: #1f2b48;
+      transform: scale(0.97);
+    }
 
-/* info panels */
-.sms-info-panel {
-  background: #f0f4fa;
-  border-radius: 1.2rem;
-  padding: 1rem 1.4rem;
-  margin-top: 0.5rem;
-}
+    /* info panels */
+    .sms-info-panel {
+      background: #f0f4fa;
+      border-radius: 1.2rem;
+      padding: 1rem 1.4rem;
+      margin-top: 0.5rem;
+    }
 
-.sms-info-title {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 700;
-  color: #4b6589;
-  margin-bottom: 0.5rem;
-}
+    .sms-info-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: #4b6589;
+      margin-bottom: 0.5rem;
+    }
 
-.sms-status-message {
-  background: #ffffffd9;
-  border-radius: 1rem;
-  padding: 0.9rem 1rem;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.85rem;
-  color: #0c1b33;
-  word-break: break-word;
-  white-space: pre-wrap;
-  border-left: 4px solid #3b82f6;
-  box-shadow: inset 0 1px 2px #00000008, 0 1px 2px white;
-}
+    .sms-status-message {
+      background: #ffffffd9;
+      border-radius: 1rem;
+      padding: 0.9rem 1rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #0c1b33;
+      word-break: break-word;
+      white-space: pre-wrap;
+      border-left: 4px solid #3b82f6;
+      box-shadow: inset 0 1px 2px #00000008, 0 1px 2px white;
+    }
 
-.sms-output-area {
-  margin-top: 1.2rem;
-}
+    .sms-output-area {
+      margin-top: 1.2rem;
+    }
 
-button {
-  font-family: inherit;
-}
+    button {
+      font-family: inherit;
+    }
 
-@media (max-width: 550px) {
-  .sms-glass-panel {
-    padding: 1.5rem;
-  }
-  .sms-action-bar {
-    gap: 0.7rem;
-  }
-  .sms-action-btn {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.8rem;
-  }
-  .sms-upload-label {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .sms-upload-btn {
-    margin-left: 0;
-    margin-top: 0.5rem;
-    text-align: center;
-  }
-}
+    @media (max-width: 550px) {
+      .sms-glass-panel {
+        padding: 1.5rem;
+      }
+      .sms-action-bar {
+        gap: 0.7rem;
+      }
+      .sms-action-btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.8rem;
+      }
+      .sms-upload-label {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .sms-upload-btn {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        text-align: center;
+      }
+    }
 
+    /* ----- SMS Dashboard Styles (original) ----- */
+    .smsreport .container {
+      max-width: 900px;
+      margin: auto;
+    }
 
-/* ----- ALL STYLES ARE NAMESPACED UNDER .smsreport CLASS ----- */
-.smsreport .container{
-  max-width:900px;
-  margin:auto;
-}
+    .smsreport h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
 
-.smsreport h2{
-  text-align:center;
-  margin-bottom:20px;
-  font-weight:600;
-}
+    .smsreport .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
 
-/* GRID */
-.smsreport .grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
+    .smsreport .card {
+      background: white;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.1s ease;
+    }
 
-/* CARD */
-.smsreport .card{
-  background:white;
-  padding:18px;
-  border-radius:12px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
-  transition: all 0.1s ease;
-}
+    .smsreport .title {
+      font-size: 13px;
+      color: #6b7280;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
 
-.smsreport .title{
-  font-size:13px;
-  color:#6b7280;
-  letter-spacing:0.3px;
-  text-transform:uppercase;
-  font-weight:500;
-}
+    .smsreport .value {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 8px;
+      color: #1e293b;
+    }
 
-.smsreport .value{
-  font-size:24px;
-  font-weight:700;
-  margin-top:8px;
-  color:#1e293b;
-}
+    .smsreport input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+      transition: border 0.2s;
+      box-sizing: border-box;
+      background: #fafcff;
+    }
 
-/* INPUT */
-.smsreport input{
-  width:100%;
-  padding:10px 12px;
-  border:1px solid #e2e8f0;
-  border-radius:10px;
-  margin-top:10px;
-  font-size:14px;
-  transition: border 0.2s;
-  box-sizing:border-box;
-  background:#fafcff;
-}
+    .smsreport input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
 
-.smsreport input:focus{
-  outline:none;
-  border-color:#3b82f6;
-  box-shadow:0 0 0 2px rgba(59,130,246,0.2);
-}
+    .smsreport button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.15s ease;
+    }
 
-/* BUTTONS */
-.smsreport button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  font-size:14px;
-  transition: all 0.15s ease;
-}
+    .smsreport .recharge {
+      background: #22c55e;
+      color: white;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    .smsreport .recharge:hover { background: #16a34a; transform: translateY(-1px); }
 
-.smsreport .recharge{ 
-  background:#22c55e; 
-  color:white; 
-  box-shadow:0 1px 2px rgba(0,0,0,0.05);
-}
-.smsreport .recharge:hover{ background:#16a34a; transform:translateY(-1px); }
+    .smsreport .refresh {
+      background: #3b82f6;
+      color: white;
+    }
+    .smsreport .refresh:hover { background: #2563eb; transform: translateY(-1px); }
 
-.smsreport .refresh{ 
-  background:#3b82f6; 
-  color:white;
-}
-.smsreport .refresh:hover{ background:#2563eb; transform:translateY(-1px);}
+    .smsreport .reset {
+      background: #ef4444;
+      color: white;
+    }
+    .smsreport .reset:hover { background: #dc2626; transform: translateY(-1px); }
 
-.smsreport .reset{ 
-  background:#ef4444; 
-  color:white;
-}
-.smsreport .reset:hover{ background:#dc2626; transform:translateY(-1px);}
+    @media (max-width: 640px) {
+      .smsreport .grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      body {
+        padding: 20px;
+      }
+    }
 
-/* MINIMAL LOADER - elegant & subtle */
-.smsreport #loader{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(10, 10, 15, 0.35);
-  backdrop-filter: blur(2px);
-  justify-content:center;
-  align-items:center;
-  z-index:1000;
-  font-family: system-ui, sans-serif;
-}
+    /* ========== MODERN LOADER OVERLAY (replaces old) ========== */
+    .modern-loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .modern-spinner {
+      width: 56px;
+      height: 56px;
+      border: 3px solid #e9ecef;
+      border-top: 3px solid #2c5f8a;
+      border-radius: 50%;
+      animation: modern-spin 0.9s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    @keyframes modern-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loader-text {
+      background: rgba(255,255,255,0.9);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1e293b;
+      backdrop-filter: blur(4px);
+    }
 
-.smsreport .loader-content{
-  background:rgba(255,255,255,0.96);
-  padding: 16px 28px;
-  border-radius: 60px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  backdrop-filter: blur(0px);
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-.smsreport .spinner{
-  width: 20px;
-  height: 20px;
-  border: 2px solid #e2e8f0;
-  border-top: 2px solid #3b82f6;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.smsreport .loader-content span{
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #1f2937;
-  letter-spacing: 0.2px;
-}
-
-/* small responsive */
-@media (max-width: 640px){
-  .smsreport .grid{
-    grid-template-columns:1fr;
-    gap:12px;
-  }
-  body{
-    padding:20px;
-  }
-  .smsreport .loader-content{
-    padding: 12px 22px;
-  }
-}
+    /* ========== GLASSMORPHISM TOAST (bottom center) ========== */
+    .toast-stack {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+      max-width: 90vw;
+      width: auto;
+      align-items: center;
+    }
+    .toast-message {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 3rem;
+      padding: 0.85rem 1.6rem;
+      color: #1a2634;
+      font-weight: 500;
+      font-size: 0.9rem;
+      border-left: 5px solid #f5b042;
+      pointer-events: auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.5);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: toastSlide 0.28s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+      min-width: 260px;
+      max-width: 380px;
+    }
+    @keyframes toastSlide {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .toast-success {
+      border-left-color: #2f6b47;
+    }
+    .toast-error {
+      border-left-color: #c24141;
+    }
+    .toast-icon-svg {
+      width: 1.6rem;
+      height: 1.6rem;
+      display: block;
+      color: #2c3e66;
+      flex-shrink: 0;
+    }
+    .toast-close {
+      background: rgba(255, 255, 255, 0.6);
+      border: none;
+      border-radius: 2rem;
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: auto;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .toast-close:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: scale(0.96);
+    }
+    .toast-close svg {
+      width: 14px;
+      height: 14px;
+      stroke: #2d3e50;
+      stroke-width: 2;
+    }
+    @media (max-width: 560px) {
+      .toast-message {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+        min-width: 240px;
+      }
+    }

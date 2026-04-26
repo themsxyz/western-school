@@ -406,113 +406,99 @@
     </div>
 </header>
 
+
 <main>
-<div class="sms-glass-panel">
-  <div>
-    <h1>SMS</h1>
-    <div class="subhead">TXT আপলোড · শিট ব্যবস্থাপনা · SMS গেটওয়ে</div>
-  </div>
-
-  <div class="sms-action-bar">
-    <button class="sms-action-btn sms-btn-create" onclick="run('createSheet')">📑 SMS তৈরি</button>
-    <button class="sms-action-btn sms-btn-sync" onclick="run('sync')">🔄 Sync</button>
-    <button class="sms-action-btn sms-btn-sms" onclick="run('sendSMS')">📲 SMS পাঠান</button>
-  </div>
-
-  <div class="sms-upload-section">
-    <div class="sms-upload-label">
-      <label for="fileInput" class="sms-custom-file-label">
-        📂 TXT ফাইল নির্বাচন করুন
-      </label>
-      <span id="fileNameDisplay" class="sms-file-name">কোনো ফাইল নির্বাচিত হয়নি</span>
-      <button class="sms-upload-btn" onclick="uploadFile()">⬆ আপলোড</button>
+  <div class="sms-glass-panel">
+    <div>
+      <h1>SMS</h1>
+      <div class="subhead">TXT আপলোড · শিট ব্যবস্থাপনা · SMS গেটওয়ে</div>
     </div>
-    <input type="file" id="fileInput" accept=".txt, text/plain">
-  </div>
 
-  <div class="sms-info-panel">
-    <div class="sms-info-title">⚡ অ্যাকশন ফিডব্যাক</div>
-    <div class="sms-status-message" id="out">
-      💡 প্রস্তুত — যেকোনো অ্যাকশন ক্লিক করুন বা .txt ফাইল আপলোড করুন
+    <div class="sms-action-bar">
+      <button class="sms-action-btn sms-btn-create" onclick="run('createSheet')">📑 SMS তৈরি</button>
+      <button class="sms-action-btn sms-btn-sync" onclick="run('sync')">🔄 Sync</button>
+      <button class="sms-action-btn sms-btn-sms" onclick="run('sendSMS')">📲 SMS পাঠান</button>
+    </div>
+
+    <div class="sms-upload-section">
+      <div class="sms-upload-label">
+        <label for="fileInput" class="sms-custom-file-label">
+          📂 TXT ফাইল নির্বাচন করুন
+        </label>
+        <span id="fileNameDisplay" class="sms-file-name">কোনো ফাইল নির্বাচিত হয়নি</span>
+        <button class="sms-upload-btn" onclick="uploadFile()">⬆ আপলোড</button>
+      </div>
+      <input type="file" id="fileInput" accept=".txt, text/plain">
+    </div>
+
+    <div class="sms-info-panel">
+      <div class="sms-info-title">⚡ অ্যাকশন ফিডব্যাক</div>
+      <div class="sms-status-message" id="out">
+        💡 প্রস্তুত — যেকোনো অ্যাকশন ক্লিক করুন বা .txt ফাইল আপলোড করুন
+      </div>
+    </div>
+
+    <div class="sms-output-area">
+      <div class="sms-info-title">📡 আপলোড স্ট্যাটাস</div>
+      <div class="sms-status-message" id="status">
+        ⏳ ফাইল আপলোডের অপেক্ষায়...
+      </div>
     </div>
   </div>
-
-  <div class="sms-output-area">
-    <div class="sms-info-title">📡 আপলোড স্ট্যাটাস</div>
-    <div class="sms-status-message" id="status">
-      ⏳ ফাইল আপলোডের অপেক্ষায়...
-    </div>
-  </div>
-</div>
 </main>
 
 <section>
-  
-<!-- MAIN NAMESPACE WRAPPER: .smsreport added exactly as required -->
-<div class="smsreport">
+  <div class="smsreport">
+    <!-- MODERN LOADER OVERLAY (replaces old) -->
+    <div id="modernLoader" class="modern-loader-overlay">
+      <div class="modern-spinner"></div>
+      <div class="loader-text">অপেক্ষা করুন...</div>
+    </div>
 
-<div id="loader">
-  <div class="loader-content">
-    <div class="spinner"></div>
-    <span>লোড হচ্ছে...</span>
+    <div class="container">
+      <h2>📊 SMS Dashboard</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="title">মোট SMS</div>
+          <div class="value" id="sms">0</div>
+        </div>
+        <div class="card">
+          <div class="title">SMS খরচ</div>
+          <div class="value" id="cost">৳ 0</div>
+        </div>
+        <div class="card">
+          <div class="title">Recharge (৳)</div>
+          <div class="value" id="rtk">0</div>
+        </div>
+        <div class="card">
+          <div class="title">বাকি টাকা</div>
+          <div class="value" id="remtk">0</div>
+        </div>
+        <div class="card">
+          <div class="title">বাকি SMS</div>
+          <div class="value" id="remsms">0</div>
+        </div>
+        <div class="card">
+          <div class="title">Recharge এমাউন্ট</div>
+          <input type="number" id="amount" placeholder="Enter amount" autocomplete="off">
+          <button class="recharge" id="rechargeBtn">Recharge</button>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:20px;">
+        <div class="card">
+          <button class="refresh" onclick="loadDashboard()">Refresh</button>
+        </div>
+        <div class="card">
+          <button class="reset" onclick="resetRecharge()">Reset Recharge</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
-<div class="container">
-
-<h2>📊 SMS Dashboard</h2>
-
-<div class="grid">
-
-  <div class="card">
-    <div class="title">মোট SMS</div>
-    <div class="value" id="sms">0</div>
-  </div>
-
-  <div class="card">
-    <div class="title">SMS খরচ</div>
-    <div class="value" id="cost">৳ 0</div>
-  </div>
-
-  <div class="card">
-    <div class="title">Recharge (৳)</div>
-    <div class="value" id="rtk">0</div>
-  </div>
-
-  <div class="card">
-    <div class="title">বাকি টাকা</div>
-    <div class="value" id="remtk">0</div>
-  </div>
-
-  <div class="card">
-    <div class="title">বাকি SMS</div>
-    <div class="value" id="remsms">0</div>
-  </div>
-
-  <div class="card">
-    <div class="title">Recharge এমাউন্ট</div>
-    <input type="number" id="amount" placeholder="Enter amount" autocomplete="off">
-    <button class="recharge" id="rechargeBtn">Recharge</button>
-  </div>
-
-</div>
-
-<div class="grid" style="margin-top:20px;">
-
-  <div class="card">
-    <button class="refresh" onclick="load()">Refresh</button>
-  </div>
-
-  <div class="card">
-    <button class="reset" onclick="reset()">Reset Recharge</button>
-  </div>
-
-</div>
-
-</div>
-
-</div>
 </section>
+
+<!-- TOAST CONTAINER -->
+<div id="toastStack" class="toast-stack"></div>
 
 <script src="student-sms.js"></script>
 <script src="nav.js"></script>
