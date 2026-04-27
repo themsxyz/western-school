@@ -46,14 +46,6 @@
       padding: 0 0 0.5rem 0;
     }
 
-    /* preserve inner spacing for both areas, keep original card aesthetics */
-    .sms-glass-panel {
-      margin: 0 0.25rem 0 0;
-    }
-
-    .smsreport .container {
-      margin-top: 0;
-    }
 
     /* responsive: on tablets & mobiles, stack vertically */
     @media (max-width: 900px) {
@@ -456,7 +448,115 @@
 </main>
 
 <section>
+<style>
+    .CsvContainer {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f5f7fb, #e8ecf3);
+    }
 
+    .CsvBox {
+      padding: 16px;
+      width: 380px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .CsvBox button {
+      margin: 5px 0;
+      padding: 8px;
+      width: 100%;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      background: #111827;
+      color: #fff;
+    }
+
+    .CsvBox input[type=file] {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .CsvBox pre {
+      background: #f4f4f4;
+      padding: 10px;
+      height: 120px;
+      overflow: auto;
+      border-radius: 6px;
+    }
+  </style>
+
+<div class="CsvContainer">
+  <div class="CsvBox">
+    <h3>CSV Upload System</h3>
+
+    <input type="file" id="CsvFile" accept=".csv,.txt" />
+
+    <button onclick="CsvUpload()">Upload CSV</button>
+    <button onclick="CsvSync()">Sync</button>
+    <button onclick="CsvRefresh()">Refresh</button>
+    <button onclick="CsvClear()">Clear CSV Data</button>
+
+    <h4>Status</h4>
+    <pre id="CsvOutput"></pre>
+  </div>
+</div>
+
+<script>
+
+const CsvScriptURL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+
+function CsvLog(msg) {
+  document.getElementById("CsvOutput").textContent = msg;
+}
+
+function CsvUpload() {
+  var file = document.getElementById("CsvFile").files[0];
+  if (!file) return CsvLog("Select a file first");
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    fetch(CsvScriptURL, {
+      method: "POST",
+      body: e.target.result
+    })
+    .then(res => res.text())
+    .then(data => CsvLog("Upload Done: " + data))
+    .catch(err => CsvLog("Error: " + err));
+  };
+
+  reader.readAsText(file);
+}
+
+function CsvSync() {
+  fetch(CsvScriptURL)
+    .then(res => res.json())
+    .then(data => CsvLog("Sync: " + JSON.stringify(data, null, 2)))
+    .catch(err => CsvLog("Error: " + err));
+}
+
+function CsvRefresh() {
+  CsvLog("Refreshing...");
+  CsvSync();
+}
+
+function CsvClear() {
+  let url = CsvScriptURL + "?mode=admin&reset=true";
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => CsvLog("Cleared: " + JSON.stringify(data)))
+    .catch(err => CsvLog("Error: " + err));
+}
+
+</script>
 </section>
 
 <!-- TOAST CONTAINER -->
