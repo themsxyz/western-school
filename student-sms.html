@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Western School</title>
   <link rel="stylesheet" href="student-sms.css">
+  <link rel="stylesheet" href="student-smssend.css">
 </head>
 <body>
 <header>
@@ -317,6 +318,8 @@
 </header>
 
 <main>
+
+<main>
 <div class="CsvContainer">
   <div class="CsvBox">
     <h3>CSV Upload System</h3>
@@ -333,8 +336,58 @@
   </div>
 </div>
 
+  
+
+
+<div class="dashboard-container">
+  <h2>📱 এসএমএস ড্যাশবোর্ড</h2>
+
+  <div class="button-group">
+    <button class="glass-btn btn-primary" id="createSheetBtn">📑 শীট লোড করুন</button>
+    <button class="glass-btn btn-primary" id="syncBtn">🔄 সিঙ্ক করুন</button>
+    <button class="glass-btn btn-success" id="sendSmsBtn">📲 এসএমএস পাঠান</button>
+    <button class="glass-btn btn-danger" id="clearDataBtn">🗑️ সব ডেটা মুছুন</button>
+    <button class="glass-btn" id="refreshBtn">🔄 রিফ্রেশ ডেটা</button>
+  </div>
+
+  <div class="status-card" id="statusMessage">
+    ✅ প্রস্তুত — যেকোনো বাটনে ক্লিক করুন
+  </div>
+
+  <div class="table-wrapper">
+    <table dir="ltr">
+      <thead>
+        <tr>
+          <th>📞 মোবাইল নম্বর</th>
+          <th>👤 নাম</th>
+          <th>📚 শ্রেণি</th>
+          <th>⏱️ তারিখ ও সময়</th>
+          <th>📌 স্ট্যাটাস</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="empty-row">
+          <td colspan="5">📭 এখনো কোনো তথ্য নেই। "শীট লোড করুন" বা "রিফ্রেশ"-এ ক্লিক করুন</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- লোডার ওভারলে -->
+<div id="modernLoader" class="modern-loader">
+  <div class="loader-spinner"></div>
+  <div class="loader-text">প্রক্রিয়াধীন, একটু অপেক্ষা করুন...</div>
+</div>
+
+<!-- টোস্ট জায়গা -->
+<div id="toastStack" class="toast-stack"></div>
+
 </main>
 
+</main>
+
+<script src="student-smssend.js"></script>
 <script src="student-sms.js"></script>
 <script src="nav.js"></script>
 </body>
