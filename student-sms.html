@@ -408,93 +408,55 @@
 
 
 <main>
-  <div class="sms-glass-panel">
-    <div>
-      <h1>SMS</h1>
-      <div class="subhead">TXT আপলোড · শিট ব্যবস্থাপনা · SMS গেটওয়ে</div>
-    </div>
+  
+<div class="dashboard-container">
+  <h2>📱 এসএমএস ড্যাশবোর্ড</h2>
 
-    <div class="sms-action-bar">
-      <button class="sms-action-btn sms-btn-create" onclick="run('createSheet')">📑 SMS তৈরি</button>
-      <button class="sms-action-btn sms-btn-sync" onclick="run('sync')">🔄 Sync</button>
-      <button class="sms-action-btn sms-btn-sms" onclick="run('sendSMS')">📲 SMS পাঠান</button>
-    </div>
-
-    <div class="sms-upload-section">
-      <div class="sms-upload-label">
-        <label for="fileInput" class="sms-custom-file-label">
-          📂 TXT ফাইল নির্বাচন করুন
-        </label>
-        <span id="fileNameDisplay" class="sms-file-name">কোনো ফাইল নির্বাচিত হয়নি</span>
-        <button class="sms-upload-btn" onclick="uploadFile()">⬆ আপলোড</button>
-      </div>
-      <input type="file" id="fileInput" accept=".txt, text/plain">
-    </div>
-
-    <div class="sms-info-panel">
-      <div class="sms-info-title">⚡ অ্যাকশন ফিডব্যাক</div>
-      <div class="sms-status-message" id="out">
-        💡 প্রস্তুত — যেকোনো অ্যাকশন ক্লিক করুন বা .txt ফাইল আপলোড করুন
-      </div>
-    </div>
-
-    <div class="sms-output-area">
-      <div class="sms-info-title">📡 আপলোড স্ট্যাটাস</div>
-      <div class="sms-status-message" id="status">
-        ⏳ ফাইল আপলোডের অপেক্ষায়...
-      </div>
-    </div>
+  <div class="button-group">
+    <button class="glass-btn btn-primary" id="createSheetBtn">📑 শীট লোড করুন</button>
+    <button class="glass-btn btn-primary" id="syncBtn">🔄 সিঙ্ক করুন</button>
+    <button class="glass-btn btn-success" id="sendSmsBtn">📲 এসএমএস পাঠান</button>
+    <button class="glass-btn btn-danger" id="clearDataBtn">🗑️ সব ডেটা মুছুন</button>
+    <button class="glass-btn" id="refreshBtn">🔄 রিফ্রেশ ডেটা</button>
   </div>
+
+  <div class="status-card" id="statusMessage">
+    ✅ প্রস্তুত — যেকোনো বাটনে ক্লিক করুন
+  </div>
+
+  <div class="table-wrapper">
+    <table dir="ltr">
+      <thead>
+        <tr>
+          <th>📞 মোবাইল নম্বর</th>
+          <th>👤 নাম</th>
+          <th>📚 শ্রেণি</th>
+          <th>⏱️ তারিখ ও সময়</th>
+          <th>📌 স্ট্যাটাস</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="empty-row">
+          <td colspan="5">📭 এখনো কোনো তথ্য নেই। "শীট লোড করুন" বা "রিফ্রেশ"-এ ক্লিক করুন</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- লোডার ওভারলে -->
+<div id="modernLoader" class="modern-loader">
+  <div class="loader-spinner"></div>
+  <div class="loader-text">প্রক্রিয়াধীন, একটু অপেক্ষা করুন...</div>
+</div>
+
+<!-- টোস্ট জায়গা -->
+<div id="toastStack" class="toast-stack"></div>
+
 </main>
 
 <section>
-  <div class="smsreport">
-    <!-- MODERN LOADER OVERLAY (replaces old) -->
-    <div id="modernLoader" class="modern-loader-overlay">
-      <div class="modern-spinner"></div>
-      <div class="loader-text">অপেক্ষা করুন...</div>
-    </div>
 
-    <div class="container">
-      <h2>📊 SMS Dashboard</h2>
-      <div class="grid">
-        <div class="card">
-          <div class="title">মোট SMS</div>
-          <div class="value" id="sms">0</div>
-        </div>
-        <div class="card">
-          <div class="title">SMS খরচ</div>
-          <div class="value" id="cost">৳ 0</div>
-        </div>
-        <div class="card">
-          <div class="title">Recharge (৳)</div>
-          <div class="value" id="rtk">0</div>
-        </div>
-        <div class="card">
-          <div class="title">বাকি টাকা</div>
-          <div class="value" id="remtk">0</div>
-        </div>
-        <div class="card">
-          <div class="title">বাকি SMS</div>
-          <div class="value" id="remsms">0</div>
-        </div>
-        <div class="card">
-          <div class="title">Recharge এমাউন্ট</div>
-          <input type="number" id="amount" placeholder="Enter amount" autocomplete="off">
-          <button class="recharge" id="rechargeBtn">Recharge</button>
-        </div>
-      </div>
-
-      <div class="grid" style="margin-top:20px;">
-        <div class="card">
-          <button class="refresh" onclick="loadDashboard()">Refresh</button>
-        </div>
-        <div class="card">
-          <button class="reset" onclick="resetRecharge()">Reset Recharge</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- TOAST CONTAINER -->
