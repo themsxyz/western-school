@@ -1,1 +1,43 @@
  @import "nav.css";
+.CsvContainer {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f5f7fb, #e8ecf3);
+    }
+
+    .CsvBox {
+      padding: 16px;
+      width: 380px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .CsvBox button {
+      margin: 5px 0;
+      padding: 8px;
+      width: 100%;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      background: #111827;
+      color: #fff;
+    }
+
+    .CsvBox input[type=file] {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .CsvBox pre {
+      background: #f4f4f4;
+      padding: 10px;
+      height: 120px;
+      overflow: auto;
+      border-radius: 6px;
+    }

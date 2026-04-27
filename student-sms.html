@@ -317,6 +317,21 @@
 </header>
 
 <main>
+<div class="CsvContainer">
+  <div class="CsvBox">
+    <h3>CSV Upload System</h3>
+
+    <input type="file" id="CsvFile" accept=".csv,.txt" />
+
+    <button onclick="CsvUpload()">Upload CSV</button>
+    <button onclick="CsvSync()">Sync</button>
+    <button onclick="CsvRefresh()">Refresh</button>
+    <button onclick="CsvClear()">Clear CSV Data</button>
+
+    <h4>Status</h4>
+    <pre id="CsvOutput"></pre>
+  </div>
+</div>
 
 </main>
 
