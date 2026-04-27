@@ -1,7 +1,7 @@
   // ========================
   // API কনফিগারেশন (একই গুগল স্ক্রিপ্ট)
   // ========================
-  const BASE_URL = "https://script.google.com/macros/s/AKfycbzhbaVfe3UcQKX3Cq4OR-9rwB11IVBXsfwxvmXcMqju-DK6SAkhRKqGTnEtgKzh-lHA_w/exec";
+  const BASE_URL = "https://script.google.com/macros/s/AKfycbzoItrYKh8ixqEZ60sxss55Mwh5N6pTOYz-iZdpMX6YN-chkYyXo2dexahcFjOMfQX6Ag/exec";
 
   // ========================
   // মডার্ন লোডার কন্ট্রোল
