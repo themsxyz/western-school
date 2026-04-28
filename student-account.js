@@ -314,20 +314,12 @@ if(phoneField) {
     });
 }
 
-// On page load: check URL class parameter first
-let classFromUrl = getUrlParameter('class');
-let targetClass = null;
-if (classFromUrl && CLASS_API_MAP[classFromUrl]) {
-    targetClass = classFromUrl;
-} else {
-    targetClass = localStorage.getItem("selectedClassKey");
-    if (!targetClass || !CLASS_API_MAP[targetClass]) targetClass = null;
-}
-if (targetClass) {
-    const classSelect = document.getElementById("classSelect");
-    if (classSelect) classSelect.value = targetClass;
-    activateClass(targetClass, false);
-} else {
-    updateClassStatusUI();
-    resetAllUIContent();
-}
+// ========== ON PAGE LOAD: NO CLASS SELECTED BY DEFAULT ==========
+// Clear any previously stored class selection to prevent auto-activation
+localStorage.removeItem("selectedClassKey");
+// Ensure the backend class dropdown shows empty
+const backendClassSelect = document.getElementById("classSelect");
+if (backendClassSelect) backendClassSelect.value = "";
+// Reset UI and show "no active class" message
+updateClassStatusUI();
+resetAllUIContent();
