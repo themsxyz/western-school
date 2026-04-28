@@ -38,10 +38,16 @@ function showConfirm(message) {
 }
 window.confirm = async function(msg) { return await showConfirm(msg); };
 
-// ---------- LOADER ----------
+// ---------- LOADER (only shown during fetch) ----------
 const loaderOverlay = document.getElementById("globalLoader");
-function showLoader() { if(loaderOverlay) loaderOverlay.style.display = "flex"; }
-function hideLoader() { if(loaderOverlay) loaderOverlay.style.display = "none"; }
+let loaderTimeout = null;
+function showLoader() {
+    if (loaderTimeout) clearTimeout(loaderTimeout);
+    if (loaderOverlay) loaderOverlay.style.display = "flex";
+}
+function hideLoader() {
+    if (loaderOverlay) loaderOverlay.style.display = "none";
+}
 
 // ---------- API MAPPING ----------
 const CLASS_API_MAP = {
@@ -54,6 +60,20 @@ const CLASS_API_MAP = {
     class4: "https://script.google.com/macros/s/AKfycbyzuGgkk4osZCf45qkb40RKSa6I3nBFhLSG3B618rn0_PaBMv62K8YIh8R7-eGQqydF/exec",
     class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
 };
+
+function getBengaliClassName(classKey) {
+    const map = {
+        nursery: "নার্সারি",
+        play: "প্লে",
+        kg: "কেজি",
+        class1: "প্রথম শ্রেণি",
+        class2: "দ্বিতীয় শ্রেণি",
+        class3: "তৃতীয় শ্রেণি",
+        class4: "চতুর্থ শ্রেণি",
+        class5: "পঞ্চম শ্রেণি"
+    };
+    return map[classKey] || "";
+}
 
 let currentApiUrl = null, currentActiveClassKey = null, currentStudent = null;
 
@@ -73,7 +93,7 @@ function resetAllUIContent() {
 function updateClassStatusUI() {
     const area = document.getElementById("classStatusArea");
     if(currentApiUrl && currentActiveClassKey) {
-        let displayName = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" }[currentActiveClassKey] || currentActiveClassKey;
+        let displayName = getBengaliClassName(currentActiveClassKey);
         area.innerHTML = `<div style="background:#eef2ff; color:#1e3a5f;">✅ সক্রিয় ক্লাস: ${displayName}</div>`;
     } else area.innerHTML = `<div style="background:#f1f5f9; color:#475569;">⚠️ কোন সক্রিয় ক্লাস নেই। অনুগ্রহ করে ক্লাস নির্বাচন করুন।</div>`;
 }
@@ -247,7 +267,13 @@ function activateClass(classKey, updateHistory = true) {
     localStorage.setItem("selectedClassKey", classKey);
     updateClassStatusUI();
     resetAllUIContent();
-    showToast(`${classKey.toUpperCase()} ক্লাস সক্রিয়`, "success");
+    
+    // Auto-fill the "শ্রেণি" field with Bengali class name
+    const bengaliClass = getBengaliClassName(classKey);
+    const classField = document.getElementById("newClass");
+    if (classField && bengaliClass) classField.value = bengaliClass;
+    
+    showToast(`${bengaliClass || classKey} ক্লাস সক্রিয়`, "success");
     if (updateHistory) {
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.set('class', classKey);
@@ -294,7 +320,7 @@ if(phoneField) {
     });
 }
 
-// On page load: check URL class parameter first
+// ---------- PAGE INITIALIZATION (Fast, no unnecessary API calls) ----------
 let classFromUrl = getUrlParameter('class');
 let targetClass = null;
 if (classFromUrl && CLASS_API_MAP[classFromUrl]) {
@@ -306,7 +332,7 @@ if (classFromUrl && CLASS_API_MAP[classFromUrl]) {
 if (targetClass) {
     const classSelect = document.getElementById("classSelect");
     if (classSelect) classSelect.value = targetClass;
-    activateClass(targetClass, false); // do not push another history entry
+    activateClass(targetClass, false); // update UI & fill class field, but don't change URL again
 } else {
     updateClassStatusUI();
     resetAllUIContent();
