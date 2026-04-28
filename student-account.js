@@ -1,4 +1,4 @@
-// ---------- GLASS TOAST ----------
+// ---------- GLASS TOAST FUNCTION (replaces old toast) ----------
 const toastElement = document.getElementById('glassToast');
 const toastMessageSpan = toastElement.querySelector('.toast-message');
 const toastIcon = toastElement.querySelector('.toast-icon svg');
@@ -6,6 +6,7 @@ let toastTimeout = null;
 
 function showToast(message, type = 'info') {
     if (toastTimeout) clearTimeout(toastTimeout);
+
     let iconPath = '';
     if (type === 'success') {
         iconPath = '<circle cx="12" cy="12" r="10"/><polyline points="18 8 12 16 8 12"/>';
@@ -14,39 +15,78 @@ function showToast(message, type = 'info') {
     } else {
         iconPath = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
     }
+
     toastIcon.innerHTML = iconPath;
     toastMessageSpan.textContent = message;
+
     toastElement.classList.remove('show');
     void toastElement.offsetWidth;
     toastElement.classList.add('show');
-    toastTimeout = setTimeout(() => toastElement.classList.remove('show'), 4000);
-}
-window.alert = function(msg) { showToast(msg, 'info'); };
 
+    toastTimeout = setTimeout(() => {
+        toastElement.classList.remove('show');
+    }, 4000);
+}
+
+// Close toast
+const closeBtn = toastElement.querySelector('.toast-close');
+closeBtn.addEventListener('click', () => {
+    toastElement.classList.remove('show');
+    if (toastTimeout) clearTimeout(toastTimeout);
+});
+
+// Override alert
+window.alert = function(msg) {
+    showToast(msg, 'info');
+};
+
+// ---------- CONFIRM ----------
 function showConfirm(message) {
     return new Promise((resolve) => {
         const overlay = document.createElement("div");
         overlay.className = "account-confirm-overlay";
-        overlay.innerHTML = `<div class="account-confirm-card"><p style="font-size:1rem; margin-bottom:14px;">❓ ${message}</p><div style="display: flex; gap: 16px; justify-content: center;"><button id="confirmYesBtn" style="background:#2f6b47; border-radius:999px; padding:6px 16px;">হ্যাঁ</button><button id="confirmNoBtn" style="background:#9b7b5c; border-radius:999px; padding:6px 16px;">না</button></div></div>`;
+        overlay.innerHTML = `
+            <div class="account-confirm-card">
+                <p style="font-size:1rem; margin-bottom:14px;">❓ ${message}</p>
+                <div style="display:flex; gap:16px; justify-content:center;">
+                    <button id="confirmYesBtn" style="background:#2f6b47;">হ্যাঁ</button>
+                    <button id="confirmNoBtn" style="background:#9b7b5c;">না</button>
+                </div>
+            </div>
+        `;
         document.body.appendChild(overlay);
+
         const yesBtn = overlay.querySelector("#confirmYesBtn");
         const noBtn = overlay.querySelector("#confirmNoBtn");
-        const cleanup = (result) => { overlay.remove(); resolve(result); };
+
+        const cleanup = (res) => {
+            overlay.remove();
+            resolve(res);
+        };
+
         yesBtn.onclick = () => cleanup(true);
         noBtn.onclick = () => cleanup(false);
     });
 }
-window.confirm = async function(msg) { return await showConfirm(msg); };
+window.confirm = async function(msg) {
+    return await showConfirm(msg);
+};
 
 // ---------- LOADER ----------
 const loaderOverlay = document.getElementById("globalLoader");
-function showLoader() { if(loaderOverlay) loaderOverlay.style.display = "flex"; }
-function hideLoader() { if(loaderOverlay) loaderOverlay.style.display = "none"; }
 
-// ---------- API MAPPING ----------
+function showLoader() {
+    if (loaderOverlay) loaderOverlay.style.display = "flex";
+}
+
+function hideLoader() {
+    if (loaderOverlay) loaderOverlay.style.display = "none";
+}
+
+// ---------- API MAP ----------
 const CLASS_API_MAP = {
     nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
-    play: "https://script.google.com/macros/s/AKfycbw8Go4t0RVGK_Mxa2VP-iCYRv_aIikqgZV48gYM3dIPW58dkQfEpm9SL-gtz6teJNH7/exec",
+    play: "https://script.google.com/macros/s/AKfycbzhtst-Y7Z4BNtDNW76zginGzhVJ9CCYM8WOot2Ij1IzPLrtxVIb6p7JuDT_ZOhgiKi/exec",
     kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
     class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
     class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
@@ -55,271 +95,158 @@ const CLASS_API_MAP = {
     class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
 };
 
-let currentApiUrl = null, currentActiveClassKey = null, currentStudent = null;
+let currentApiUrl = null;
+let currentActiveClassKey = null;
+let currentStudent = null;
 
+// ---------- RESET UI ----------
 function resetAllUIContent() {
-    document.getElementById("profileView").classList.add("account-hidden"); 
+    document.getElementById("profileView").classList.add("account-hidden");
     document.getElementById("profileView").innerHTML = "";
+
     document.getElementById("searchId").value = "";
-    document.getElementById("updateBtn").classList.add("account-hidden"); 
+
+    document.getElementById("updateBtn").classList.add("account-hidden");
     document.getElementById("deleteStudentBtn").classList.add("account-hidden");
+
     currentStudent = null;
+
     document.getElementById("formTitle").innerHTML = "➕ নতুন শিক্ষার্থী তৈরি";
-    const fields = ["newId","newName","newRoll","newClass","newSection","newPhotoUrl","newDob","newBcn","newFname","newMname","newFnid","newMnid","newAddress","newPhone","newBlood"];
-    fields.forEach(f => { let el = document.getElementById(f); if(el) el.value = ""; });
+
+    const fields = [
+        "newId","newName","newRoll","newClass","newSection",
+        "newPhotoUrl","newDob","newBcn","newFname","newMname",
+        "newFnid","newMnid","newAddress","newPhone","newBlood"
+    ];
+
+    fields.forEach(f => {
+        let el = document.getElementById(f);
+        if (el) el.value = "";
+    });
+
     document.getElementById("newPhotoFile").value = "";
-    // Reset class dropdown to default empty
-    const classSelect = document.getElementById("newClass");
-    if(classSelect) classSelect.value = "";
 }
 
+// ---------- CLASS SYNC (NEW) ----------
+document.getElementById("classSelect").addEventListener("change", function () {
+    document.getElementById("newClass").value = this.value;
+});
+
+document.getElementById("newClass").addEventListener("change", function () {
+    const val = this.value;
+    if (val) document.getElementById("classSelect").value = val;
+});
+
+// ---------- CLASS STATUS ----------
 function updateClassStatusUI() {
     const area = document.getElementById("classStatusArea");
-    if(currentApiUrl && currentActiveClassKey) {
-        let displayName = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" }[currentActiveClassKey] || currentActiveClassKey;
-        area.innerHTML = `<div style="background:#eef2ff; color:#1e3a5f;">✅ সক্রিয় ক্লাস: ${displayName}</div>`;
-    } else area.innerHTML = `<div style="background:#f1f5f9; color:#475569;">⚠️ কোন সক্রিয় ক্লাস নেই। অনুগ্রহ করে ক্লাস নির্বাচন করুন।</div>`;
+
+    if (currentApiUrl && currentActiveClassKey) {
+        let displayName = {
+            nursery:"নার্সারি",
+            play:"প্লে",
+            kg:"কেজি",
+            class1:"প্রথম শ্রেণি",
+            class2:"দ্বিতীয় শ্রেণি",
+            class3:"তৃতীয় শ্রেণি",
+            class4:"চতুর্থ শ্রেণি",
+            class5:"পঞ্চম শ্রেণি"
+        }[currentActiveClassKey] || currentActiveClassKey;
+
+        area.innerHTML = `✅ সক্রিয় ক্লাস: ${displayName}`;
+    } else {
+        area.innerHTML = `⚠️ কোন সক্রিয় ক্লাস নেই`;
+    }
 }
 
+// ---------- API CALL ----------
 async function callApi(action, payload) {
-    if (!currentApiUrl) { showToast("প্রথমে ক্লাস নির্বাচন ও নিশ্চিত করুন!", "error"); throw new Error("No API"); }
+    if (!currentApiUrl) {
+        showToast("ক্লাস নির্বাচন করুন", "error");
+        throw new Error("No API");
+    }
+
     try {
-        const res = await fetch(currentApiUrl, { method: "POST", body: JSON.stringify({ action, ...payload }) });
-        const data = await res.json();
-        return data;
-    } catch (err) { showToast("নেটওয়ার্ক সমস্যা! ব্যাকএন্ড চেক করুন।", "error"); throw err; }
+        const res = await fetch(currentApiUrl, {
+            method: "POST",
+            body: JSON.stringify({ action, ...payload })
+        });
+
+        return await res.json();
+    } catch (err) {
+        showToast("নেটওয়ার্ক সমস্যা", "error");
+        throw err;
+    }
 }
 
-function fileToBase64(file) { 
-    return new Promise((resolve, reject) => { 
-        const reader = new FileReader(); 
-        reader.readAsDataURL(file); 
-        reader.onload = () => resolve(reader.result); 
-        reader.onerror = reject; 
-    }); 
+// ---------- FILE ----------
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
 }
 
-const PROFILE_IMAGE_URL = "https://res.cloudinary.com/do1dejkkk/image/upload/v1777138381/profile-svgrepo-com_jalrok.svg";
-function getProfileImageHtml() { return `<img src="${PROFILE_IMAGE_URL}" class="account-profile-img" alt="প্রোফাইল">`; }
+// ---------- PROFILE ----------
+const PROFILE_IMAGE_URL =
+    "https://res.cloudinary.com/do1dejkkk/image/upload/v1777138381/profile-svgrepo-com_jalrok.svg";
+
+function getProfileImageHtml() {
+    return `<img src="${PROFILE_IMAGE_URL}" class="account-profile-img">`;
+}
 
 function displayProfile(basic) {
-    const container = document.getElementById("profileView"); 
+    const container = document.getElementById("profileView");
     container.classList.remove("account-hidden");
-    const photoHtml = getProfileImageHtml();
-    let infoHtml = `<div style="display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">${photoHtml}<h3 style="color:#1e3a5f;">${basic["Student Name"] || ""}</h3></div><div class="account-info-grid">`;
-    for(let [k,v] of Object.entries(basic)) if(k!=="Photo URL" && k!=="Student Name") infoHtml += `<div><strong>${k}:</strong> ${v || '—'}</div>`;
-    infoHtml += `</div>`; 
-    container.innerHTML = infoHtml;
-}
 
-async function handleSearch() {
-    if(!currentApiUrl){ showToast("ক্লাস সক্রিয় করুন","error"); return; }
-    const id = document.getElementById("searchId").value.trim(); 
-    if(!id) { showToast("আইডি দিন","warning"); return; }
-    showLoader();
-    try {
-        const res = await callApi("getFullData", { id });
-        if(res.status==="found") {
-            currentStudent = res; 
-            displayProfile(res.basic);
-            document.getElementById("updateBtn").classList.remove("account-hidden"); 
-            document.getElementById("deleteStudentBtn").classList.remove("account-hidden");
-            document.getElementById("formTitle").innerHTML = "✏️ শিক্ষার্থী সম্পাদনা";
-            const b = res.basic;
-            document.getElementById("newId").value = id; 
-            document.getElementById("newName").value = b["Student Name"] || ""; 
-            document.getElementById("newRoll").value = b["Roll"] || "";
-            // Set class dropdown value (English name)
-            const classValue = b["Class"] || "";
-            const classSelect = document.getElementById("newClass");
-            if(classSelect) {
-                let found = false;
-                for(let i=0; i<classSelect.options.length; i++) {
-                    if(classSelect.options[i].value === classValue) {
-                        classSelect.selectedIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
-                if(!found) classSelect.value = "";
-            }
-            document.getElementById("newSection").value = b["Section"] || ""; 
-            document.getElementById("newPhotoUrl").value = b["Photo URL"] || "";
-            document.getElementById("newDob").value = b["Date of birth"] || ""; 
-            document.getElementById("newBcn").value = b["Birth registration number"] || "";
-            document.getElementById("newFname").value = b["Father's name"] || ""; 
-            document.getElementById("newMname").value = b["Mother's name"] || "";
-            document.getElementById("newFnid").value = b["Father's NID"] || ""; 
-            document.getElementById("newMnid").value = b["Mother's NID"] || "";
-            document.getElementById("newAddress").value = b["Address"] || ""; 
-            document.getElementById("newPhone").value = b["Phone number"] || ""; 
-            document.getElementById("newBlood").value = b["Blood group"] || "";
-        } else { showToast("শিক্ষার্থী পাওয়া যায়নি","error"); resetAllUIContent(); }
-    } catch(e) { console.warn(e); }
-    finally { hideLoader(); }
-}
+    let html = `<div style="display:flex; gap:1rem; align-items:center;">
+        ${getProfileImageHtml()}
+        <h3>${basic["Student Name"] || ""}</h3>
+    </div><div class="account-info-grid">`;
 
-const searchInput = document.getElementById("searchId");
-const searchBtn = document.getElementById("searchBtn");
-searchBtn.onclick = handleSearch;
-searchInput.addEventListener("keypress", function(e) { if(e.key === "Enter") { e.preventDefault(); handleSearch(); } });
-
-async function performAsyncAction(actionFn) { showLoader(); try { await actionFn(); } finally { hideLoader(); } }
-
-document.getElementById("createBtn").onclick = async () => {
-    if(!currentApiUrl){ showToast("ক্লাস সক্রিয় করুন","error"); return; }
-    const id = document.getElementById("newId").value.trim(); 
-    if(!id) { showToast("আইডি প্রয়োজন","warning"); return; }
-    const classVal = document.getElementById("newClass").value;
-    if(!classVal) { showToast("শ্রেণি নির্বাচন করুন","warning"); return; }
-    await performAsyncAction(async () => {
-        let photoBase64 = null; 
-        const file = document.getElementById("newPhotoFile").files[0]; 
-        if(file) photoBase64 = await fileToBase64(file);
-        const payload = { 
-            id, 
-            name: document.getElementById("newName").value, 
-            roll: document.getElementById("newRoll").value, 
-            class: classVal, 
-            section: document.getElementById("newSection").value, 
-            photoUrl: document.getElementById("newPhotoUrl").value, 
-            photoBase64, 
-            dob: document.getElementById("newDob").value, 
-            bcn: document.getElementById("newBcn").value, 
-            fname: document.getElementById("newFname").value, 
-            mname: document.getElementById("newMname").value, 
-            fnid: document.getElementById("newFnid").value, 
-            mnid: document.getElementById("newMnid").value, 
-            address: document.getElementById("newAddress").value, 
-            phone: document.getElementById("newPhone").value, 
-            blood: document.getElementById("newBlood").value 
-        };
-        const res = await callApi("create", payload);
-        if(res.status==="created") { showToast("শিক্ষার্থী সফলভাবে তৈরি!","success"); resetAllUIContent(); } 
-        else showToast(res.message || "ত্রুটি","error");
-    });
-};
-
-document.getElementById("updateBtn").onclick = async () => {
-    if(!currentApiUrl || !currentStudent){ showToast("প্রথমে শিক্ষার্থী লোড করুন","error"); return; }
-    const id = document.getElementById("newId").value.trim(); 
-    if(!id) return;
-    const classVal = document.getElementById("newClass").value;
-    if(!classVal) { showToast("শ্রেণি নির্বাচন করুন","warning"); return; }
-    await performAsyncAction(async () => {
-        let photoBase64 = null; 
-        const file = document.getElementById("newPhotoFile").files[0]; 
-        if(file) photoBase64 = await fileToBase64(file);
-        const payload = { 
-            id, 
-            name: document.getElementById("newName").value, 
-            roll: document.getElementById("newRoll").value, 
-            class: classVal, 
-            section: document.getElementById("newSection").value, 
-            photoUrl: document.getElementById("newPhotoUrl").value, 
-            photoBase64, 
-            dob: document.getElementById("newDob").value, 
-            bcn: document.getElementById("newBcn").value, 
-            fname: document.getElementById("newFname").value, 
-            mname: document.getElementById("newMname").value, 
-            fnid: document.getElementById("newFnid").value, 
-            mnid: document.getElementById("newMnid").value, 
-            address: document.getElementById("newAddress").value, 
-            phone: document.getElementById("newPhone").value, 
-            blood: document.getElementById("newBlood").value 
-        };
-        const res = await callApi("updateBasic", payload);
-        if(res.status==="updated"){ showToast("হালনাগাদ সফল","success"); await handleSearch(); } 
-        else showToast("আপডেট ব্যর্থ","error");
-    });
-};
-
-document.getElementById("deleteStudentBtn").onclick = async () => {
-    if(!currentApiUrl) return;
-    const id = document.getElementById("searchId").value.trim();
-    if(!id) return;
-    if(await showConfirm("স্থায়ীভাবে মুছে ফেলতে চান?")) {
-        await performAsyncAction(async () => {
-            const res = await callApi("delete", { id }); 
-            if(res.status==="deleted"){ showToast("মুছে ফেলা হয়েছে","success"); resetAllUIContent(); } 
-            else showToast("ত্রুটি","error");
-        });
+    for (let [k,v] of Object.entries(basic)) {
+        if (k !== "Photo URL" && k !== "Student Name") {
+            html += `<div><strong>${k}:</strong> ${v || "—"}</div>`;
+        }
     }
-};
 
-function triggerPrimaryAction() {
-    const updateBtn = document.getElementById("updateBtn");
-    const createBtn = document.getElementById("createBtn");
-    if (updateBtn && !updateBtn.classList.contains("account-hidden")) updateBtn.click();
-    else if (createBtn) createBtn.click();
+    html += `</div>`;
+    container.innerHTML = html;
 }
 
-const formInputs = document.querySelectorAll("#studentFormGrid input, #studentFormGrid select");
-formInputs.forEach(input => { input.addEventListener("keypress", function(e) { if (e.key === "Enter") { e.preventDefault(); triggerPrimaryAction(); } }); });
-const textareas = document.querySelectorAll("#studentFormGrid textarea");
-textareas.forEach(ta => { ta.addEventListener("keypress", function(e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); triggerPrimaryAction(); } }); });
-
-function activateClass(classKey, updateHistory = true) {
+// ---------- ACTIVATE CLASS ----------
+function activateClass(classKey) {
     const url = CLASS_API_MAP[classKey];
     if (!url) return false;
+
     currentApiUrl = url;
     currentActiveClassKey = classKey;
+
     localStorage.setItem("selectedClassKey", classKey);
+
     updateClassStatusUI();
     resetAllUIContent();
-    showToast(`${classKey.toUpperCase()} ক্লাস সক্রিয়`, "success");
-    if (updateHistory) {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set('class', classKey);
-        window.history.pushState({}, '', newUrl);
-    }
+
+    document.getElementById("newClass").value = classKey;
+
+    showToast(`${classKey.toUpperCase()} সক্রিয়`, "success");
     return true;
 }
 
-function getUrlParameter(name) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-    const results = regex.exec(window.location.href);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+// ---------- INIT ----------
+let savedClass = localStorage.getItem("selectedClassKey");
+if (savedClass && CLASS_API_MAP[savedClass]) {
+    document.getElementById("classSelect").value = savedClass;
 }
 
-document.getElementById("applyClassBtn").onclick = () => {
-    const val = document.getElementById("classSelect").value;
-    if (val) {
-        activateClass(val, true);
-    } else {
-        showToast("ক্লাস নির্বাচন করুন", "warning");
-    }
-};
-
-document.getElementById("clearUiBtn").onclick = async () => {
-    if(await showConfirm("সমস্ত UI ডাটা সাফ করবেন?")) resetAllUIContent();
-};
-
-// Auto-capitalize name
-const nameField = document.getElementById("newName");
-if(nameField) {
-    nameField.addEventListener("input", function(e){
-        let words = e.target.value.split(" ");
-        this.value = words.map(w=> w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
-    });
-}
-// Phone number: only digits, max 11
-const phoneField = document.getElementById("newPhone");
-if(phoneField) {
-    phoneField.addEventListener("input", function(){
-        this.value = this.value.replace(/\D/g, '').slice(0,11);
-    });
-}
-
-// ========== ON PAGE LOAD: NO CLASS SELECTED BY DEFAULT ==========
-// Clear any previously stored class selection to prevent auto-activation
-localStorage.removeItem("selectedClassKey");
-// Ensure the backend class dropdown shows empty
-const backendClassSelect = document.getElementById("classSelect");
-if (backendClassSelect) backendClassSelect.value = "";
-// Reset UI and show "no active class" message
 updateClassStatusUI();
 resetAllUIContent();
+
+// ---------- APPLY BUTTON ----------
+document.getElementById("applyClassBtn").onclick = () => {
+    const val = document.getElementById("classSelect").value;
+    if (val) activateClass(val);
+    else showToast("ক্লাস নির্বাচন করুন", "warning");
+};
