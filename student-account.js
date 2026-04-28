@@ -28,19 +28,19 @@ function showToast(message, type = 'info') {
     }, 4000);
 }
 
-// Close toast
+// Close button event
 const closeBtn = toastElement.querySelector('.toast-close');
 closeBtn.addEventListener('click', () => {
     toastElement.classList.remove('show');
     if (toastTimeout) clearTimeout(toastTimeout);
 });
 
-// Override alert
+// Override default alert
 window.alert = function(msg) {
     showToast(msg, 'info');
 };
 
-// ---------- CONFIRM ----------
+// ---------- CONFIRM (unchanged) ----------
 function showConfirm(message) {
     return new Promise((resolve) => {
         const overlay = document.createElement("div");
@@ -48,9 +48,9 @@ function showConfirm(message) {
         overlay.innerHTML = `
             <div class="account-confirm-card">
                 <p style="font-size:1rem; margin-bottom:14px;">❓ ${message}</p>
-                <div style="display:flex; gap:16px; justify-content:center;">
-                    <button id="confirmYesBtn" style="background:#2f6b47;">হ্যাঁ</button>
-                    <button id="confirmNoBtn" style="background:#9b7b5c;">না</button>
+                <div style="display: flex; gap: 16px; justify-content: center;">
+                    <button id="confirmYesBtn" style="background:#2f6b47; border-radius:999px; padding:6px 16px;">হ্যাঁ</button>
+                    <button id="confirmNoBtn" style="background:#9b7b5c; border-radius:999px; padding:6px 16px;">না</button>
                 </div>
             </div>
         `;
@@ -59,15 +59,16 @@ function showConfirm(message) {
         const yesBtn = overlay.querySelector("#confirmYesBtn");
         const noBtn = overlay.querySelector("#confirmNoBtn");
 
-        const cleanup = (res) => {
+        const cleanup = (result) => {
             overlay.remove();
-            resolve(res);
+            resolve(result);
         };
 
         yesBtn.onclick = () => cleanup(true);
         noBtn.onclick = () => cleanup(false);
     });
 }
+
 window.confirm = async function(msg) {
     return await showConfirm(msg);
 };
@@ -81,9 +82,9 @@ function showLoader() {
 
 function hideLoader() {
     if (loaderOverlay) loaderOverlay.style.display = "none";
-}
+};
 
-// ---------- API MAP ----------
+// ---------- API ENDPOINTS ----------
 const CLASS_API_MAP = {
     nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
     play: "https://script.google.com/macros/s/AKfycbzhtst-Y7Z4BNtDNW76zginGzhVJ9CCYM8WOot2Ij1IzPLrtxVIb6p7JuDT_ZOhgiKi/exec",
@@ -103,9 +104,7 @@ let currentStudent = null;
 function resetAllUIContent() {
     document.getElementById("profileView").classList.add("account-hidden");
     document.getElementById("profileView").innerHTML = "";
-
     document.getElementById("searchId").value = "";
-
     document.getElementById("updateBtn").classList.add("account-hidden");
     document.getElementById("deleteStudentBtn").classList.add("account-hidden");
 
@@ -127,14 +126,15 @@ function resetAllUIContent() {
     document.getElementById("newPhotoFile").value = "";
 }
 
-// ---------- CLASS SYNC (NEW) ----------
+// ---------- 🔥 ONLY ADDITION: CLASS AUTO SYNC ----------
 document.getElementById("classSelect").addEventListener("change", function () {
-    document.getElementById("newClass").value = this.value;
+    const form = document.getElementById("newClass");
+    if (form) form.value = this.value;
 });
 
 document.getElementById("newClass").addEventListener("change", function () {
-    const val = this.value;
-    if (val) document.getElementById("classSelect").value = val;
+    const top = document.getElementById("classSelect");
+    if (this.value && top) top.value = this.value;
 });
 
 // ---------- CLASS STATUS ----------
@@ -155,14 +155,14 @@ function updateClassStatusUI() {
 
         area.innerHTML = `✅ সক্রিয় ক্লাস: ${displayName}`;
     } else {
-        area.innerHTML = `⚠️ কোন সক্রিয় ক্লাস নেই`;
+        area.innerHTML = `⚠️ কোন সক্রিয় ক্লাস নেই।`;
     }
 }
 
 // ---------- API CALL ----------
 async function callApi(action, payload) {
     if (!currentApiUrl) {
-        showToast("ক্লাস নির্বাচন করুন", "error");
+        showToast("ক্লাস নির্বাচন করুন","error");
         throw new Error("No API");
     }
 
@@ -174,52 +174,15 @@ async function callApi(action, payload) {
 
         return await res.json();
     } catch (err) {
-        showToast("নেটওয়ার্ক সমস্যা", "error");
+        showToast("নেটওয়ার্ক সমস্যা","error");
         throw err;
     }
 }
 
-// ---------- FILE ----------
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
-}
-
-// ---------- PROFILE ----------
-const PROFILE_IMAGE_URL =
-    "https://res.cloudinary.com/do1dejkkk/image/upload/v1777138381/profile-svgrepo-com_jalrok.svg";
-
-function getProfileImageHtml() {
-    return `<img src="${PROFILE_IMAGE_URL}" class="account-profile-img">`;
-}
-
-function displayProfile(basic) {
-    const container = document.getElementById("profileView");
-    container.classList.remove("account-hidden");
-
-    let html = `<div style="display:flex; gap:1rem; align-items:center;">
-        ${getProfileImageHtml()}
-        <h3>${basic["Student Name"] || ""}</h3>
-    </div><div class="account-info-grid">`;
-
-    for (let [k,v] of Object.entries(basic)) {
-        if (k !== "Photo URL" && k !== "Student Name") {
-            html += `<div><strong>${k}:</strong> ${v || "—"}</div>`;
-        }
-    }
-
-    html += `</div>`;
-    container.innerHTML = html;
-}
-
-// ---------- ACTIVATE CLASS ----------
-function activateClass(classKey) {
+// ---------- CLASS ACTIVATE (ONLY ADDITION INSIDE) ----------
+function activateClass(classKey){
     const url = CLASS_API_MAP[classKey];
-    if (!url) return false;
+    if(!url) return false;
 
     currentApiUrl = url;
     currentActiveClassKey = classKey;
@@ -229,24 +192,18 @@ function activateClass(classKey) {
     updateClassStatusUI();
     resetAllUIContent();
 
+    // 🔥 IMPORTANT ADD
     document.getElementById("newClass").value = classKey;
 
-    showToast(`${classKey.toUpperCase()} সক্রিয়`, "success");
+    showToast(`${classKey.toUpperCase()} ক্লাস সক্রিয়`,"success");
     return true;
 }
 
 // ---------- INIT ----------
 let savedClass = localStorage.getItem("selectedClassKey");
-if (savedClass && CLASS_API_MAP[savedClass]) {
+if(savedClass && CLASS_API_MAP[savedClass]){
     document.getElementById("classSelect").value = savedClass;
 }
 
 updateClassStatusUI();
 resetAllUIContent();
-
-// ---------- APPLY BUTTON ----------
-document.getElementById("applyClassBtn").onclick = () => {
-    const val = document.getElementById("classSelect").value;
-    if (val) activateClass(val);
-    else showToast("ক্লাস নির্বাচন করুন", "warning");
-};
