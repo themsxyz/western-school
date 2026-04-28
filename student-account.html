@@ -317,14 +317,13 @@
 </header>
 
 <main>
-
 <div class="account-container">
     <h1>📘 শিক্ষার্থী অ্যাকাউন্ট ব্যবস্থাপনা</h1>
     
     <div class="account-class-selector-panel">
         <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
             <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                <label style="font-weight: 700; color:#334155;">🏫 ক্লাস নির্বাচন:</label>
+                <label style="font-weight: 700; color:#334155;">🏫 ক্লাস নির্বাচন (ব্যাকএন্ড):</label>
                 <select id="classSelect" style="width: auto; min-width: 180px; border-radius: 999px;">
                     <option value="">-- বাছাই করুন --</option>
                     <option value="nursery">নার্সারি</option>
@@ -358,7 +357,22 @@
                 <div class="account-form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি"></div>
                 <div class="account-form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="পূর্ণ নাম" style="text-transform: uppercase;"></div>
                 <div class="account-form-group"><label>রোল</label><input type="text" id="newRoll" placeholder="রোল"></div>
-                <div class="account-form-group"><label>শ্রেণি</label><input type="text" id="newClass" placeholder="শ্রেণি"></div>
+                
+                <!-- শ্রেণি now a dropdown -->
+                <div class="account-form-group"><label>শ্রেণি *</label>
+                    <select id="newClass">
+                        <option value="">-- নির্বাচন করুন --</option>
+                        <option value="নার্সারি">নার্সারি</option>
+                        <option value="প্লে">প্লে</option>
+                        <option value="কেজি">কেজি</option>
+                        <option value="প্রথম শ্রেণি">প্রথম শ্রেণি</option>
+                        <option value="দ্বিতীয় শ্রেণি">দ্বিতীয় শ্রেণি</option>
+                        <option value="তৃতীয় শ্রেণি">তৃতীয় শ্রেণি</option>
+                        <option value="চতুর্থ শ্রেণি">চতুর্থ শ্রেণি</option>
+                        <option value="পঞ্চম শ্রেণি">পঞ্চম শ্রেণি</option>
+                    </select>
+                </div>
+                
                 <div class="account-form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন"></div>
                 <div class="account-form-group"><label>প্রোফাইল ছবি</label><input type="file" id="newPhotoFile" accept="image/*"><input type="hidden" id="newPhotoUrl"></div>
                 <div class="account-form-group"><label>জন্ম তারিখ</label><input type="date" id="newDob"></div>
@@ -387,8 +401,6 @@
 </div>
 
 <div id="globalLoader" class="account-loader-overlay"><div class="loader" role="status" aria-label="Loading content"></div><span class="sr-only">অপেক্ষা করুন</span></div>
-</main>
-
 </main>
 
 <script src="student-account.js"></script>
