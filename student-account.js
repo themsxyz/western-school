@@ -66,7 +66,7 @@
     let currentApiUrl = null, currentClassKey = null, currentStudent = null;
     const CLASS_API_MAP = {
         nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
-        play: "https://script.google.com/macros/s/AKfycbwunXrLrB0NpVrNPyuopy2jV1G7Q_ZiwDKJTkz38AfPnPSoqZoUP2TKHYs4vkZQtQ/exec",
+        play: "https://script.google.com/macros/s/AKfycbwy3X6WR8eBcsU1eFzYeX6xqCGxmDq33ui_KvCEuJ7GdQ6_3gCZXPBPA91P4Tu-I_IAvQ/exec",
         kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
         class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
         class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
@@ -190,7 +190,7 @@
         try {
             let res = await callApi('getAllStudents', {});
             if (res.status === 'ok' && res.students) {
-                let html = '<table><thead><tr><th>নাম</th><th>আইডি</th><th>শ্রেণি</th><th>রোল</th><th>মোবাইল</th><th>পিতা</th><tr></thead><tbody>';
+                let html = '<table><thead><tr><th>নাম</th><th>আইডি</th><th>শ্রেণি</th><th>রোল</th><th>মোবাইল</th><th>পিতা</th></tr></thead><tbody>';
                 res.students.forEach(s => {
                     html += `<tr><td>${escapeHtml(s.name)}</td><td>${escapeHtml(s.id)}</td><td>${escapeHtml(s.class)}</td><td>${escapeHtml(s.roll)}</td><td>${escapeHtml(s.phone)}</td><td>${escapeHtml(s.father)}</td></tr>`;
                 });
@@ -268,7 +268,9 @@
     document.getElementById('showAllBtn').onclick = refreshAllRecords;
     document.getElementById('closeRecordsBtn').onclick = () => document.getElementById('allRecordsSection').classList.add('hidden');
     document.getElementById('searchBtn').onclick = handleSearch;
-    document.getElementById('searchId').addEventListener('keypress', e => { if(e.key === 'Enter') handleSearch(); });
+    // ENTER key shortcut for search field
+    const searchInput = document.getElementById('searchId');
+    searchInput.addEventListener('keypress', e => { if(e.key === 'Enter') { e.preventDefault(); handleSearch(); } });
     document.getElementById('createBtn').onclick = createStudent;
     document.getElementById('updateBtn').onclick = updateStudent;
     document.getElementById('deleteBtn').onclick = deleteStudent;
