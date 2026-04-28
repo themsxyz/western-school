@@ -1,260 +1,334 @@
-// ========== MODERN LOADER ==========
-    function showLoader(show) {
-        const overlay = document.getElementById('loaderOverlay');
-        if (show) overlay.classList.add('active');
-        else overlay.classList.remove('active');
-    }
+// ---------- GLASS TOAST ----------
+const toastElement = document.getElementById('glassToast');
+const toastMessageSpan = toastElement.querySelector('.toast-message');
+const toastIcon = toastElement.querySelector('.toast-icon svg');
+let toastTimeout = null;
 
-    // ========== GLASSMORPHISM TOAST (with SVG icons) ==========
-    function showToast(message, type = "info") {
-        const root = document.getElementById("toastRoot");
-        const toast = document.createElement("div");
-        let baseClass = "result-toast-message";
-        if (type === "success") baseClass += " result-toast-success";
-        else if (type === "error") baseClass += " result-toast-error";
-        toast.className = baseClass;
-        
-        let iconSvg = '';
-        if (type === 'success') {
-            iconSvg = `<svg class="toast-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/><polyline points="18 8 12 16 8 12"/>
-                       </svg>`;
-        } else if (type === 'error') {
-            iconSvg = `<svg class="toast-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                       </svg>`;
-        } else {
-            iconSvg = `<svg class="toast-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                       </svg>`;
-        }
-        
-        toast.innerHTML = `
-            ${iconSvg}
-            <span style="flex:1;">${message}</span>
-            <button class="toast-close-btn" aria-label="Close">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        `;
-        root.appendChild(toast);
-        
-        // close button event
-        const closeBtn = toast.querySelector('.toast-close-btn');
-        closeBtn.addEventListener('click', () => {
-            toast.remove();
+function showToast(message, type = 'info') {
+    if (toastTimeout) clearTimeout(toastTimeout);
+    let iconPath = '';
+    if (type === 'success') {
+        iconPath = '<circle cx="12" cy="12" r="10"/><polyline points="18 8 12 16 8 12"/>';
+    } else if (type === 'error') {
+        iconPath = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+    } else {
+        iconPath = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+    }
+    toastIcon.innerHTML = iconPath;
+    toastMessageSpan.textContent = message;
+    toastElement.classList.remove('show');
+    void toastElement.offsetWidth;
+    toastElement.classList.add('show');
+    toastTimeout = setTimeout(() => toastElement.classList.remove('show'), 4000);
+}
+window.alert = function(msg) { showToast(msg, 'info'); };
+
+function showConfirm(message) {
+    return new Promise((resolve) => {
+        const overlay = document.createElement("div");
+        overlay.className = "account-confirm-overlay";
+        overlay.innerHTML = `<div class="account-confirm-card"><p style="font-size:1rem; margin-bottom:14px;">❓ ${message}</p><div style="display: flex; gap: 16px; justify-content: center;"><button id="confirmYesBtn" style="background:#2f6b47; border-radius:999px; padding:6px 16px;">হ্যাঁ</button><button id="confirmNoBtn" style="background:#9b7b5c; border-radius:999px; padding:6px 16px;">না</button></div></div>`;
+        document.body.appendChild(overlay);
+        const yesBtn = overlay.querySelector("#confirmYesBtn");
+        const noBtn = overlay.querySelector("#confirmNoBtn");
+        const cleanup = (result) => { overlay.remove(); resolve(result); };
+        yesBtn.onclick = () => cleanup(true);
+        noBtn.onclick = () => cleanup(false);
+    });
+}
+window.confirm = async function(msg) { return await showConfirm(msg); };
+
+// ---------- LOADER ----------
+const loaderOverlay = document.getElementById("globalLoader");
+function showLoader() { if(loaderOverlay) loaderOverlay.style.display = "flex"; }
+function hideLoader() { if(loaderOverlay) loaderOverlay.style.display = "none"; }
+
+// ---------- API MAPPING ----------
+const CLASS_API_MAP = {
+    nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
+    play: "https://script.google.com/macros/s/AKfycbwwbfdHQf4gNKpchOfSdc1IbxKBrEmbbzzWUsrpdAsSb45s1EnieTrIJLPgTxDVbH4P/exec",
+    kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
+    class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
+    class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
+    class3: "https://script.google.com/macros/s/AKfycbzxg-lf8ZvBpw9L-kzPdpxRRTtdxnCGNSiyc_UElLihDpRr6zl4YxZIoKDek7IXtlsv/exec",
+    class4: "https://script.google.com/macros/s/AKfycbyzuGgkk4osZCf45qkb40RKSa6I3nBFhLSG3B618rn0_PaBMv62K8YIh8R7-eGQqydF/exec",
+    class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
+};
+
+let currentApiUrl = null, currentActiveClassKey = null, currentStudent = null;
+
+function resetAllUIContent() {
+    document.getElementById("profileView").classList.add("account-hidden"); 
+    document.getElementById("profileView").innerHTML = "";
+    document.getElementById("searchId").value = "";
+    document.getElementById("updateBtn").classList.add("account-hidden"); 
+    document.getElementById("deleteStudentBtn").classList.add("account-hidden");
+    currentStudent = null;
+    document.getElementById("formTitle").innerHTML = "➕ নতুন শিক্ষার্থী তৈরি";
+    const fields = ["newId","newName","newRoll","newClass","newSection","newPhotoUrl","newDob","newBcn","newFname","newMname","newFnid","newMnid","newAddress","newPhone","newBlood"];
+    fields.forEach(f => { let el = document.getElementById(f); if(el) el.value = ""; });
+    document.getElementById("newPhotoFile").value = "";
+    // Reset class dropdown to default empty
+    const classSelect = document.getElementById("newClass");
+    if(classSelect) classSelect.value = "";
+}
+
+function updateClassStatusUI() {
+    const area = document.getElementById("classStatusArea");
+    if(currentApiUrl && currentActiveClassKey) {
+        let displayName = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" }[currentActiveClassKey] || currentActiveClassKey;
+        area.innerHTML = `<div style="background:#eef2ff; color:#1e3a5f;">✅ সক্রিয় ক্লাস: ${displayName}</div>`;
+    } else area.innerHTML = `<div style="background:#f1f5f9; color:#475569;">⚠️ কোন সক্রিয় ক্লাস নেই। অনুগ্রহ করে ক্লাস নির্বাচন করুন।</div>`;
+}
+
+async function callApi(action, payload) {
+    if (!currentApiUrl) { showToast("প্রথমে ক্লাস নির্বাচন ও নিশ্চিত করুন!", "error"); throw new Error("No API"); }
+    try {
+        const res = await fetch(currentApiUrl, { method: "POST", body: JSON.stringify({ action, ...payload }) });
+        const data = await res.json();
+        return data;
+    } catch (err) { showToast("নেটওয়ার্ক সমস্যা! ব্যাকএন্ড চেক করুন।", "error"); throw err; }
+}
+
+function fileToBase64(file) { 
+    return new Promise((resolve, reject) => { 
+        const reader = new FileReader(); 
+        reader.readAsDataURL(file); 
+        reader.onload = () => resolve(reader.result); 
+        reader.onerror = reject; 
+    }); 
+}
+
+const PROFILE_IMAGE_URL = "https://res.cloudinary.com/do1dejkkk/image/upload/v1777138381/profile-svgrepo-com_jalrok.svg";
+function getProfileImageHtml() { return `<img src="${PROFILE_IMAGE_URL}" class="account-profile-img" alt="প্রোফাইল">`; }
+
+function displayProfile(basic) {
+    const container = document.getElementById("profileView"); 
+    container.classList.remove("account-hidden");
+    const photoHtml = getProfileImageHtml();
+    let infoHtml = `<div style="display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">${photoHtml}<h3 style="color:#1e3a5f;">${basic["Student Name"] || ""}</h3></div><div class="account-info-grid">`;
+    for(let [k,v] of Object.entries(basic)) if(k!=="Photo URL" && k!=="Student Name") infoHtml += `<div><strong>${k}:</strong> ${v || '—'}</div>`;
+    infoHtml += `</div>`; 
+    container.innerHTML = infoHtml;
+}
+
+async function handleSearch() {
+    if(!currentApiUrl){ showToast("ক্লাস সক্রিয় করুন","error"); return; }
+    const id = document.getElementById("searchId").value.trim(); 
+    if(!id) { showToast("আইডি দিন","warning"); return; }
+    showLoader();
+    try {
+        const res = await callApi("getFullData", { id });
+        if(res.status==="found") {
+            currentStudent = res; 
+            displayProfile(res.basic);
+            document.getElementById("updateBtn").classList.remove("account-hidden"); 
+            document.getElementById("deleteStudentBtn").classList.remove("account-hidden");
+            document.getElementById("formTitle").innerHTML = "✏️ শিক্ষার্থী সম্পাদনা";
+            const b = res.basic;
+            document.getElementById("newId").value = id; 
+            document.getElementById("newName").value = b["Student Name"] || ""; 
+            document.getElementById("newRoll").value = b["Roll"] || "";
+            // Set class dropdown value (should match Bangla text)
+            const classValue = b["Class"] || "";
+            const classSelect = document.getElementById("newClass");
+            if(classSelect) {
+                // Try to find exact match, if not found set empty
+                let found = false;
+                for(let i=0; i<classSelect.options.length; i++) {
+                    if(classSelect.options[i].value === classValue) {
+                        classSelect.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) classSelect.value = "";
+            }
+            document.getElementById("newSection").value = b["Section"] || ""; 
+            document.getElementById("newPhotoUrl").value = b["Photo URL"] || "";
+            document.getElementById("newDob").value = b["Date of birth"] || ""; 
+            document.getElementById("newBcn").value = b["Birth registration number"] || "";
+            document.getElementById("newFname").value = b["Father's name"] || ""; 
+            document.getElementById("newMname").value = b["Mother's name"] || "";
+            document.getElementById("newFnid").value = b["Father's NID"] || ""; 
+            document.getElementById("newMnid").value = b["Mother's NID"] || "";
+            document.getElementById("newAddress").value = b["Address"] || ""; 
+            document.getElementById("newPhone").value = b["Phone number"] || ""; 
+            document.getElementById("newBlood").value = b["Blood group"] || "";
+        } else { showToast("শিক্ষার্থী পাওয়া যায়নি","error"); resetAllUIContent(); }
+    } catch(e) { console.warn(e); }
+    finally { hideLoader(); }
+}
+
+const searchInput = document.getElementById("searchId");
+const searchBtn = document.getElementById("searchBtn");
+searchBtn.onclick = handleSearch;
+searchInput.addEventListener("keypress", function(e) { if(e.key === "Enter") { e.preventDefault(); handleSearch(); } });
+
+async function performAsyncAction(actionFn) { showLoader(); try { await actionFn(); } finally { hideLoader(); } }
+
+document.getElementById("createBtn").onclick = async () => {
+    if(!currentApiUrl){ showToast("ক্লাস সক্রিয় করুন","error"); return; }
+    const id = document.getElementById("newId").value.trim(); 
+    if(!id) { showToast("আইডি প্রয়োজন","warning"); return; }
+    const classVal = document.getElementById("newClass").value;
+    if(!classVal) { showToast("শ্রেণি নির্বাচন করুন","warning"); return; }
+    await performAsyncAction(async () => {
+        let photoBase64 = null; 
+        const file = document.getElementById("newPhotoFile").files[0]; 
+        if(file) photoBase64 = await fileToBase64(file);
+        const payload = { 
+            id, 
+            name: document.getElementById("newName").value, 
+            roll: document.getElementById("newRoll").value, 
+            class: classVal, 
+            section: document.getElementById("newSection").value, 
+            photoUrl: document.getElementById("newPhotoUrl").value, 
+            photoBase64, 
+            dob: document.getElementById("newDob").value, 
+            bcn: document.getElementById("newBcn").value, 
+            fname: document.getElementById("newFname").value, 
+            mname: document.getElementById("newMname").value, 
+            fnid: document.getElementById("newFnid").value, 
+            mnid: document.getElementById("newMnid").value, 
+            address: document.getElementById("newAddress").value, 
+            phone: document.getElementById("newPhone").value, 
+            blood: document.getElementById("newBlood").value 
+        };
+        const res = await callApi("create", payload);
+        if(res.status==="created") { showToast("শিক্ষার্থী সফলভাবে তৈরি!","success"); resetAllUIContent(); } 
+        else showToast(res.message || "ত্রুটি","error");
+    });
+};
+
+document.getElementById("updateBtn").onclick = async () => {
+    if(!currentApiUrl || !currentStudent){ showToast("প্রথমে শিক্ষার্থী লোড করুন","error"); return; }
+    const id = document.getElementById("newId").value.trim(); 
+    if(!id) return;
+    const classVal = document.getElementById("newClass").value;
+    if(!classVal) { showToast("শ্রেণি নির্বাচন করুন","warning"); return; }
+    await performAsyncAction(async () => {
+        let photoBase64 = null; 
+        const file = document.getElementById("newPhotoFile").files[0]; 
+        if(file) photoBase64 = await fileToBase64(file);
+        const payload = { 
+            id, 
+            name: document.getElementById("newName").value, 
+            roll: document.getElementById("newRoll").value, 
+            class: classVal, 
+            section: document.getElementById("newSection").value, 
+            photoUrl: document.getElementById("newPhotoUrl").value, 
+            photoBase64, 
+            dob: document.getElementById("newDob").value, 
+            bcn: document.getElementById("newBcn").value, 
+            fname: document.getElementById("newFname").value, 
+            mname: document.getElementById("newMname").value, 
+            fnid: document.getElementById("newFnid").value, 
+            mnid: document.getElementById("newMnid").value, 
+            address: document.getElementById("newAddress").value, 
+            phone: document.getElementById("newPhone").value, 
+            blood: document.getElementById("newBlood").value 
+        };
+        const res = await callApi("updateBasic", payload);
+        if(res.status==="updated"){ showToast("হালনাগাদ সফল","success"); await handleSearch(); } 
+        else showToast("আপডেট ব্যর্থ","error");
+    });
+};
+
+document.getElementById("deleteStudentBtn").onclick = async () => {
+    if(!currentApiUrl) return;
+    const id = document.getElementById("searchId").value.trim();
+    if(!id) return;
+    if(await showConfirm("স্থায়ীভাবে মুছে ফেলতে চান?")) {
+        await performAsyncAction(async () => {
+            const res = await callApi("delete", { id }); 
+            if(res.status==="deleted"){ showToast("মুছে ফেলা হয়েছে","success"); resetAllUIContent(); } 
+            else showToast("ত্রুটি","error");
         });
-        
-        // auto remove after 4.5 seconds
-        setTimeout(() => {
-            if (toast && toast.remove) toast.remove();
-        }, 4500);
     }
+};
 
-    // ========== API & CLASS STATE ==========
-    const CLASS_API_MAP = {
-        nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
-        play: "https://script.google.com/macros/s/AKfycbzhtst-Y7Z4BNtDNW76zginGzhVJ9CCYM8WOot2Ij1IzPLrtxVIb6p7JuDT_ZOhgiKi/exec",
-        kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
-        class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
-        class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
-        class3: "https://script.google.com/macros/s/AKfycbzxg-lf8ZvBpw9L-kzPdpxRRTtdxnCGNSiyc_UElLihDpRr6zl4YxZIoKDek7IXtlsv/exec",
-        class4: "https://script.google.com/macros/s/AKfycbyzuGgkk4osZCf45qkb40RKSa6I3nBFhLSG3B618rn0_PaBMv62K8YIh8R7-eGQqydF/exec",
-        class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
-    };
-    let currentApiUrl = null, currentActiveClassKey = null;
+function triggerPrimaryAction() {
+    const updateBtn = document.getElementById("updateBtn");
+    const createBtn = document.getElementById("createBtn");
+    if (updateBtn && !updateBtn.classList.contains("account-hidden")) updateBtn.click();
+    else if (createBtn) createBtn.click();
+}
 
-    function updateClassStatusUI() {
-        const area = document.getElementById("classStatusArea");
-        if (currentApiUrl && currentActiveClassKey) {
-            let displayName = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" }[currentActiveClassKey];
-            area.innerHTML = `<div style="background:#e9e0cf; border-radius:2rem; padding:0.4rem 1.2rem; font-weight:600;">✅ সক্রিয় ক্লাস: ${displayName}</div>`;
-        } else area.innerHTML = `<div style="background:#ffe6cc; border-radius:2rem; padding:0.4rem 1rem;">⚠️ কোন সক্রিয় ক্লাস নেই।</div>`;
-    }
+const formInputs = document.querySelectorAll("#studentFormGrid input, #studentFormGrid select");
+formInputs.forEach(input => { input.addEventListener("keypress", function(e) { if (e.key === "Enter") { e.preventDefault(); triggerPrimaryAction(); } }); });
+const textareas = document.querySelectorAll("#studentFormGrid textarea");
+textareas.forEach(ta => { ta.addEventListener("keypress", function(e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); triggerPrimaryAction(); } }); });
 
-    async function callApi(action, payload) {
-        if (!currentApiUrl) throw new Error("No active class");
-        showLoader(true);
-        try {
-            const res = await fetch(currentApiUrl, { method: "POST", body: JSON.stringify({ action, ...payload }) });
-            const data = await res.json();
-            return data;
-        } finally {
-            showLoader(false);
-        }
-    }
-
-    function activateClass(classKey) {
-        const url = CLASS_API_MAP[classKey];
-        if (!url) return false;
-        currentApiUrl = url;
-        currentActiveClassKey = classKey;
-        updateClassStatusUI();
-        showToast(`${classKey.toUpperCase()} ক্লাস সক্রিয়`, "success");
-        return true;
-    }
-
-    document.getElementById("applyClassBtn").onclick = () => {
-        const val = document.getElementById("classSelect").value;
-        if (val) activateClass(val);
-        else showToast("ক্লাস নির্বাচন করুন", "warning");
-    };
+function activateClass(classKey, updateHistory = true) {
+    const url = CLASS_API_MAP[classKey];
+    if (!url) return false;
+    currentApiUrl = url;
+    currentActiveClassKey = classKey;
+    localStorage.setItem("selectedClassKey", classKey);
     updateClassStatusUI();
-
-    // ========== GRADING RULES ==========
-    async function loadGradingRulesAndDisplay() {
-        if (!currentApiUrl) return;
-        try {
-            const res = await callApi("getGradingRules", {});
-            if (res.status === "ok") {
-                window.currentGradingRules = res.rules;
-                renderGradingRulesForm(res.rules);
-            }
-        } catch (e) { console.log(e); }
+    resetAllUIContent();
+    showToast(`${classKey.toUpperCase()} ক্লাস সক্রিয়`, "success");
+    if (updateHistory) {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('class', classKey);
+        window.history.pushState({}, '', newUrl);
     }
-    
-    function renderGradingRulesForm(rules) {
-        const container = document.getElementById("gradingRulesPanel");
-        let html = `<label>পাস মার্ক (%): <input type="number" id="passMark" class="result-input" value="${rules.passMark}" style="width:100px;"></label><br><br>
-            <table class="result-data-table"><thead><tr><th>ন্যূনতম %</th><th>জিপিএ</th></tr></thead><tbody>`;
-        for (let i = 0; i < rules.thresholds.length; i++) {
-            html += `<tr><td><input type="number" id="th_${i}" class="result-input" value="${rules.thresholds[i]}"></td>
-                            <td><input type="number" id="gpa_${i}" class="result-input" value="${rules.gpaValues[i]}" step="0.01"></td></tr>`;
-        }
-        html += `</tbody></table>`;
-        container.innerHTML = html;
+    return true;
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(window.location.href);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+document.getElementById("applyClassBtn").onclick = () => {
+    const val = document.getElementById("classSelect").value;
+    if (val) {
+        activateClass(val, true);
+    } else {
+        showToast("ক্লাস নির্বাচন করুন", "warning");
     }
-    
-    document.getElementById("showGradingBtn").onclick = () => {
-        const panel = document.getElementById("gradingRulesPanel");
-        const saveContainer = document.getElementById("gradingSaveContainer");
-        if (panel.style.display === "none") {
-            panel.style.display = "block";
-            saveContainer.style.display = "block";
-            if (currentApiUrl) loadGradingRulesAndDisplay();
-        } else {
-            panel.style.display = "none";
-            saveContainer.style.display = "none";
-        }
-    };
-    
-    document.getElementById("saveGradingRulesBtn").onclick = async () => {
-        if (!currentApiUrl) { showToast("ক্লাস সক্রিয় করুন", "error"); return; }
-        const passMark = parseFloat(document.getElementById("passMark").value);
-        let thresholds = [], gpaValues = [];
-        for (let i = 0; i < 7; i++) {
-            let th = parseFloat(document.getElementById(`th_${i}`)?.value);
-            if (!isNaN(th)) thresholds.push(th);
-            let gpa = parseFloat(document.getElementById(`gpa_${i}`)?.value);
-            if (!isNaN(gpa)) gpaValues.push(gpa);
-        }
-        const res = await callApi("setGradingRules", { rules: { thresholds, gpaValues, passMark } });
-        if (res.status === "ok") { showToast("গ্রেডিং নিয়ম আপডেট", "success"); }
-        else showToast("ত্রুটি", "error");
-    };
+};
 
-    // ========== RESULT DISPLAY ==========
-    function displayNewResults(r1, r2, r3) {
-        const container = document.getElementById("resultContainer");
-        let html = "";
-        for (let i = 1; i <= 3; i++) {
-            let exam = i === 1 ? r1 : (i === 2 ? r2 : r3);
-            if (exam && exam.subjects && exam.subjects.length) {
-                html += `<div style="margin-bottom:1.5rem; border:1px solid #e2cfb3; border-radius:1rem; padding:0.8rem;">
-                            <h4 style="color:#8b5a2b;">📌 পরীক্ষা ${i}</h4>
-                            <table class="result-data-table"><thead><tr><th>বিষয়</th><th>সর্বোচ্চ</th><th>প্রাপ্ত</th><th>জিপিএ</th><th>%</th><th>ফলাফল</th></tr></thead><tbody>`;
-                exam.subjects.forEach(sub => {
-                    html += `<tr><td>${sub.subject}</td><td>${sub.maxMarks}</td><td>${sub.obtained}</td><td>${sub.gpa}</td><td>${sub.percentage}%</td><td><span class="${sub.status === 'Pass' ? 'result-badge-success' : 'result-badge-danger'}">${sub.status}</span></td></tr>`;
-                });
-                html += `<tr class="result-summary-row"><td colspan="3"><strong>সামগ্রিক জিপিএ</strong></td><td colspan="3"><strong>${exam.overallGPA}</strong></td></tr>
-                           <tr><td colspan="3"><strong>সর্বমোট %</strong></td><td colspan="3"><strong>${exam.overallPercentage}%</strong></td></tr>
-                           <tr><td colspan="3"><strong>সামগ্রিক ফলাফল</strong></td><td colspan="3"><strong>${exam.overallStatus}</strong></td></tr></tbody></table></div>`;
-            } else {
-                html += `<div style="margin-bottom:1rem; padding:0.5rem; background:#f9f2e0; border-radius:1rem;"><h4>পরীক্ষা ${i}</h4><p>কোনো ফলাফল পাওয়া যায়নি</p></div>`;
-            }
-        }
-        container.innerHTML = html;
-    }
+document.getElementById("clearUiBtn").onclick = async () => {
+    if(await showConfirm("সমস্ত UI ডাটা সাফ করবেন?")) resetAllUIContent();
+};
 
-    document.getElementById("resultSearchBtn").onclick = async () => {
-        if (!currentApiUrl) { showToast("ক্লাস সক্রিয় করুন", "error"); return; }
-        const id = document.getElementById("resultSearchId").value.trim();
-        if (!id) return;
-        const res = await callApi("getFullData", { id });
-        if (res.status === "found") {
-            displayNewResults(res.result1, res.result2, res.result3);
-            document.getElementById("resultForm").classList.remove("result-hidden");
-        } else showToast("শিক্ষার্থী পাওয়া যায়নি", "error");
-    };
+// Auto-capitalize name
+const nameField = document.getElementById("newName");
+if(nameField) {
+    nameField.addEventListener("input", function(e){
+        let words = e.target.value.split(" ");
+        this.value = words.map(w=> w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+    });
+}
+// Phone number: only digits, max 11
+const phoneField = document.getElementById("newPhone");
+if(phoneField) {
+    phoneField.addEventListener("input", function(){
+        this.value = this.value.replace(/\D/g, '').slice(0,11);
+    });
+}
 
-    document.getElementById("addResultBtn").onclick = async () => {
-        if (!currentApiUrl) return;
-        const id = document.getElementById("resultSearchId").value.trim();
-        const examNo = parseInt(document.getElementById("examNo").value);
-        const selectedSubject = document.getElementById("subjectName").value;
-        const maxMarks = parseFloat(document.getElementById("maxMarksResult").value);
-        const obtained = parseFloat(document.getElementById("obtainedMarks").value);
-        if (!id || !selectedSubject || isNaN(obtained) || isNaN(maxMarks)) {
-            showToast("সব তথ্য পূরণ করুন", "warning");
-            return;
-        }
-        const subjectMap = { "ইংরেজی":"English", "বাংলা":"Bengali", "গণিত":"Math", "চারু ও কারুকলা":"Drawing" };
-        const subject = subjectMap[selectedSubject];
-        if (!subject) { showToast("অবৈধ বিষয়", "error"); return; }
-        const res = await callApi("addResult", { id, examNo, subject, obtained, maxMarks });
-        if (res.status === "ok") {
-            showToast("ফলাফল সংরক্ষিত", "success");
-            document.getElementById("resultSearchBtn").click();
-        } else showToast("ত্রুটি – " + (res.message || "অজানা"), "error");
-    };
-
-    // ========== ATTENDANCE ==========
-    async function loadAttendanceTables(id) {
-        if (!currentApiUrl) return;
-        const res = await callApi("getFullData", { id });
-        if (res.status === "found" && res.attendanceTables) renderAttendanceTables(res.attendanceTables);
-        else renderAttendanceTables([{ totalClass:0, totalAttendance:0 }, { totalClass:0, totalAttendance:0 }, { totalClass:0, totalAttendance:0 }]);
-    }
-    
-    function renderAttendanceTables(tables) {
-        const container = document.getElementById("attendanceTablesContainer");
-        let html = "";
-        for (let i = 0; i < 3; i++) {
-            html += `<div class="result-attendance-panel">
-                        <h5>📋 পরীক্ষা ${i + 1}</h5>
-                        <label>মোট ক্লাস: <input type="number" id="totalClass_${i+1}" class="result-input" value="${tables[i].totalClass}" style="width:90px;"></label>
-                        <label style="margin-left:1rem;">মোট উপস্থিতি: <input type="number" id="totalAttendance_${i+1}" class="result-input" value="${tables[i].totalAttendance}" style="width:90px;"></label>
-                        <button class="result-save-attendance-btn result-btn result-btn-secondary" data-exam="${i+1}" style="margin-left:1rem;">সংরক্ষণ</button>
-                    </div>`;
-        }
-        container.innerHTML = html;
-        for (let i = 1; i <= 3; i++) {
-            document.querySelector(`.result-save-attendance-btn[data-exam="${i}"]`)?.addEventListener("click", async () => {
-                const id = document.getElementById("attSearchId").value.trim();
-                if (!id) { showToast("শিক্ষার্থী আইডি দিন", "warning"); return; }
-                const totalClass = parseFloat(document.getElementById(`totalClass_${i}`).value) || 0;
-                const totalAttendance = parseFloat(document.getElementById(`totalAttendance_${i}`).value) || 0;
-                const res = await callApi("updateAttendanceTable", { id, examNo: i, totalClass, totalAttendance });
-                if (res.status === "ok") showToast(`পরীক্ষা ${i} উপস্থিতি সংরক্ষিত`, "success");
-                else showToast("ত্রুটি", "error");
-            });
-        }
-    }
-    
-    document.getElementById("attSearchBtn").onclick = async () => {
-        if (!currentApiUrl) { showToast("ক্লাস সক্রিয় করুন", "error"); return; }
-        const id = document.getElementById("attSearchId").value.trim();
-        if (id) await loadAttendanceTables(id);
-        else showToast("আইডি দিন", "warning");
-    };
-
-    // ENTER KEY shortcuts
-    document.getElementById("resultSearchId").addEventListener("keypress", (e) => { if(e.key === "Enter") document.getElementById("resultSearchBtn").click(); });
-    document.getElementById("attSearchId").addEventListener("keypress", (e) => { if(e.key === "Enter") document.getElementById("attSearchBtn").click(); });
-
-    // Clear UI & reload (safe)
-    document.getElementById("clearUiBtn").onclick = () => { 
-        if(confirm("সব তথ্য মুছবেন? পৃষ্ঠা রিলোড হবে")) location.reload(); 
-    };
+// On page load: check URL class parameter first
+let classFromUrl = getUrlParameter('class');
+let targetClass = null;
+if (classFromUrl && CLASS_API_MAP[classFromUrl]) {
+    targetClass = classFromUrl;
+} else {
+    targetClass = localStorage.getItem("selectedClassKey");
+    if (!targetClass || !CLASS_API_MAP[targetClass]) targetClass = null;
+}
+if (targetClass) {
+    const classSelect = document.getElementById("classSelect");
+    if (classSelect) classSelect.value = targetClass;
+    activateClass(targetClass, false);
+} else {
+    updateClassStatusUI();
+    resetAllUIContent();
+}
