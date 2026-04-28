@@ -38,21 +38,15 @@ function showConfirm(message) {
 }
 window.confirm = async function(msg) { return await showConfirm(msg); };
 
-// ---------- LOADER (only shown during fetch) ----------
+// ---------- LOADER ----------
 const loaderOverlay = document.getElementById("globalLoader");
-let loaderTimeout = null;
-function showLoader() {
-    if (loaderTimeout) clearTimeout(loaderTimeout);
-    if (loaderOverlay) loaderOverlay.style.display = "flex";
-}
-function hideLoader() {
-    if (loaderOverlay) loaderOverlay.style.display = "none";
-}
+function showLoader() { if(loaderOverlay) loaderOverlay.style.display = "flex"; }
+function hideLoader() { if(loaderOverlay) loaderOverlay.style.display = "none"; }
 
 // ---------- API MAPPING ----------
 const CLASS_API_MAP = {
     nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
-    play: "https://script.google.com/macros/s/AKfycbyB50qjStCST3D3aOEZ5niJBjZ9yhMvYiDcKvmCWa4ibxekxZOPxf9QCN5HMCJsudy7/exec",
+    play: "https://script.google.com/macros/s/AKfycbzhtst-Y7Z4BNtDNW76zginGzhVJ9CCYM8WOot2Ij1IzPLrtxVIb6p7JuDT_ZOhgiKi/exec",
     kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
     class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
     class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
@@ -60,20 +54,6 @@ const CLASS_API_MAP = {
     class4: "https://script.google.com/macros/s/AKfycbyzuGgkk4osZCf45qkb40RKSa6I3nBFhLSG3B618rn0_PaBMv62K8YIh8R7-eGQqydF/exec",
     class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
 };
-
-function getBengaliClassName(classKey) {
-    const map = {
-        nursery: "নার্সারি",
-        play: "প্লে",
-        kg: "কেজি",
-        class1: "প্রথম শ্রেণি",
-        class2: "দ্বিতীয় শ্রেণি",
-        class3: "তৃতীয় শ্রেণি",
-        class4: "চতুর্থ শ্রেণি",
-        class5: "পঞ্চম শ্রেণি"
-    };
-    return map[classKey] || "";
-}
 
 let currentApiUrl = null, currentActiveClassKey = null, currentStudent = null;
 
@@ -88,12 +68,15 @@ function resetAllUIContent() {
     const fields = ["newId","newName","newRoll","newClass","newSection","newPhotoUrl","newDob","newBcn","newFname","newMname","newFnid","newMnid","newAddress","newPhone","newBlood"];
     fields.forEach(f => { let el = document.getElementById(f); if(el) el.value = ""; });
     document.getElementById("newPhotoFile").value = "";
+    // Reset class dropdown to default empty
+    const classSelect = document.getElementById("newClass");
+    if(classSelect) classSelect.value = "";
 }
 
 function updateClassStatusUI() {
     const area = document.getElementById("classStatusArea");
     if(currentApiUrl && currentActiveClassKey) {
-        let displayName = getBengaliClassName(currentActiveClassKey);
+        let displayName = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" }[currentActiveClassKey] || currentActiveClassKey;
         area.innerHTML = `<div style="background:#eef2ff; color:#1e3a5f;">✅ সক্রিয় ক্লাস: ${displayName}</div>`;
     } else area.innerHTML = `<div style="background:#f1f5f9; color:#475569;">⚠️ কোন সক্রিয় ক্লাস নেই। অনুগ্রহ করে ক্লাস নির্বাচন করুন।</div>`;
 }
@@ -146,7 +129,20 @@ async function handleSearch() {
             document.getElementById("newId").value = id; 
             document.getElementById("newName").value = b["Student Name"] || ""; 
             document.getElementById("newRoll").value = b["Roll"] || "";
-            document.getElementById("newClass").value = b["Class"] || ""; 
+            // Set class dropdown value (English name)
+            const classValue = b["Class"] || "";
+            const classSelect = document.getElementById("newClass");
+            if(classSelect) {
+                let found = false;
+                for(let i=0; i<classSelect.options.length; i++) {
+                    if(classSelect.options[i].value === classValue) {
+                        classSelect.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) classSelect.value = "";
+            }
             document.getElementById("newSection").value = b["Section"] || ""; 
             document.getElementById("newPhotoUrl").value = b["Photo URL"] || "";
             document.getElementById("newDob").value = b["Date of birth"] || ""; 
@@ -174,6 +170,8 @@ document.getElementById("createBtn").onclick = async () => {
     if(!currentApiUrl){ showToast("ক্লাস সক্রিয় করুন","error"); return; }
     const id = document.getElementById("newId").value.trim(); 
     if(!id) { showToast("আইডি প্রয়োজন","warning"); return; }
+    const classVal = document.getElementById("newClass").value;
+    if(!classVal) { showToast("শ্রেণি নির্বাচন করুন","warning"); return; }
     await performAsyncAction(async () => {
         let photoBase64 = null; 
         const file = document.getElementById("newPhotoFile").files[0]; 
@@ -182,7 +180,7 @@ document.getElementById("createBtn").onclick = async () => {
             id, 
             name: document.getElementById("newName").value, 
             roll: document.getElementById("newRoll").value, 
-            class: document.getElementById("newClass").value, 
+            class: classVal, 
             section: document.getElementById("newSection").value, 
             photoUrl: document.getElementById("newPhotoUrl").value, 
             photoBase64, 
@@ -206,6 +204,8 @@ document.getElementById("updateBtn").onclick = async () => {
     if(!currentApiUrl || !currentStudent){ showToast("প্রথমে শিক্ষার্থী লোড করুন","error"); return; }
     const id = document.getElementById("newId").value.trim(); 
     if(!id) return;
+    const classVal = document.getElementById("newClass").value;
+    if(!classVal) { showToast("শ্রেণি নির্বাচন করুন","warning"); return; }
     await performAsyncAction(async () => {
         let photoBase64 = null; 
         const file = document.getElementById("newPhotoFile").files[0]; 
@@ -214,7 +214,7 @@ document.getElementById("updateBtn").onclick = async () => {
             id, 
             name: document.getElementById("newName").value, 
             roll: document.getElementById("newRoll").value, 
-            class: document.getElementById("newClass").value, 
+            class: classVal, 
             section: document.getElementById("newSection").value, 
             photoUrl: document.getElementById("newPhotoUrl").value, 
             photoBase64, 
@@ -267,13 +267,7 @@ function activateClass(classKey, updateHistory = true) {
     localStorage.setItem("selectedClassKey", classKey);
     updateClassStatusUI();
     resetAllUIContent();
-    
-    // Auto-fill the "শ্রেণি" field with Bengali class name
-    const bengaliClass = getBengaliClassName(classKey);
-    const classField = document.getElementById("newClass");
-    if (classField && bengaliClass) classField.value = bengaliClass;
-    
-    showToast(`${bengaliClass || classKey} ক্লাস সক্রিয়`, "success");
+    showToast(`${classKey.toUpperCase()} ক্লাস সক্রিয়`, "success");
     if (updateHistory) {
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.set('class', classKey);
@@ -320,7 +314,7 @@ if(phoneField) {
     });
 }
 
-// ---------- PAGE INITIALIZATION (Fast, no unnecessary API calls) ----------
+// On page load: check URL class parameter first
 let classFromUrl = getUrlParameter('class');
 let targetClass = null;
 if (classFromUrl && CLASS_API_MAP[classFromUrl]) {
@@ -332,7 +326,7 @@ if (classFromUrl && CLASS_API_MAP[classFromUrl]) {
 if (targetClass) {
     const classSelect = document.getElementById("classSelect");
     if (classSelect) classSelect.value = targetClass;
-    activateClass(targetClass, false); // update UI & fill class field, but don't change URL again
+    activateClass(targetClass, false);
 } else {
     updateClassStatusUI();
     resetAllUIContent();
