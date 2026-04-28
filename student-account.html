@@ -317,93 +317,97 @@
 </header>
 
 <main>
-  <div class="container">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
-        <h1>📘 শিক্ষার্থী ব্যবস্থাপনা</h1>
-        <button id="refreshBtn" style="background: #2c3e4e; padding: 0.5rem 1.2rem; border-radius: 40px;">🔄 রিফ্রেশ</button>
-    </div>
-
-    <!-- Database Seat Panel -->
-    <div class="glass-card db-seat">
-        <div><strong style="color: #2c3e4e;">🗄️ ডেটাবেস সিট:</strong> <span id="dbStatus">পরীক্ষা করা হচ্ছে...</span></div>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <select id="classForDb" style="background: white; width: auto;">
-                <option value="nursery">নার্সারি</option><option value="play">প্লে</option><option value="kg">কেজি</option>
-                <option value="class1">প্রথম</option><option value="class2">দ্বিতীয়</option><option value="class3">তৃতীয়</option>
-                <option value="class4">চতুর্থ</option><option value="class5">পঞ্চম</option>
-            </select>
-            <button id="createDbBtn" class="btn-success">➕ ডেটাবেস তৈরি করুন</button>
+  <!-- Main wrapper with class 'Student' as requested -->
+<div class="Student">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
+            <h1>📘 শিক্ষার্থী ব্যবস্থাপনা</h1>
+            <button id="refreshBtn" style="background: #2c3e4e; padding: 0.5rem 1.2rem; border-radius: 40px;">🔄 রিফ্রেশ</button>
         </div>
-    </div>
 
-    <!-- Main App (appears after DB ready) -->
-    <div id="mainApp" class="hidden">
-        <!-- Class activator -->
-        <div class="glass-card" style="padding: 1rem 2rem; margin-bottom: 1.8rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
-            <div style="display: flex; gap: 1rem; align-items: center;">
-                <label style="font-weight: 600;">🏫 ক্লাস নির্বাচন:</label>
-                <select id="classSelect" style="width: auto;">
+        <!-- Database Seat Panel -->
+        <div class="glass-card db-seat">
+            <div><strong style="color: #2c3e4e;">🗄️ ডেটাবেস সিট:</strong> <span id="dbStatus">পরীক্ষা করা হচ্ছে...</span></div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <select id="classForDb" style="background: white; width: auto;">
                     <option value="nursery">নার্সারি</option><option value="play">প্লে</option><option value="kg">কেজি</option>
                     <option value="class1">প্রথম</option><option value="class2">দ্বিতীয়</option><option value="class3">তৃতীয়</option>
                     <option value="class4">চতুর্থ</option><option value="class5">পঞ্চম</option>
                 </select>
-                <button id="applyClassBtn">✅ সক্রিয় করুন</button>
-            </div>
-            <div id="classStatus"></div>
-            <button id="clearUiBtn" class="btn-secondary">🗑️ সাফ করুন</button>
-        </div>
-
-        <!-- Search Section (separate) -->
-        <div class="glass-card" style="padding: 1.2rem 2rem; margin-bottom: 1.8rem;">
-            <div class="search-section">
-                <input type="text" id="searchId" placeholder="শিক্ষার্থী আইডি (এন্টার চাপুন)" style="flex: 2;">
-                <button id="searchBtn">🔍 অনুসন্ধান</button>
-                <button id="showAllBtn" class="btn-secondary">📋 সব রেকর্ড দেখুন</button>
-            </div>
-            <div id="profileView" class="hidden"></div>
-        </div>
-
-        <!-- Student Form Section -->
-        <div class="glass-card" style="padding: 1.5rem 2rem;">
-            <h3 id="formTitle" style="color: #2c3e4e; margin-bottom: 0.5rem;">➕ নতুন শিক্ষার্থী তৈরি</h3>
-            <div class="form-grid">
-                <div class="form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি"></div>
-                <div class="form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="পূর্ণ নাম"></div>
-                <div class="form-group"><label>রোল</label><input type="text" id="newRoll" placeholder="রোল"></div>
-                <div class="form-group"><label>শ্রেণি</label><input type="text" id="newClass" placeholder="শ্রেণি"></div>
-                <div class="form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন"></div>
-                <div class="form-group"><label>ছবি</label><input type="file" id="newPhotoFile" accept="image/*"><input type="hidden" id="newPhotoUrl"></div>
-                <div class="form-group"><label>জন্ম তারিখ</label><input type="date" id="newDob"></div>
-                <div class="form-group"><label>জন্ম নিবন্ধন নং</label><input type="text" id="newBcn" maxlength="17" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
-                <div class="form-group"><label>পিতার নাম</label><input type="text" id="newFname"></div>
-                <div class="form-group"><label>মাতার নাম</label><input type="text" id="newMname"></div>
-                <div class="form-group"><label>পিতার এনআইডি</label><input type="text" id="newFnid" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
-                <div class="form-group"><label>মাতার এনআইডি</label><input type="text" id="newMnid" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
-                <div class="form-group"><label>ঠিকানা</label><textarea id="newAddress" rows="2"></textarea></div>
-                <div class="form-group"><label>মোবাইল (১১ ডিজিট)</label><input type="tel" id="newPhone" maxlength="11"></div>
-                <div class="form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood"></div>
-            </div>
-            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
-                <button id="createBtn" class="btn-success">➕ তৈরি করুন</button>
-                <button id="updateBtn" class="btn-warning hidden">✏️ হালনাগাদ</button>
-                <button id="deleteBtn" class="btn-danger hidden">🗑️ মুছুন</button>
+                <button id="createDbBtn" class="btn-success">➕ ডেটাবেস তৈরি করুন</button>
             </div>
         </div>
 
-        <!-- All Records Table (hidden initially) -->
-        <div id="allRecordsSection" class="glass-card hidden" style="margin-top: 1.8rem; padding: 1rem 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <strong>📋 সকল শিক্ষার্থীর তালিকা</strong>
-                <button id="closeRecordsBtn" class="btn-secondary" style="padding: 0.3rem 1rem;">✖ বন্ধ</button>
+        <!-- Main App (appears after DB ready) -->
+        <div id="mainApp" class="hidden">
+            <!-- Class activator -->
+            <div class="glass-card" style="padding: 1rem 2rem; margin-bottom: 1.8rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <label style="font-weight: 600;">🏫 ক্লাস নির্বাচন:</label>
+                    <select id="classSelect" style="width: auto;">
+                        <option value="nursery">নার্সারি</option><option value="play">প্লে</option><option value="kg">কেজি</option>
+                        <option value="class1">প্রথম</option><option value="class2">দ্বিতীয়</option><option value="class3">তৃতীয়</option>
+                        <option value="class4">চতুর্থ</option><option value="class5">পঞ্চম</option>
+                    </select>
+                    <button id="applyClassBtn">✅ সক্রিয় করুন</button>
+                </div>
+                <div id="classStatus"></div>
+                <button id="clearUiBtn" class="btn-secondary">🗑️ সাফ করুন</button>
             </div>
-            <div id="recordsTable" class="table-wrapper"></div>
+
+            <!-- Search Section (separate) -->
+            <div class="glass-card" style="padding: 1.2rem 2rem; margin-bottom: 1.8rem;">
+                <div class="search-section">
+                    <input type="text" id="searchId" placeholder="শিক্ষার্থী আইডি (এন্টার চাপুন)" style="flex: 2;">
+                    <button id="searchBtn">🔍 অনুসন্ধান</button>
+                    <button id="showAllBtn" class="btn-secondary">📋 সব রেকর্ড দেখুন</button>
+                </div>
+                <div id="profileView" class="hidden"></div>
+            </div>
+
+            <!-- Student Form Section -->
+            <div class="glass-card" style="padding: 1.5rem 2rem;">
+                <h3 id="formTitle" style="color: #2c3e4e; margin-bottom: 0.5rem;">➕ নতুন শিক্ষার্থী তৈরি</h3>
+                <div class="form-grid">
+                    <div class="form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি"></div>
+                    <div class="form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="পূর্ণ নাম"></div>
+                    <div class="form-group"><label>রোল</label><input type="text" id="newRoll" placeholder="রোল"></div>
+                    <div class="form-group"><label>শ্রেণি</label><input type="text" id="newClass" placeholder="শ্রেণি"></div>
+                    <div class="form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন"></div>
+                    <div class="form-group"><label>ছবি</label><input type="file" id="newPhotoFile" accept="image/*"><input type="hidden" id="newPhotoUrl"></div>
+                    <div class="form-group"><label>জন্ম তারিখ</label><input type="date" id="newDob"></div>
+                    <div class="form-group"><label>জন্ম নিবন্ধন নং</label><input type="text" id="newBcn" maxlength="17" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
+                    <div class="form-group"><label>পিতার নাম</label><input type="text" id="newFname"></div>
+                    <div class="form-group"><label>মাতার নাম</label><input type="text" id="newMname"></div>
+                    <div class="form-group"><label>পিতার এনআইডি</label><input type="text" id="newFnid" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
+                    <div class="form-group"><label>মাতার এনআইডি</label><input type="text" id="newMnid" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
+                    <div class="form-group"><label>ঠিকানা</label><textarea id="newAddress" rows="2"></textarea></div>
+                    <div class="form-group"><label>মোবাইল (১১ ডিজিট)</label><input type="tel" id="newPhone" maxlength="11"></div>
+                    <div class="form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood"></div>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+                    <button id="createBtn" class="btn-success">➕ তৈরি করুন</button>
+                    <button id="updateBtn" class="btn-warning hidden">✏️ হালনাগাদ</button>
+                    <button id="deleteBtn" class="btn-danger hidden">🗑️ মুছুন</button>
+                </div>
+            </div>
+
+            <!-- All Records Table (hidden initially) -->
+            <div id="allRecordsSection" class="glass-card hidden" style="margin-top: 1.8rem; padding: 1rem 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong>📋 সকল শিক্ষার্থীর তালিকা</strong>
+                    <button id="closeRecordsBtn" class="btn-secondary" style="padding: 0.3rem 1rem;">✖ বন্ধ</button>
+                </div>
+                <div id="recordsTable" class="table-wrapper"></div>
+            </div>
         </div>
     </div>
+
+    <!-- Toast & Loader -->
+    <div id="toast" class="toast"><div id="toastMsg">Message</div><button onclick="this.parentElement.classList.remove('show')">OK</button></div>
+    <div id="loader" class="loader-overlay"><div class="loader"></div><span style="color:#0b3b5f; font-weight:500;">লোড হচ্ছে...</span></div>
 </div>
 
-<!-- Toast & Loader -->
-<div id="toast" class="toast"><div id="toastMsg">Message</div><button onclick="this.parentElement.classList.remove('show')">OK</button></div>
-<div id="loader" class="loader-overlay"><div class="loader"></div><span style="color:#0b3b5f; font-weight:500;">লোড হচ্ছে...</span></div>
 </main>
 
 <script src="student-account.js"></script>
