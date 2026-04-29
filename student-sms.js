@@ -1,5 +1,5 @@
 
-const CsvScriptURL = "https://script.google.com/macros/s/AKfycbwnjjd6J9OjKuZ9000cMTPgszbxSq9GDjcrCWTheLwNIeCY8cpMV-0Oc2jnhCPRA5Y9nA/exec";
+const CsvScriptURL = "https://script.google.com/macros/s/AKfycbwnx1VZWWn9b_HIZpQajh5ltxTNyQJPxPYQEr0UC8q-b4UTBBqkhijBgostMy7B5C8MWQ/exec";
 
 function CsvLog(msg) {
   document.getElementById("CsvOutput").textContent = msg;
