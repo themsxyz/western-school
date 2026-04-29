@@ -1,3 +1,4 @@
+
     // ---------- UI Helpers ----------
     const toast = document.getElementById('toast'), toastMsg = document.getElementById('toastMsg');
     function showToast(msg, type = 'info') { toastMsg.innerText = msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 3500); }
@@ -13,7 +14,6 @@
         loaderStartTime = Date.now();
         loaderOverlay.style.display = 'flex';
         isLoaderVisible = true;
-        // Maximum 4 seconds - force hide
         loaderTimeoutId = setTimeout(() => {
             if (isLoaderVisible) {
                 hideLoader();
@@ -62,18 +62,40 @@
         input.value = val;
     }
 
+    // Auto capitalize for father/mother names (already CSS, but also ensure data before send)
+    function capitalizeWords(str) {
+        if (!str) return '';
+        return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+    }
+    
+    // Uppercase transform for name fields (text-transform already, but we also store exact)
+    function processFormData() {
+        let nameField = document.getElementById('newName');
+        let sectionField = document.getElementById('newSection');
+        let bloodField = document.getElementById('newBlood');
+        if(nameField) nameField.value = nameField.value.toUpperCase();
+        if(sectionField) sectionField.value = sectionField.value.toUpperCase();
+        if(bloodField) bloodField.value = bloodField.value.toUpperCase();
+        let fname = document.getElementById('newFname');
+        let mname = document.getElementById('newMname');
+        if(fname) fname.value = capitalizeWords(fname.value);
+        if(mname) mname.value = capitalizeWords(mname.value);
+        let address = document.getElementById('newAddress');
+        if(address) address.value = capitalizeWords(address.value);
+    }
+
     // ---------- API Config ----------
     let currentApiUrl = null, currentClassKey = null, currentStudent = null;
-const CLASS_API_MAP = {
-    nursery: "https://script.google.com/macros/s/AKfycbyTF_85aIdiEnNm_q9Tne-fIDqWI1XVX82GDIdyqz1CvBxpG7f95nIWm6IAFBXOe-Mf/exec",
-    play: "https://script.google.com/macros/s/AKfycbyyGjmPF3ymWXpbaBsp86jlBfVF_NL8QR1FSGBcYugkk-ql9B_l2jIlBdY49kKz0bnP/exec",
-    kg: "https://script.google.com/macros/s/AKfycbzT9Y9p3pzzcfvB2NhjKYK7VZwW5oI9cnP6liXpEj8GwMdmGHRUW_urobQub6ftDLIV/exec",
-    class1: "https://script.google.com/macros/s/AKfycbxip3LS8e6t9lou6SIK0JsOh4WmUodi_oicpmNaYqUoHii7wwg2LMG9IMLKhSShI0Ve/exec",
-    class2: "https://script.google.com/macros/s/AKfycbzsN8qTTagmSfkf5m0EWeUQDXrLMRA5-lUFYyypd7ih5Onb5wT0QedBjoHoGCRB395iUg/exec",
-    class3: "https://script.google.com/macros/s/AKfycbx6Wlrh2V5823dpApgkhfiuX-a6WhzcQJ9PkI7GHuMiNnRlvuUJG-RXDzDG6B6A1gbo/exec",
-    class4: "https://script.google.com/macros/s/AKfycbyAZkQoX8mY8YQyKvhRthwg4Ij02PFbw_z67w_CdShpfmPY8qgkO6ueMyeegXlRtuMG/exec",
-    class5: "https://script.google.com/macros/s/AKfycbxxLrztdhv7O_uFHT1PHZlPNmF600tc6huT1PTA-M-o1OrE9JFtCpKuq3fuToGL6haEqQ/exec"
-};
+    const CLASS_API_MAP = {
+        nursery: "https://script.google.com/macros/s/AKfycbyTF_85aIdiEnNm_q9Tne-fIDqWI1XVX82GDIdyqz1CvBxpG7f95nIWm6IAFBXOe-Mf/exec",
+        play: "https://script.google.com/macros/s/AKfycbyyGjmPF3ymWXpbaBsp86jlBfVF_NL8QR1FSGBcYugkk-ql9B_l2jIlBdY49kKz0bnP/exec",
+        kg: "https://script.google.com/macros/s/AKfycbzT9Y9p3pzzcfvB2NhjKYK7VZwW5oI9cnP6liXpEj8GwMdmGHRUW_urobQub6ftDLIV/exec",
+        class1: "https://script.google.com/macros/s/AKfycbxip3LS8e6t9lou6SIK0JsOh4WmUodi_oicpmNaYqUoHii7wwg2LMG9IMLKhSShI0Ve/exec",
+        class2: "https://script.google.com/macros/s/AKfycbzsN8qTTagmSfkf5m0EWeUQDXrLMRA5-lUFYyypd7ih5Onb5wT0QedBjoHoGCRB395iUg/exec",
+        class3: "https://script.google.com/macros/s/AKfycbx6Wlrh2V5823dpApgkhfiuX-a6WhzcQJ9PkI7GHuMiNnRlvuUJG-RXDzDG6B6A1gbo/exec",
+        class4: "https://script.google.com/macros/s/AKfycbyAZkQoX8mY8YQyKvhRthwg4Ij02PFbw_z67w_CdShpfmPY8qgkO6ueMyeegXlRtuMG/exec",
+        class5: "https://script.google.com/macros/s/AKfycbxxLrztdhv7O_uFHT1PHZlPNmF600tc6huT1PTA-M-o1OrE9JFtCpKuq3fuToGL6haEqQ/exec"
+    };
     const classToBangla = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" };
 
     async function callApi(action, payload) {
@@ -125,8 +147,13 @@ const CLASS_API_MAP = {
         document.getElementById('deleteBtn').classList.add('hidden');
         currentStudent = null;
         document.getElementById('formTitle').innerHTML = '➕ নতুন শিক্ষার্থী তৈরি';
-        ['newId','newName','newRoll','newClass','newSection','newPhotoUrl','newDob','newBcn','newFname','newMname','newFnid','newMnid','newAddress','newPhone','newBlood'].forEach(id => { let el=document.getElementById(id); if(el) el.value=''; });
+        // clear all input fields except ID prefill with 100
+        ['newName','newRoll','newClass','newSection','newPhotoUrl','newDob','newBcn','newFname','newMname','newFnid','newMnid','newAddress','newPhone','newBlood'].forEach(id => { let el=document.getElementById(id); if(el) el.value=''; });
         document.getElementById('newPhotoFile').value = '';
+        // Set default ID "100" as per requirement
+        document.getElementById('newId').value = '100';
+        // auto fill class if active
+        if(currentClassKey) document.getElementById('newClass').value = classToBangla[currentClassKey];
     }
 
     function updateClassStatus() {
@@ -140,7 +167,7 @@ const CLASS_API_MAP = {
         currentClassKey = classKey;
         localStorage.setItem('activeClass', classKey);
         updateClassStatus();
-        resetUI();
+        resetUI();  // this will also set ID to 100 and fill class
         autoFillClass();
         showToast(`${classToBangla[classKey]} ক্লাস সক্রিয়`);
     }
@@ -180,6 +207,10 @@ const CLASS_API_MAP = {
                 document.getElementById('newAddress').value = b["Address"] || '';
                 document.getElementById('newPhone').value = b["Phone number"] || '';
                 document.getElementById('newBlood').value = b["Blood group"] || '';
+                // apply capitalization styles consistency
+                document.getElementById('newName').value = document.getElementById('newName').value.toUpperCase();
+                if(document.getElementById('newFname').value) document.getElementById('newFname').value = capitalizeWords(document.getElementById('newFname').value);
+                if(document.getElementById('newMname').value) document.getElementById('newMname').value = capitalizeWords(document.getElementById('newMname').value);
             } else { showToast('শিক্ষার্থী পাওয়া যায়নি'); resetUI(); }
         } catch(e) { console.warn(e); } finally { hideLoader(); }
     }
@@ -204,6 +235,7 @@ const CLASS_API_MAP = {
     async function createStudent() {
         let id = document.getElementById('newId').value.trim();
         if(!id) { showToast('আইডি প্রয়োজন'); return; }
+        processFormData();  // ensure uppercase & capitalized before send
         showLoader();
         try {
             let photoBase64 = null;
@@ -228,6 +260,7 @@ const CLASS_API_MAP = {
         if(!currentStudent) return;
         let id = document.getElementById('newId').value.trim();
         if(!id) return;
+        processFormData();
         showLoader();
         try {
             let photoBase64 = null;
@@ -261,16 +294,35 @@ const CLASS_API_MAP = {
         }
     }
 
-    // Event bindings
+    // Event bindings + ENTER key for forms
     document.getElementById('createDbBtn').onclick = createDatabase;
     document.getElementById('classForDb').onchange = checkDatabase;
     document.getElementById('refreshBtn').onclick = () => { if(currentApiUrl) refreshAllRecords(); };
     document.getElementById('showAllBtn').onclick = refreshAllRecords;
     document.getElementById('closeRecordsBtn').onclick = () => document.getElementById('allRecordsSection').classList.add('hidden');
     document.getElementById('searchBtn').onclick = handleSearch;
-    // ENTER key shortcut for search field
+    
+    // ENTER key for search field
     const searchInput = document.getElementById('searchId');
     searchInput.addEventListener('keypress', e => { if(e.key === 'Enter') { e.preventDefault(); handleSearch(); } });
+    
+    // ENTER key submission for create/update form: pressing Enter on any field inside form triggers the respective action
+    const formContainer = document.querySelector('.Student .form-grid');
+    const activeButtons = () => {
+        if(document.getElementById('updateBtn') && !document.getElementById('updateBtn').classList.contains('hidden')) return 'update';
+        return 'create';
+    };
+    const allInputsInForm = document.querySelectorAll('#newId, #newName, #newRoll, #newClass, #newSection, #newDob, #newBcn, #newFname, #newMname, #newFnid, #newMnid, #newAddress, #newPhone, #newBlood');
+    allInputsInForm.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                if(activeButtons() === 'update') updateStudent();
+                else createStudent();
+            }
+        });
+    });
+    
     document.getElementById('createBtn').onclick = createStudent;
     document.getElementById('updateBtn').onclick = updateStudent;
     document.getElementById('deleteBtn').onclick = deleteStudent;
@@ -278,6 +330,9 @@ const CLASS_API_MAP = {
     document.getElementById('clearUiBtn').onclick = async() => { if(await confirmMsg('UI সাফ করবেন?')) resetUI(); };
     document.getElementById('newPhone').addEventListener('input', function() { formatPhoneNumber(this); });
     document.getElementById('newRoll').addEventListener('input', function() { this.value = this.value.replace(/[^0-9]/g, ''); });
+    
+    // set initial default ID as "100"
+    document.getElementById('newId').value = '100';
 
     // Initialize
     checkDatabase();
