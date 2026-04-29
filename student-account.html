@@ -317,7 +317,6 @@
 </header>
 
 <main>
-  <!-- Main wrapper with class 'Student' as requested -->
 <div class="Student">
     <div class="container">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
@@ -369,27 +368,28 @@
             <div class="glass-card" style="padding: 1.5rem 2rem;">
                 <h3 id="formTitle" style="color: #2c3e4e; margin-bottom: 0.5rem;">➕ নতুন শিক্ষার্থী তৈরি</h3>
                 <div class="form-grid">
-                    <div class="form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি"></div>
-                    <div class="form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="পূর্ণ নাম"></div>
+                    <div class="form-group"><label>আইডি *</label><input type="text" id="newId" placeholder="আইডি" autocomplete="off"></div>
+                    <div class="form-group"><label>পূর্ণ নাম (বড় হাতের)</label><input type="text" id="newName" placeholder="পূর্ণ নাম" style="text-transform: uppercase;"></div>
                     <div class="form-group"><label>রোল</label><input type="text" id="newRoll" placeholder="রোল"></div>
                     <div class="form-group"><label>শ্রেণি</label><input type="text" id="newClass" placeholder="শ্রেণি"></div>
-                    <div class="form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন"></div>
+                    <div class="form-group"><label>সেকশন</label><input type="text" id="newSection" placeholder="সেকশন" style="text-transform: uppercase;"></div>
                     <div class="form-group"><label>ছবি</label><input type="file" id="newPhotoFile" accept="image/*"><input type="hidden" id="newPhotoUrl"></div>
                     <div class="form-group"><label>জন্ম তারিখ</label><input type="date" id="newDob"></div>
                     <div class="form-group"><label>জন্ম নিবন্ধন নং</label><input type="text" id="newBcn" maxlength="17" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
-                    <div class="form-group"><label>পিতার নাম</label><input type="text" id="newFname"></div>
-                    <div class="form-group"><label>মাতার নাম</label><input type="text" id="newMname"></div>
+                    <div class="form-group"><label>পিতার নাম (অটো ক্যাপিটাল)</label><input type="text" id="newFname" placeholder="পিতার নাম" style="text-transform: capitalize;"></div>
+                    <div class="form-group"><label>মাতার নাম (অটো ক্যাপিটাল)</label><input type="text" id="newMname" placeholder="মাতার নাম" style="text-transform: capitalize;"></div>
                     <div class="form-group"><label>পিতার এনআইডি</label><input type="text" id="newFnid" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
                     <div class="form-group"><label>মাতার এনআইডি</label><input type="text" id="newMnid" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
-                    <div class="form-group"><label>ঠিকানা</label><textarea id="newAddress" rows="2"></textarea></div>
+                    <div class="form-group"><label>ঠিকানা</label><textarea id="newAddress" rows="2" style="text-transform: capitalize;"></textarea></div>
                     <div class="form-group"><label>মোবাইল (১১ ডিজিট)</label><input type="tel" id="newPhone" maxlength="11"></div>
-                    <div class="form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood"></div>
+                    <div class="form-group"><label>রক্তের গ্রুপ</label><input type="text" id="newBlood" placeholder="রক্তের গ্রুপ" style="text-transform: uppercase;"></div>
                 </div>
                 <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
                     <button id="createBtn" class="btn-success">➕ তৈরি করুন</button>
                     <button id="updateBtn" class="btn-warning hidden">✏️ হালনাগাদ</button>
                     <button id="deleteBtn" class="btn-danger hidden">🗑️ মুছুন</button>
                 </div>
+                <div class="suggest-id-tip">💡 আইডি ফিল্ডে প্রস্তাবিত "100" (আপনি পরিবর্তন করতে পারেন)</div>
             </div>
 
             <!-- All Records Table (hidden initially) -->
@@ -407,7 +407,6 @@
     <div id="toast" class="toast"><div id="toastMsg">Message</div><button onclick="this.parentElement.classList.remove('show')">OK</button></div>
     <div id="loader" class="loader-overlay"><div class="loader"></div><span style="color:#0b3b5f; font-weight:500;">লোড হচ্ছে...</span></div>
 </div>
-
 </main>
 
 <script src="student-account.js"></script>
