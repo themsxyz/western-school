@@ -17,7 +17,7 @@
         loaderTimeoutId = setTimeout(() => {
             if (isLoaderVisible) {
                 hideLoader();
-                showToast('সার্ভার থেকে উত্তর আসতে বেশি সময় লাগছে। আবার চেষ্টা করুন।', 'error');
+                showToast('সাবমিট হয়েছে', 'error');
             }
         }, 4000);
     }
@@ -99,7 +99,7 @@
     const classToBangla = { nursery:"নার্সারি", play:"প্লে", kg:"কেজি", class1:"প্রথম শ্রেণি", class2:"দ্বিতীয় শ্রেণি", class3:"তৃতীয় শ্রেণি", class4:"চতুর্থ শ্রেণি", class5:"পঞ্চম শ্রেণি" };
 
     async function callApi(action, payload) {
-        if (!currentApiUrl) throw new Error('No API');
+        if (!currentApiUrl) throw new Error('API নাই');
         const res = await fetch(currentApiUrl, { method: 'POST', body: JSON.stringify({ action, ...payload }) });
         return await res.json();
     }
@@ -114,7 +114,7 @@
         try {
             let res = await callApi('checkMainSheet', {});
             if (res.exists) {
-                document.getElementById('dbStatus').innerHTML = '✅ ডেটাবেস উপস্থিত';
+                document.getElementById('dbStatus').innerHTML = '✅ ডেটাবেস সিলেক্টেড';
                 document.getElementById('mainApp').classList.remove('hidden');
                 activateClass(selected);
             } else {
@@ -251,7 +251,7 @@
                 phone: document.getElementById('newPhone').value, blood: document.getElementById('newBlood').value
             };
             let res = await callApi('create', payload);
-            if(res.status === 'created') { showToast('তৈরি সফল!','success'); resetUI(); refreshAllRecords(); }
+            if(res.status === 'created') { showToast('সফল!','success'); resetUI(); refreshAllRecords(); }
             else showToast(res.message || 'ত্রুটি','error');
         } catch(e) { showToast('তৈরি ব্যর্থ'); } finally { hideLoader(); }
     }
