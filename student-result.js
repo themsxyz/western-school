@@ -45,15 +45,15 @@ function hideLoader() { if(loaderOverlay) loaderOverlay.style.display = "none"; 
 
 // ---------- API MAPPING ----------
 const CLASS_API_MAP = {
-    nursery: "https://script.google.com/macros/s/AKfycbzRBVqJZnQCez3AS27DIMNqc83NnkDBdzUs4IZfmIsn2qOxkOe1_DM8NQvMjCPtwwiS/exec",
-    play: "https://script.google.com/macros/s/AKfycbwwbfdHQf4gNKpchOfSdc1IbxKBrEmbbzzWUsrpdAsSb45s1EnieTrIJLPgTxDVbH4P/exec",
-    kg: "https://script.google.com/macros/s/AKfycbxRDeg7egxUdLpjdQg8d37WvcNw1xQMd-QpfwnqC3Si2hWh7HCYjE8jBvzAqWb4ED0/exec",
-    class1: "https://script.google.com/macros/s/AKfycby9Fv1xZGyZwNAfDFOKVC6Cf7q86GMz4cWvxO4u-jeC8ejMAaLc8rgmx2KDESAA134T/exec",
-    class2: "https://script.google.com/macros/s/AKfycbyxfRJFIkoi5IZabxs1MiVqBNb5HgIWUR2nG0TjXLf1S7AXyW8uGMFVlJ009pXLY4JnfA/exec",
-    class3: "https://script.google.com/macros/s/AKfycbzxg-lf8ZvBpw9L-kzPdpxRRTtdxnCGNSiyc_UElLihDpRr6zl4YxZIoKDek7IXtlsv/exec",
-    class4: "https://script.google.com/macros/s/AKfycbyzuGgkk4osZCf45qkb40RKSa6I3nBFhLSG3B618rn0_PaBMv62K8YIh8R7-eGQqydF/exec",
-    class5: "https://script.google.com/macros/s/AKfycbzHlGMzOU5gqxOl9RsgVTjwXioS0ddq6nlNO7pvxsJoSdS4RJX5OznHnb4O_WRHlxTDvg/exec"
-};
+        nursery: "https://script.google.com/macros/s/AKfycbyTF_85aIdiEnNm_q9Tne-fIDqWI1XVX82GDIdyqz1CvBxpG7f95nIWm6IAFBXOe-Mf/exec",
+        play: "https://script.google.com/macros/s/AKfycbyyGjmPF3ymWXpbaBsp86jlBfVF_NL8QR1FSGBcYugkk-ql9B_l2jIlBdY49kKz0bnP/exec",
+        kg: "https://script.google.com/macros/s/AKfycbzT9Y9p3pzzcfvB2NhjKYK7VZwW5oI9cnP6liXpEj8GwMdmGHRUW_urobQub6ftDLIV/exec",
+        class1: "https://script.google.com/macros/s/AKfycbxip3LS8e6t9lou6SIK0JsOh4WmUodi_oicpmNaYqUoHii7wwg2LMG9IMLKhSShI0Ve/exec",
+        class2: "https://script.google.com/macros/s/AKfycbzsN8qTTagmSfkf5m0EWeUQDXrLMRA5-lUFYyypd7ih5Onb5wT0QedBjoHoGCRB395iUg/exec",
+        class3: "https://script.google.com/macros/s/AKfycbx6Wlrh2V5823dpApgkhfiuX-a6WhzcQJ9PkI7GHuMiNnRlvuUJG-RXDzDG6B6A1gbo/exec",
+        class4: "https://script.google.com/macros/s/AKfycbyAZkQoX8mY8YQyKvhRthwg4Ij02PFbw_z67w_CdShpfmPY8qgkO6ueMyeegXlRtuMG/exec",
+        class5: "https://script.google.com/macros/s/AKfycbxxLrztdhv7O_uFHT1PHZlPNmF600tc6huT1PTA-M-o1OrE9JFtCpKuq3fuToGL6haEqQ/exec"
+    };
 
 let currentApiUrl = null, currentActiveClassKey = null, currentStudent = null;
 
